@@ -1,0 +1,1562 @@
+<HTML><HEAD><TITLE>Manager Help</TITLE></HEAD><BODY>
+
+<H1><HREF NAME="top">Manager Help</A></H1>
+
+<H2><A NAME="@@who">@@who</A></H2>
+
+<P>See: <A HREF="#@net-who">@net-who</A>
+
+<H2><A NAME="@abort-shutdown">@abort-shutdown</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @abort-sh*utdown [&lt;text&gt;]</TD></TR></TABLE>
+
+<P>This aborts any shutdown currently in progress (i.e., set in motion by @shutdown).  All connected users are notified that no shutdown will actually occur; &lt;text&gt;, if given will be included in this notification.
+
+<P>Available to Managers with "server management" responsibilities.
+
+<P><B>Related Topics:</B>
+<BR><A HREF="manager_help.html#@shutdown">@shutdown</A> -- shuts down the MOO server
+
+<H2><A NAME="@account-locks">@account-locks</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> @account-lock &lt;person&gt;
+<BR>@unlock-account &lt;person&gt;
+<BR>@unlock-char &lt;person&gt;
+<BR>@account-locks</TD></TR></TABLE>
+
+<P>To get lockout information about a person, including if they are locked out, use: @account-lock &lt;person&gt;
+
+<P>To get a list of all current account locks, use: @account-locks
+
+<P>To unlock a locked account, use:  @unlock-account &lt;person&gt;
+
+<P>Account locks are generated automatically when a person tries and fails to connect more than a certain number of times.  A message is posted to the *account-locks mail folder.
+
+<P>$login.account_lockout_thresholds - the number of incorrect connect attempts before a lockout is triggered.
+<BR>An a-list in the form: { {number of failures, lockout duration}, {number of failures, lockout duration}, ...}
+<BR>Each element gives information for an increasing "number of failures" value.
+
+<H2><A NAME="@add-class">@add-class</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> @add-class [&lt;classname&gt;]
+<BR>@rm-class  [&lt;classname&gt;]</TD></TR></TABLE>
+
+<P>These commands add or remove a class to be displayed by the @classes command.  If no &lt;classname&gt; is specified, then you'll be asked to name a class.
+
+<P>To remove a class, the complete name of the class (not just a prefix) must be used.
+
+<P>To edit the descriptive line associated with a class, use the @add-class command and give the name of the class.  You'll be asked if you only want to edit the descriptive line.
+
+<P><TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> @add-class-obj &lt;what&gt; in &lt;classname&gt;
+<BR>@rm-class-obj  &lt;what&gt; in &lt;classname&gt;</TD></TR></TABLE>
+
+<P>These commands add and remove object &lt;what&gt; from the given &lt;classname&gt; class, where &lt;classname&gt; is an unambiguous prefix for an existing @classes class.
+
+<P><B>Related Topics:</B>
+<BR><A HREF="wiz_help.html#@classes">@classes</A> -- display classes of objects, and the objects in each class
+
+<H2><A NAME="@add-class-obj">@add-class-obj</A></H2>
+
+<P>See: <A HREF="#@add-class">@add-class</A>
+
+<H2><A NAME="@add-class-object">@add-class-object</A></H2>
+
+<P>See: <A HREF="#@add-class">@add-class</A>
+
+<H2><A NAME="@add-owner">@add-owner</A></H2>
+
+NOTE: Managers with "ownership transfers" responsibility can use this with objects owned by others.
+
+<P>Also see: <A HREF="builder_help.html#@add-owner">@add-owner</A> in Builder Help
+
+<H2><A NAME="@announce">@announce</A></H2>
+
+<P>See: <A HREF="#@shout">@shout</A>
+
+<H2><A NAME="@bad-email">@bad-email</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @bad-email</TD></TR></TABLE>
+
+<P>Lists all non-VSPO characters that have no email address set.
+
+<P>Note that if a character has no email address set, and
+<BR>$local.email_address_required is true, then when that person connects
+<BR>they are shown the $local.email_missing_text message.  This message
+<BR>generally should tell them to use @registerme to set a new email
+<BR>immediately.
+
+<P>If a person has a bad email address, it usually becomes apparent when
+<BR>the MOO tries to mail them something and it bounces.  You can then
+<BR>use:
+
+<P>&nbsp;&nbsp;@register &lt;who&gt; ""
+
+<P>to set a blank email address for the person, and they'll receive the
+<BR>appropriate warnings when they connect.  Their @notes will also be
+<BR>marked with the date, so you can tell how long they've been without
+<BR>an email address using the "@notes &lt;who&gt;" command.
+
+<H2><A NAME="@bday">@bday</A></H2>
+
+<P>See: <A HREF="#@birthday">@birthday</A>
+
+<H2><A NAME="@birthday">@birthday</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> @birthday &lt;person&gt;</TD></TR></TABLE>
+
+<P>Synonym: @bday &lt;person&gt;
+
+<P>Displays the person's recorded real age, and offers you the chance to change the recording.  This is generally set during the character application and acceptance process.
+
+<P>Available to Managers with "character applications" responsibility.
+
+<H2><A NAME="@blacklist">@blacklist</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @redlist   [&lt;domain or subnet&gt; [commentary]]
+<BR>@blacklist [&lt;domain or subnet&gt; [commentary]]
+<BR>@graylist  [&lt;domain or subnet&gt; [commentary]]
+<BR>@spooflist [&lt;domain or subnet&gt; [commentary]]</TD></TR></TABLE>
+
+<P><TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @unredlist   [&lt;domain or subnet&gt; [commentary]]
+<BR>@unblacklist [&lt;domain or subnet&gt; [commentary]]
+<BR>@ungraylist  [&lt;domain or subnet&gt; [commentary]]
+<BR>@unspooflist [&lt;domain or subnet&gt; [commentary]]</TD></TR></TABLE>
+
+<P>With no argument, the current contents of the corresponding list are printed.
+<BR>Otherwise, the specified domain or subnet is added to or removed from the list and mail will be sent to $site_log.  
+
+<P>If the given domain or subnet has subdomains/subsubnets that are already on the list, you will be prompted as to whether you want to remove them.  Note that adding an entry for a particular domain or subnet effectively adds all subdomains/subsubnets, so unless there's some reason for keeping an explicit entry for a particular subdomain, chances are you will indeed want to remove them.  One reason to keep an explicit entry for a subdomain would be if you intended to unlist the full domain later but wanted to be sure you didn't unlist the subdomain in the process.
+
+<P>See `help blacklist' for a description of the functions of these lists.
+
+<H2><A NAME="@boot">@boot</A></H2>
+
+User-bouncing verb. Think first!
+<P><TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> @boot &lt;who&gt; [with] [message]
+<BR>Disconnects &lt;who&gt; from the MOO;
+<BR>the optional [with] [message] displays whatever text you choose</TD></TR></TABLE>
+      to the person before disconnecting him.
+
+<H2><A NAME="@builder">@builder</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> @builder &lt;name&gt; [with/using &lt;quota&gt;]</TD></TR></TABLE>
+
+<P>Change the parent of &lt;name&gt; to $builder. If you provide a numerical starting quota, it will be assigned to the user instead of $builder.ownership_quota (this will also automatically send mail to $quota_log).
+<BR>You may choose to send &lt;name&gt; a MOOmail notification of its status gain (you'll be prompted with a yes/no). Two message properties on $wiz get printed in the course of using this verb. @builder_victim is what the user sees and @builder is what the room the user is in sees (which excludes the @builder'ing wizard).
+<BR>If you add a "new_builder_txt" property to yourself and fill it with additional text for the MOOmail notification it gets appended (please insert the appropriate blank lines and such yourself).
+
+<P><TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> @unbuilder &lt;name&gt;
+<BR>The @unbuilder command is available to revoke a person's builder status.</TD></TR></TABLE>
+
+<P>Available to Managers with "builder management" responsibility.
+
+<H2><A NAME="@checkpoint">@checkpoint</A></H2>
+
+<P>See: <A HREF="#@dump-database">@dump-database</A>
+
+<H2><A NAME="@chown">@chown</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @chown &lt;object&gt;            [to] &lt;owner&gt;
+<BR>@chown &lt;object&gt;.&lt;propname&gt; [to] &lt;owner&gt;
+<BR>@chown &lt;object&gt;:&lt;verbname&gt; [to] &lt;owner&gt;</TD></TR></TABLE>
+
+<P>Changes the ownership of the indicated object, property or verb.
+
+<P>Verb ownership changes are fairly straightforward, being merely a matter of changing the verb_info() on a single verb.
+
+<P>Changing an object ownership includes changing the ownership on all +c properties on that object.  Note that @chown will not change the ownership of any other properties, nor will it change verb ownerships.  Use @grant if you need to do a more complete ownership change.  The quota of the former owner is increased by one, as is the quota of the new owner decreased by one.
+
+<P>Changing a property ownership is truly hairy.  If the property is +c one should not be doing this, unless it is to correct a past injustice which caused the property to be owned by the wrong person.  In the case of -c properties, the property ownership is changed on all descendent objects (currently, if +c instances of a -c property are found in the traversal of all of the descendants, these are not changed, being deemed sufficiently weird that they should be handled on a case-by-case basis...).
+
+<P>If there's any justice, a future version of the server will prevent occurrences of (1) +c properties being owned by someone other than the object owner (2) -c properties with different owners on descendant objects (3) -c properties that are +c on some descendants.
+
+<P>NOTE:  Managers with "Ownership Transfers" responsibility can @chown objects, but not verbs or properties.  Managers with "Technical Support" responsibility can @chown all three.  Neither can @chown objects, verbs, or properties that are wizard-owned.
+
+<H2><A NAME="@chown-group">@chown-group</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> @chown-group &lt;gnum&gt; to &lt;new-owner&gt;</TD></TR></TABLE>
+
+<P>Used to set a new owner for a VSPO group.
+
+<H2><A NAME="@connect-places">@connect-places</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> @connect-places &lt;who&gt;</TD></TR></TABLE>
+
+<P>Shows the recorded places &lt;who&gt; has connected from, and the last place connected from.
+
+<H2><A NAME="@connectlog">@connectlog</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> @connectlog &lt;summary|log|clear|enable|disable|who&gt; for &lt;names&gt;
+<BR>@connectlog who   - to see a list of who is being tracked.</TD></TR></TABLE>
+
+<P>Keeps track of connection times for people if tracking has been enabled for them.  Saves data for the last 60 disconnections.  
+<BR>Options:
+<BR>&nbsp;&nbsp;summary - all recorded connections arranged by date
+<BR>&nbsp;&nbsp;log - all recorded connections, listed individually with timestamp
+<BR>&nbsp;&nbsp;clear - clear the connection log records
+<BR>&nbsp;&nbsp;enable - start tracking connections for a person
+<BR>&nbsp;&nbsp;disable - turn off connection logging for a person
+<BR>&nbsp;&nbsp;who - list all people with connection logging currently enabled
+<BR>If connect_idler() is active, it will also track time idle.
+
+<H2><A NAME="@create-character">@create-character</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> @create-c*haracter &lt;*char msg number&gt; [as|for &lt;name&gt;]
+<BR>@create-c*haracter &lt;*char msg number&gt; from|on *undecided [as|for &lt;name&gt;]</TD></TR></TABLE>
+
+<P><B>Synonyms:</B> @created
+
+<P>This will move an application from the *character-request-pool (*char) list, or *undecided list, to the *created list and therebye mark it as accepted. As an addition, it triggers a @make-player command and parses the application to set the .age and .notes of the new character with the information provided in its application. 
+
+<P>Notification is optionally sent to the applicant.
+
+<P>If the applying character was a VSPO his/her character will get converted to a regular one (while the notes etc get set like in the case of a newly created character).
+
+<P><B>Examples:</B>
+<BR>@created 4
+<BR>&nbsp;&nbsp;Create the character from application 4 on
+<BR>&nbsp;&nbsp;*character-request-pool.
+<BR>@created 6 as JoeBob
+<BR>&nbsp;&nbsp;Create the character from application 4 on
+<BR>&nbsp;&nbsp;*character-request-pool with the name JoeBob, irregardless of the
+<BR>&nbsp;&nbsp;name requested in the application.
+<BR>@created 8 from *undecided
+<BR>&nbsp;&nbsp;Create the character from application 4 on *undecided.
+
+<P>Available to Managers with "character applications" responsibility.
+
+<P><B>Related Topics:</B>
+<BR><A HREF="manager_help.html#applications">applications</A> -- overview of the application processing system
+<BR><A HREF="manager_help.html#@reject-character">@reject-character</A> -- reject a character application (aka "@rejected")
+<BR><A HREF="manager_help.html#@undecided">@undecided</A>-- mark a character application as "undecided" (aka "@unsure")
+<BR><A HREF="manager_help.html#@searchapplications">@searchapplications</A> -- search all applicaiton-related mail folders for
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;specified text
+
+<H2><A NAME="@created">@created</A></H2>
+
+<P>See: <A HREF="#@create-character">@create-character</A>
+
+<H2><A NAME="@dbsize">@dbsize</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @dbsize</TD></TR></TABLE>
+
+<P>@dbsize goes through the entire database, counting the valid and invalid objects, giving a summary at the end.  This information can be useful, but because this command is cpu intensive, it should be used sparingly.
+
+<H2><A NAME="@del-owner">@del-owner</A></H2>
+
+NOTE: Managers with "ownership transfers" responsibility can use this with objects owned by others.
+
+<P>Also see: <A HREF="builder_help.html#@del-owner">@del-owner</A> in Builder Help
+
+<H2><A NAME="@denewt">@denewt</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">    @denewt &lt;who&gt; [commentary]</TD></TR></TABLE>
+
+<P><B>Synonyms:</B>  @unnewt
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@get-better
+
+<P>@denewt reverses the effects of @newt, removing the person from $login.newted (and also from $login.temporary_newts if appropriate).
+
+<P>Mail is sent to $newt_log including any commentary you provide.  E.g.,
+
+<P>&nbsp;&nbsp;@denewt Twit  He promises not to do it again.
+
+<H2><A NAME="@detoad">@detoad</A></H2>
+
+<P>See: <A HREF="#@untoad">@untoad</A>
+
+<H2><A NAME="@dump-database">@dump-database</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @dump-database
+<BR>Aliases: @dumpdb, @dump-db, @checkpoint</TD></TR></TABLE>
+
+<P>Invokes the builtin dump_database(), which requests that the server checkpoint the database at its next opportunity.  It is not normally necessary to call this function; the server automatically checkpoints the database at regular intervals; see the chapter on server assumptions about the database for details.
+
+<P>Available to Managers with "server managing" responsibility.
+
+<H2><A NAME="@dusted">@dusted</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> @dusted</TD></TR></TABLE>
+
+<P>Displays all non-wizard owned objects that carry one or more wiz-permed verbs.
+
+<H2><A NAME="@egrep">@egrep</A></H2>
+
+<P>See: <A HREF="#@grep">@grep</A>
+
+<H2><A NAME="@expire-group">@expire-group</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> @expire-group &lt;group&gt;
+<BR>@expire-g &lt;group&gt;</TD></TR></TABLE>
+
+<P>Let the VSPO group &lt;group&gt; expire;  this automatically sets its expiration deadline to whatever the current grace-period is.
+
+<P>Available to Managers with "VSPO management" responsibility.
+
+<P><B>Related Topics:</B>
+<BR><A HREF="manager_help.html#vspo-manager-tools">vspo-manager-tools</A> -- list of commands for VSPO system management
+<BR><A HREF="manager_help.html#@kill-vspo-group">@kill-vspo-group</A> -- causes a VSPO group to expire immediately
+
+<H2><A NAME="@expiregroup">@expiregroup</A></H2>
+
+<P>See: <A HREF="#@expire-group">@expire-group</A>
+
+<H2><A NAME="@gaddroom">@gaddroom</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @gaddroom [&lt;room&gt;] [as &lt;name&gt;]
+<BR>@grmroom [&lt;room&gt;]</TD></TR></TABLE>
+
+<P>&nbsp;&nbsp;Adds or removes a room from the $local rooms database, so that any user's @go command can recognize it by the name you assign.
+
+<H2><A NAME="@ginfo">@ginfo</A></H2>
+
+<P>See: <A HREF="vspo_help.html#@ginfo">@ginfo</A> in VSPO Help and <A HREF="#@vspo-info">@vspo-info</A>
+
+<H2><A NAME="@grant">@grant</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @grant &lt;object&gt; to &lt;who&gt;
+<BR>@grants &lt;object&gt; to &lt;who&gt;
+<BR>@transfer &lt;expression&gt; to &lt;who&gt;</TD></TR></TABLE>
+
+<P>&nbsp;&nbsp;Ownership of the object changes as in @chown, i.e., .owner and all c properties change hands while the previous owner's and the new owner's quotas are adjusted.  In addition all verbs and !c properties owned by the previous owner change ownership as well.  Finally, for !c properties, instances on descendant objects change ownership as when @chowning the properties individually.
+<BR>&nbsp;&nbsp;The @grants command does the same as @grant but may suspend.  The @transfer command works like @grant, but will accept a list of objects to transfer (eg. @transfer {#2323, #2353} to Hildegard) 
+
+<P>Available to Mangers with "ownership transfers" responsibility.
+
+<H2><A NAME="@graylist">@graylist</A></H2>
+
+<P>See: <A HREF="#@blacklist">@blacklist</A>
+
+<H2><A NAME="@grep">@grep</A></H2>
+
+For wizards and MOO Technician managers, the following forms are also available for doing full-db searches
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@grep &lt;pattern&gt;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@grep &lt;pattern&gt;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@egrep &lt;pattern&gt; from [#]&lt;n&gt;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@egrep &lt;pattern&gt; from [#]&lt;n&gt;
+
+<P>the first two search all objects in the database while the last two search the range [#&lt;n&gt;..max_object()]
+
+<P>Additional topics:
+<BR><A HREF="manager_help.html#@grepcore">@grepcore</A> -- performs a @grep limited to core objects
+<BR><A HREF="manager_help.html#@who-calls">@who-calls</A> -- searches the whole DB looking for calls to the specified verb
+
+<P>Also see: <A HREF="prog_help.html#@grep">@grep</A> in Programmer Help
+
+<H2><A NAME="@grepcore">@grepcore</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @grepcore &lt;pattern&gt;
+<BR>@who-calls &lt;verbname&gt;</TD></TR></TABLE>
+
+<P>@grepcore pattern is @grep pattern in {all core objects}.  Core objects are computed for you by #0:core_objects().
+
+<P>@who-calls greps for the verbname + "(", hoping to catch it as a verb call.  Currently @who-calls does not allow you to restrict the search as @grep does.  (Volunteers?)
+
+<H2><A NAME="@grmroom">@grmroom</A></H2>
+
+<P>See: <A HREF="#@gaddroom">@gaddroom</A>
+
+<H2><A NAME="@guests">@guests</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @guests [&lt;n&gt;]</TD></TR></TABLE>
+
+<P>Prints out the log of guest connections, indicating connect/disconnect times and where they came from.  If a numeric argument n is given, then only the last n entries in the log are consulted (useful for when the full log is rather long) - note that connections and disconnections are separate entries so the actual printed listing will be about half this length.
+
+<P>Available to any Manager.
+
+<P>Alternate:  @guests now
+
+<P>Prints out in @who format all connected guests.  In place of the location field is the current connect site.
+
+<H2><A NAME="@idle-boot-protect">@idle-boot-protect</A></H2>
+
+Normally, non-wizards are automatically booted after a certain time of inactivity unless they are listed in $local.idle_boot_protect.  The @idle-boot-protect command can be used to add, remove, or list who is on this list.
+
+<P>Use:  @idle-boot-protect            .. to list who can be idle indefinitely,
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@idle-boot-protect &lt;whoever&gt;  .. to add someone, or
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@idle-boot-protect !&lt;whoever&gt; .. to remove someone
+
+<H2><A NAME="@kill-vspo-group">@kill-vspo-group</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> @kill-vspo-group &lt;group&gt;</TD></TR></TABLE>
+
+<P>This command immediately expires the VSPO group, recycling all the VSPOs in it.
+
+<P>Available to Managers with "VSPO management" responsibility.
+
+<P><B>Related Topics:</B>
+<BR><A HREF="manager_help.html#vspo-manager-tools">vspo-manager-tools</A> -- list of commands for VSPO system management
+
+<H2><A NAME="@killtasks">@killtasks</A></H2>
+
+<P>See: <A HREF="#@tasks">@tasks</A>
+
+<H2><A NAME="@last-connected">@last-connected</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> @last-connected
+<BR>@last &lt;number&gt;
+<BR>@last &lt;name&gt; [..&lt;name&gt;]]
+<BR>@last wiz</TD></TR></TABLE>
+
+<P>May be abbreviated as: @last
+
+<P>Displays the last &lt;number&gt; connections to the MOO (default 10), or the current connection information for the provided user names sorted by their .last_connect_time values.
+
+<P>You might notice the similarity to the common unix command "last".  Don't forget however, that @last can't give you absolute data, since usually there is no connection log (like wtmp on most unix systems) kept inside MOOs.  What you really get is the connect information about the &lt;number&gt; most recently connected people, not the connect information about the &lt;number&gt; most recent logins.  If &lt;number&gt; exceeds the connection list of the last week a "wtmp" start time is displayed at the bottom of the list. 
+
+<P>If "wiz" is the given argument, then @last is called for all wizards.
+
+<H2><A NAME="@make-guest">@make-guest</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @make-guest &lt;adjective&gt;</TD></TR></TABLE>
+
+<P>This creates a new guest character.  For example,
+<BR>&nbsp;&nbsp;@make-guest Loud
+<BR>creates a child of $guest, owned by $hacker, named Loud_Guest and with aliases Loud and Loud_Guest.
+
+<P>See also `help @make-player'.
+
+<H2><A NAME="@make-player">@make-player</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @make-player &lt;name&gt;[,&lt;aliases&gt;] &lt;email-address&gt;</TD></TR></TABLE>
+
+<P>This creates a new character having the given name and password.
+<BR>If an email address is given, this information is sent off to $new_player_log.
+<BR>If password is null or not given, a random password is generated.
+
+<P>Entries into the $registration_db are made for the e-mail address, and into the $player_db for the character name.
+
+<P>Note that various properties like $player.age and such aren't set by this system as they are with the @create-character command and the regular character application system.
+
+<P><B>Related Topics:</B>
+<BR><A HREF="manager_help.html#@make-guest">@make-guest</A>       -- make a guest character
+<BR><A HREF="manager_help.html#@create-character">@create-character</A> -- use the character application system to create a
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;character from the *character-request-pool mail
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;list (a.k.a.  @created).
+
+<H2><A NAME="@make-vspos">@make-vspos</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @make-vspos &lt;number&gt; for &lt;person&gt;
+<BR>Create a group of &lt;number&gt; Visiting Student Person Objects for &lt;person&gt;.
+<BR>This verb will prompt for a name and description of the group.</TD></TR></TABLE>
+
+<P>Available to Managers with "VSPO management" responsibility.
+
+<P><B>Related Topics:</B>
+<BR><A HREF="manager_help.html#vspo-manager-tools">vspo-manager-tools</A> -- tools for VSPO system management
+
+<H2><A NAME="@massmail">@massmail</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> @massmail &lt;note&gt; to &lt;list of characters, *mail-folders, or @classes&gt;</TD></TR></TABLE>
+
+<P>The @massmail command sends the text of the specified &lt;note&gt; to the given characters, mail-folders, or classes.  The text is sent to the *email address* of all but mail-folders, unless the character doesn't have one set, in which case it is send by regular MOOmail.
+
+<P>If either &lt;note&gt; or &lt;list of characters, *mail-folders, or @classes&gt; is omitted, you will be prompted for an answer.  In any case, you will be prompted for a subject line for the message, and for any additional recipients you wish to add to your list.
+
+<P>If you wish a character, mail-folder, or class to be specifically *omitted* then prefix it with a "!" character.
+
+<P>Users can specify that they do not wish to receive any @massmail mailings by using the "no_mass_mail" user option:
+<BR>&nbsp;&nbsp;@useroption +no_mass_mail
+
+<P>Currently available classes are: @everyone, @builders, @programmers, @wizards, @newbies, @professors, @vspos
+
+<P><B>Example:</B> @massmail message to Jim *general @vspos
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@massmail to @everyone
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@massmail to @everyone !@vspos
+
+<P>The last example sends the mail to everyone except VSPOs.
+
+<P>Note that if recipients are specified explicitly, then they are sent the mail even if they are included in one of the classes specified as not to receive mail.  For instance, if Jim is a VSPO, then with 
+
+<P>&nbsp;&nbsp;@massmail message to Jim !@vspo
+
+<P>Jim will still be sent a copy of the message since he was specified explicitly.  However, if Jim is a @builder and a VSPO, and 
+
+<P>&nbsp;&nbsp;@massmail message to @builders !@vspos
+
+<P>Then Jim will not receive the message, since no VSPOs are to be sent a copy, and Jim wasn't specified explicitly.  
+
+<H2><A NAME="@nail">@nail</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @nail &lt;who&gt; [&lt;who&gt; &lt;who&gt; ...]
+<BR>@nail all
+<BR>@unnail &lt;who&gt; [&lt;who&gt; &lt;who&gt; ...]
+<BR>@unnail all
+<BR>@squelch &lt;who&gt; [&lt;who&gt; &lt;who&gt; ...]
+<BR>@squelch all
+<BR>@unsquelch &lt;who&gt; [&lt;who&gt; &lt;who&gt; ...]
+<BR>@unsquelch all</TD></TR></TABLE>
+
+<P>These commands are for temporarily restricting a person's ability to move or to speak.  The "un" versions reverse the restriction.  @nail prevents a person from leaving their present location, and @squelch prevents them from speaking or emoting.
+
+<P>If "all" appears anywhere in the &lt;who&gt; list, then all people in the same location as the person issuing the command are affected.
+
+<P>Note that they stay @nail'ed or @squelch'ed until you release them, so you don't generally want to leave this on long and risk forgetting.
+
+<H2><A NAME="@net-who">@net-who</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @net-who [&lt;who&gt;...]
+<BR>@net-who from [&lt;host&gt;]</TD></TR></TABLE>
+
+<P>Synonym: @@who
+
+<P>@net-who without any arguments prints all connected users and hosts.
+<BR>If one or more &lt;who&gt; arguments are given, the specified users are
+<BR>printed along with their current or most recent connected hosts.  If
+<BR>any of these hosts are mentioned on $login.blacklist or
+<BR>$login.graylist (see `help blacklist'), an annotation appears.
+
+<P>With a `from...' argument, this command consults $site_db and prints
+<BR>all people who have ever connected from the given host or host
+<BR>substring. Substring can include *'s (e.g. @net-who from *.foo.edu).
+
+<H2><A NAME="@newpassword">@newpassword</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> @newpassword &lt;character&gt; is [&lt;newpassword&gt;]</TD></TR></TABLE>
+
+<P>Sends a new password to a person.  Asks you if you want to e-mail it.
+
+<H2><A NAME="@newproject">@newproject</A></H2>
+
+<P>See: <A HREF="#@projects">@projects</A>
+
+<H2><A NAME="@newt">@newt</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @newt &lt;who&gt; [commentary]</TD></TR></TABLE>
+
+<P>The @newt command temporarily prevents logins on a given character.
+<BR>It works by adding the person to $login.newted, which is checked by $login:connect(). This is the LambdaCoreOct94 version.
+
+<P>You must give either the character's full name or its object number.
+<BR>Also, this command does not let you @newt yourself.
+
+<P>Mail will be sent to $newt_log, listing the character's .all_connect_places and including any commentary you provide.  E.g.,
+
+<P>&nbsp;&nbsp;@newt Twit  did real annoying things.
+
+<P>As with @toad and @programmer, there are messages that one may set
+
+<P>@newt  [%n @newts %d (%[#d])]
+<BR>&nbsp;&nbsp;Printed to everyone in the room in which the victim is being @newted.
+<BR>&nbsp;&nbsp;If you're worried about accidentally newting yourself in the process of
+<BR>&nbsp;&nbsp;setting this message, you can't (see above).
+
+<P>@newt_victim  []
+<BR>&nbsp;&nbsp;Printed to the victim.  
+<BR>&nbsp;&nbsp;This is followed by $login:newt_registration_string().
+
+<P>See `help @toad' if you need something more drastic.
+
+<H2><A NAME="@newted">@newted</A></H2>
+
+<P>See: <A HREF="#@newts">@newts</A>
+
+<H2><A NAME="@newts">@newts</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> @newts
+<BR>@newted</TD></TR></TABLE>
+
+<P>Lists all people currently newted, either temporarily or indefinitely.
+
+<H2><A NAME="@nobanish">@nobanish</A></H2>
+
+<P>See: <A HREF="#@notag">@notag</A>
+
+<H2><A NAME="@notag">@notag</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> @notag
+<BR>@notag &lt;person&gt;
+<BR>@notag -&lt;person&gt;
+<BR>@notag !&lt;person&gt;
+<BR>@nobanish
+<BR>@nobanish &lt;person&gt;
+<BR>@nobanish -&lt;person&gt;
+<BR>@nobanish !&lt;person&gt;</TD></TR></TABLE>
+
+<P>These commands are used to display or edit the list of people whose
+<BR>ability to @tag and/or @banish have been restricted.  Omitting a
+<BR>&lt;person&gt; lists the people currently restricted.  Specifying a
+<BR>&lt;person&gt; adds them to the list.  Using !&lt;person&gt; or -&lt;person&gt; removes
+<BR>them.
+
+<H2><A NAME="@password">@password</A></H2>
+
+<B>Notes for Managers:</B>
+
+<P>Use @newpassword to send someone a new password.  You will be asked if you want to e-mail it.
+
+<P>Also see: <A HREF="user_help.html#@password">@password</A> in General Help
+
+<H2><A NAME="@peepeditor">@peepeditor</A></H2>
+
+Managers and wizards using this command can view sessions even if they haven't been published.  However, the person is still informed that you are "looking over their shoulder."
+
+<P>Also see: <A HREF="user_help.html#@peepeditor">@peepeditor</A> in General Help
+
+<H2><A NAME="@professor">@professor</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> @professor &lt;person&gt;</TD></TR></TABLE>
+
+<P>Used to check if &lt;person&gt; has their "professor" property set, indicating they are a professional teacher.  Also gives you the opportunity to change the setting.
+
+<P>Available to Managers with "character applications" responsibility.
+
+<H2><A NAME="@professors">@professors</A></H2>
+
+<P>See: <A HREF="#@whoprofessors">@whoprofessors</A>
+
+<H2><A NAME="@programmer">@programmer</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @programmer &lt;who&gt;</TD></TR></TABLE>
+
+<P>Sets the programmer flag on the indicated person and sends mail to $new_prog_log. 
+
+<P>If the person is not already a descendant of $prog, we @chparent him/her to $prog.
+
+<P>If object-quota is enabled, then the person's quota is increased by the difference between $wiz_utils.default_programmer_quota and .default_builder_quota.
+
+<P>There are messages that one may set to customize how the granting of a programmer bit looks to the victim and to any onlookers.  After all, this is a seminal event in a MOOer's life...  Thus we have
+
+<P>@programmer  [%d is now a programmer.]
+<BR>&nbsp;&nbsp;Displayed to everyone in the room with the victim being @programmer'ed.
+
+<P>@programmer_victim  [You are now a programmer.]
+<BR>&nbsp;&nbsp;Displayed to the victim.
+
+<P>These are pronoun subbed with victim == dobj.
+
+<P><TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> @unprogrammer &lt;who&gt;
+<BR>The @unprogrammer command is used to revoke a person's progbit.</TD></TR></TABLE>
+
+<P>Available to Managers with "programmer management" responsibility.
+
+<H2><A NAME="@projects">@projects</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> 1) @projects
+<BR>2) @projects &lt;user&gt;
+<BR>3) @project &lt;existing-project-name&gt;
+<BR>4) @project &lt;new-project-name&gt;</TD></TR></TABLE>
+
+<P>1) Displays the full list of registered projects of all wizards.
+<BR>2) Displays the list of projects registred by &lt;user&gt;.
+<BR>3) Allows you to rename a project of yours or to change its status.
+<BR>4) Initiates a new project and calls @newproject eventually.
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a) @newp*roject &lt;new-project-name&gt;
+
+<P>Registers a new project under your name. Prompts for an object status.
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;b) @removep*roject/@rmp*roject &lt;existing-project-name&gt;
+
+<P>Removes one of your registered projects.
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;c) @removep*roject/@rmp*roject &lt;existing-project-name&gt; for &lt;who&gt;
+
+<P>Removes a project belonging to &lt;who&gt;.
+
+<P>Note that &lt;existing-project-name&gt; can be abbreviated and doesn't need to 
+<BR>be typed out full length. @newproject prompts the registration of your new 
+<BR>project to all connected wizards but you.
+
+<H2><A NAME="@quota">@quota</A></H2>
+
+&nbsp;- - - - - - - - - - - - - - - - - - - - - - - - - -
+<P><TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @quota &lt;who&gt; is &lt;number&gt; [&lt;reason&gt;]
+<BR>@quota &lt;who&gt; is  [+/-]&lt;change&gt; [&lt;reason&gt;]";
+<BR>@quota &lt;who&gt; is --&lt;number&gt; [&lt;reason&gt;]";
+<BR>(to set a negative quota absolutely</TD></TR></TABLE>
+
+<P>This second and more interesting form of the verb sets a person's quota to the given number, or adjusts it by the given delta.  Mail will be sent to $quota_log; the message will include the &lt;reason&gt; if such is given.
+
+<P>Available to Managers with "builder management" responsibility.
+
+<P>Also see: <A HREF="builder_help.html#@quota">@quota</A> in Builder Help
+
+<H2><A NAME="@readlog">@readlog</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> @readlog &lt;person&gt;</TD></TR></TABLE>
+
+<P>&nbsp;&nbsp;Displays the last 20 lines of the log of someone who's been
+<BR>@witness'ed, presumably because of their violating some aspect of the
+<BR>manners policy as described in the "help manners" text.  Note that
+<BR>the log is erased when they disconnect unless @tag is also used.
+
+<P>Related commands (all of which are available to all MOO users):
+
+<P><A HREF="user_help.html#@witness">@witness</A> -- begins logging someone's text
+<BR><A HREF="user_help.html#@tag">@tag</A> -- forwards the log to the *witness mail folder
+<BR><A HREF="user_help.html#@ban">@ban</A> -- disconnects guests who have been @witness'ed
+
+<H2><A NAME="@recycle">@recycle</A></H2>
+
+<B>Notes for Managers:</B>
+
+<P><TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> @recycle! &lt;object&gt;</TD></TR></TABLE>
+
+<P>The first version (plain old @recycle) has a number of security features.  It will display the object's name, whether the object in question is not owned by you, whether it in turn owns objects, and whether it is parent to any objects.  It will ALWAYS await a second confirmation (yes/no type of prompt).
+
+<P>The exclamation-mark version omits all these security checks and thus works like $builder's @recycle.  Be cautious, though, and don't use @recycle! unless you're sure about what you're doing!
+
+<P>Also see: <A HREF="builder_help.html#@recycle">@recycle</A> in Builder Help
+
+<H2><A NAME="@redlist">@redlist</A></H2>
+
+<P>See: <A HREF="#@blacklist">@blacklist</A>
+
+<H2><A NAME="@register">@register</A></H2>
+
+<B>Notes for Wizards and Managers</B>
+
+<P><TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> @register &lt;person&gt; &lt;email-address&gt;</TD></TR></TABLE>
+
+<P>Use the @register command to change someone's e-mail address.
+
+<P>Note that there is a @register command for $wizards to set someone's
+<BR>email address, and a @register command on $player so that guests and
+<BR>VSPOs can request characters.  Two completely different commands, but
+<BR>they have the same name since $wiz:@register is from L'ambdaCore and
+<BR>wizards never would need the $player version.
+
+<P>Also see: <A HREF="#@registerme">@registerme</A>
+
+<H2><A NAME="@registerme">@registerme</A></H2>
+
+<B>Notes for Wizards and Managers</B>
+
+<P><TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> @register &lt;person&gt; &lt;email-address&gt;</TD></TR></TABLE>
+
+<P>Use the @register command to change someone's e-mail address.
+
+<P>Also see: <A HREF="user_help.html#@registerme">@registerme</A> in General Help
+
+<H2><A NAME="@reject-character">@reject-character</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> @reject*-character &lt;*char msg number&gt; 
+<BR>@reject*-character &lt;*undecided msg number&gt; from|on *undecided</TD></TR></TABLE>
+
+<P>Synonym: @rejected
+
+<P>Mark an application as rejected and move it from *char to *rejected. This will automatically send a rejection email message to the applicant.
+
+<P>There is a set of rejection texts available to send, and you will be asked which to use.  These appear on $local as properties named `&lt;reason&gt;_nope_txt' where each text has a different &lt;reason&gt;.  There are also `nope_header_txt' and `nope_footer_txt' properties that are always added before and after the &lt;reason&gt; text, respectively.
+
+<P>If you have a property on your character named `rejection_mail' and it contains text, you will be given a `personal' option for the rejection letter's &lt;reason&gt; section, and can select that to include your prepared text.
+
+<P>Substitutions, in $string_utils:substitute list format, are stored in $local.nope_txt_substitutions.
+
+<P>Available to Managers with "character applications" responsibility.
+
+<P><B>Related Topics:</B>
+<BR><A HREF="manager_help.html#applications">applications</A> -- overview of the application processing system
+<BR><A HREF="manager_help.html#@create-character">@create-character</A> -- create a character based on an application (aka
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"@created")
+<BR><A HREF="manager_help.html#@undecided">@undecided</A> -- mark a character application as "undecided" (aka "@unsure")
+<BR><A HREF="manager_help.html#@searchapplications">@searchapplications</A> -- search all applicaiton-related mail folders for
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;specified text
+
+<H2><A NAME="@rejected">@rejected</A></H2>
+
+<P>See: <A HREF="#@reject-character">@reject-character</A>
+
+<H2><A NAME="@removeproject">@removeproject</A></H2>
+
+<P>See: <A HREF="#@projects">@projects</A>
+
+<H2><A NAME="@request">@request</A></H2>
+
+Related topics for wizards and managers:
+<BR><A HREF="manager_help.html#@register">@register</A> -- the $manager:@register command sets the email address for a specified character
+<BR><A HREF="manager_help.html#@register">@register</A> -- the $player:@register command is an alias for @request.
+
+<P>Also see: <A HREF="user_help.html#@request">@request</A> in General Help
+
+<H2><A NAME="@rm-class">@rm-class</A></H2>
+
+<P>See: <A HREF="#@add-class">@add-class</A>
+
+<H2><A NAME="@rm-class-object">@rm-class-object</A></H2>
+
+<P>See: <A HREF="#@rm-class">@rm-class</A>
+
+<H2><A NAME="@rmproject">@rmproject</A></H2>
+
+<P>See: <A HREF="#@projects">@projects</A>
+
+<H2><A NAME="@searchapplications">@searchapplications</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> @searchapp &lt;list&gt; for &lt;name|e-mail|anything&gt;</TD></TR></TABLE>
+
+<P><B>Example:</B> @searchapp *created for JohnDoe
+
+<P>&nbsp;&nbsp;Searches all the mail lists associated with the character application system for the given string.  The mail lists are $request_pool, $created_chars, $rejected_chars, $undecided, and typically named *character-request-pool, *created, *rejected, *undecided, and respectively.
+
+<P>Available to Managers with "character applications" responsibility.
+
+<P><B>Related Topics:</B>
+<BR><A HREF="manager_help.html#applications">applications</A> -- overview of the application processing system
+<BR><A HREF="manager_help.html#@create-character">@create-character</A> -- create a character based on an application (aka
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"@created")
+<BR><A HREF="manager_help.html#@undecided">@undecided</A> -- mark a character application as "undecided" (aka "@unsure")
+<BR><A HREF="manager_help.html#@reject-character">@reject-character</A> -- reject a character application (aka "@rejected")
+
+<H2><A NAME="@seeklastmod">@seeklastmod</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> @seeklastmod [&lt;number of hours&gt;] [for &lt;person[s]&gt;]</TD></TR></TABLE>
+
+<P>Searches the database for objects and verbs that have been modified in last
+<BR>number of hours (default is 12) by person(s) named. [if they are named]
+<BR>If you are just interested in objects that have been created, use @seeknew
+
+<P><B>Related Topics:</B>
+<BR>@seeknew - search for objects created recently
+
+<H2><A NAME="@seeknew">@seeknew</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> @seeknew [&lt;number of hours&gt;]
+<BR>Searches the database for objects created within the last number of hours
+<BR>Default is 24. It checks the object's .creation_date property.</TD></TR></TABLE>
+
+<P><B>Related Topics:</B>
+<BR>@seeklastmod - search for objects or verbs recently modified
+
+<H2><A NAME="@sendhome">@sendhome</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> @sendhome &lt;what&gt;</TD></TR></TABLE>
+
+<P>Sends &lt;what&gt; to whatever home seems most appropriate.  Checks object for a send_home verb first, otherwise sends it to a place appropriate for the type of object.
+
+<P>Available to any Manager.
+
+<H2><A NAME="@serverlog">@serverlog</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> @serverlog [&lt;string&gt;]</TD></TR></TABLE>
+
+<P>Enters a comment into the server log.
+
+<P>If no string is given, you are prompted to enter one or more lines for an extended comment.
+
+<H2><A NAME="@setoption">@setoption</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> @setoption-&lt;class&gt; &lt;who&gt;
+<BR>@setoption-&lt;class&gt; &lt;who&gt; to &lt;option-setting&gt;
+<BR>@setop-&lt;class&gt; &lt;who&gt;
+<BR>@setop-&lt;class&gt; &lt;who&gt; to &lt;option-setting&gt;</TD></TR></TABLE>
+
+<P>This command allows managers and wizards to view and set the various options values on characters other than themselves.  &lt;class&gt; must be a valid options class, taken from one of: mail, edit, display, web, user, prog
+
+<P><B>Example:</B> @setoption-mail Jane to +netmail
+
+<P>The &lt;option-setting&gt; may be any value that is valid in a regular option setting command.
+
+<P>If "to &lt;option-setting&gt;" is omitted, then all the option settings for the specified class are listed.
+
+<H2><A NAME="@shout">@shout</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @shout &lt;text&gt;
+<BR>@announce &lt;text&gt;</TD></TR></TABLE>
+
+<P>Broadcasts the given text to all connected people.  Displays
+<BR>"&lt;person&gt; shouts..." or "&lt;person&gt; announces..." depending on the verb
+<BR>form used.
+
+<P>Available to all Managers.
+
+<H2><A NAME="@shutdown">@shutdown</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @shutdown [in &lt;m&gt;] [&lt;text&gt;]</TD></TR></TABLE>
+
+<P>This is the friendly way to do a server shutdown; it arranges for the actual shutdown to take place `m' minutes hence (default two).  Shutdown is preceded by a sequence of warnings to all connected people.  Warnings are likewise given to anyone who connect during this time.  &lt;text&gt;, if given is included in these warning messages, perhaps as an explanation for why the server is being shut down.
+
+<P>Shutdown may be aborted at any time by using @abort-shutdown.
+
+<P>Available to Managers with "server management" responsibility.
+
+<H2><A NAME="@spooflist">@spooflist</A></H2>
+
+<P>See: <A HREF="#@blacklist">@blacklist</A>
+
+<H2><A NAME="@squelch">@squelch</A></H2>
+
+<P>See: <A HREF="#@nail">@nail</A>
+
+<H2><A NAME="@tags">@tags</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> @tags
+<BR>@tags on &lt;person&gt;</TD></TR></TABLE>
+
+<P>Shows the taggings recorded for the specified &lt;person&gt;.  Omitting &lt;person&gt; shows all tags currently recorded (may be long!).
+
+<H2><A NAME="@tasks">@tasks</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @tasks [&lt;users&gt;|&lt;object:verb&gt;|all]
+<BR>@killt*asks &lt;user&gt;|&lt;object:verb&gt;</TD></TR></TABLE>
+
+<P>@tasks can be used to evaluate the number of tasks on the MOO (total) or for a specific user or verb. It displays:  
+
+<P>&nbsp;&nbsp;a) the number of currently queued tasks          (no arguments)
+<BR>&nbsp;&nbsp;b) the number of tasks of a certain programmer   (&lt;user&gt;)
+<BR>&nbsp;&nbsp;c) the number of tasks queued for a certain verb (&lt;object:verb&gt;)
+<BR>&nbsp;&nbsp;c) a list of users with the associated number of tasks,
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sorted by task-quantity                       (all)
+
+<P>@killtasks offers a drastic way to kill the tasks of a specific user or verb, after a yes/no type of question confirmation.  
+
+<P><B>Related Topics:</B>
+<BR><A HREF="prog_help.html#@forked">@forked</A> -- listing forked tasks
+<BR><A HREF="prog_help.html#@kill">@kill</A>   -- killing a particular forked task
+
+<H2><A NAME="@temp-newt">@temp-newt</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> @temp-newt &lt;person&gt; for &lt;duration&gt;</TD></TR></TABLE>
+
+<P><B>Example:</B> @temp-newt goober for 1 week
+
+<P>Newts someone (disallows connections) for the given &lt;duration&gt;.  Essentially the same as @newt, but if they try to connect and the duration is over, they're removed from the list of newted people and allowed to connect.
+
+<H2><A NAME="@toad">@toad</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @toad   &lt;who&gt;  [graylist|blacklist|redlist]
+<BR>@toad!  &lt;who&gt;
+<BR>@toad!! &lt;who&gt;</TD></TR></TABLE>
+
+<P>Resets the player flag of &lt;who&gt; (thus causing &lt;who&gt; to be booted), resets the .programmer and .wizard flags, chowns the character object to $hacker, and removes all of its names and aliases from $player_db.
+
+<P>You must give either the character's full name or its object number.
+<BR>Also, this command does not let you @toad yourself.
+
+<P>In some cases you may wish to add the person's last connected site to the site graylist, blacklist or redlist - see `help blacklist' - in order to invoke various kinds of blocking on that site (e.g., if character creation is enabled, you may want to enter the person on the blacklist to keep him or her from immediately creating a new character).  Specifying one of the listnames `graylist', `blacklist' or `redlist' will do this.
+
+<P>@toad! &lt;who&gt;  is synonymous with  @toad &lt;who&gt; blacklist
+<BR>@toad!! &lt;who&gt;  is synonymous with  @toad &lt;who&gt; redlist
+
+<P>There are messages that one may set to customize toading.  After all, a toading is (supposed to be) a rare event and you will doubtless want to put on a good show.  Thus we have
+
+<P>@toad  [%n @toads %d (%[#d])]
+<BR>&nbsp;&nbsp;Printed to everyone in the room in which the victim is being @toaded.
+<BR>&nbsp;&nbsp;If you're worried about accidentally toading yourself in the process of
+<BR>&nbsp;&nbsp;setting this message, see above.
+
+<P>@toad_victim  [Have a nice life...]
+<BR>&nbsp;&nbsp;Printed to the victim.
+
+<P>These are pronoun_subbed with victim == dobj.
+
+<H2><A NAME="@transfer">@transfer</A></H2>
+
+<P>See: <A HREF="#@grant">@grant</A>
+
+<H2><A NAME="@trend-db">@trend-db</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> @trend-db</TD></TR></TABLE>
+
+<P>@trend-db looks at the information stored after each successful
+<BR>Checkpoint and lists the date and size of the database at that
+<BR>checkpoint.
+
+<P>Useful to see if there are any trends in database growth or loss that
+<BR>need to  be checked into.
+
+<P>Available to Managers with "server management" responsibility.
+
+<H2><A NAME="@unblacklist">@unblacklist</A></H2>
+
+<P>See: <A HREF="#@blacklist">@blacklist</A>
+
+<H2><A NAME="@unbuilder">@unbuilder</A></H2>
+
+<P>See: <A HREF="#@builder">@builder</A>
+
+<H2><A NAME="@undecided">@undecided</A></H2>
+
+<P>See: <A HREF="#@unsure">@unsure</A>
+
+<H2><A NAME="@ungraylist">@ungraylist</A></H2>
+
+<P>See: <A HREF="#@blacklist">@blacklist</A>
+
+<H2><A NAME="@unlock-account">@unlock-account</A></H2>
+
+<P>See: <A HREF="#@account-locks">@account-locks</A>
+
+<H2><A NAME="@unlock-character">@unlock-character</A></H2>
+
+<P>See: <A HREF="#@account-locks">@account-locks</A>
+
+<H2><A NAME="@unnail">@unnail</A></H2>
+
+<P>See: <A HREF="#@nail">@nail</A>
+
+<H2><A NAME="@unnewt">@unnewt</A></H2>
+
+<P>See: <A HREF="#@denewt">@denewt</A>
+
+<H2><A NAME="@unprogrammer">@unprogrammer</A></H2>
+
+<P>See: <A HREF="#@programmer">@programmer</A>
+
+<H2><A NAME="@unredlist">@unredlist</A></H2>
+
+<P>See: <A HREF="#@blacklist">@blacklist</A>
+
+<H2><A NAME="@unspooflist">@unspooflist</A></H2>
+
+<P>See: <A HREF="#@blacklist">@blacklist</A>
+
+<H2><A NAME="@unsquelch">@unsquelch</A></H2>
+
+<P>See: <A HREF="#@nail">@nail</A>
+
+<H2><A NAME="@unsure">@unsure</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> @unsure &lt;*char msg number&gt;</TD></TR></TABLE>
+
+<P><B>Synonyms:</B> @undecided
+
+<P>When you're not sure what to do with a specific application but want to mark it as already read and want others to read it and decide, use this command to move an application from *character-request-pool (*char) to *undecided.
+
+<P>Applications in *undecided can be accepted with @create-char.
+
+<P>Available to Managers with "character applications" responsibility.
+
+<P><B>Related Topics:</B>
+<BR><A HREF="manager_help.html#applications">applications</A> -- overview of the application processing system
+<BR><A HREF="manager_help.html#@create-character">@create-character</A> -- create a character based on an application (aka
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"@created")
+<BR><A HREF="manager_help.html#@reject-character">@reject-character</A> -- reject a character application (aka "@rejected")
+<BR><A HREF="manager_help.html#@searchapplications">@searchapplications</A> -- search all applicaiton-related mail folders for
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;specified text
+
+<H2><A NAME="@untoad">@untoad</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @untoad &lt;object&gt; [as &lt;name&gt;,&lt;alias&gt;,&lt;alias&gt;...]</TD></TR></TABLE>
+
+<P>Synonym: @detoad
+
+<P>Turns the object into a registered character. 
+<BR>If the name/alias... specification is given, the object is also renamed.
+<BR>In order for this to work, the object must be a descendant of $player but not a registered user character and the new object name (or the original name if none is given in the command line) must be available for use as a person's name.  As with ordinary user character @renaming, any aliases which are unavailable for use as character names are eliminated.
+
+<P>If the object is a descendant of $guest, then it becomes a new guest character.
+<BR>Otherwise the object is chowned to itself.  In the latter case, it is advisable to check that the .password property has something nontrivial in it.
+
+<P>If the object is a descendant of $prog, then its .programmer flag is set.
+<BR>Note that the .wizard flag is not set under any circumstances.
+
+<H2><A NAME="@verify-owned">@verify-owned</A></H2>
+
+Wizards and Managers with "Technical Support" responsibility are additionally to use the form "@verify-owned &lt;who&gt;" to verify the owned_object property of someone else.
+
+<P>Also see: <A HREF="builder_help.html#@verify-owned">@verify-owned</A> in Builder Help
+
+<H2><A NAME="@vspo-info">@vspo-info</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> @vspo-info &lt;group&gt;
+<BR>Alias: @ginfo</TD></TR></TABLE>
+
+<P>Lists some information about the specified VSPO group, including when
+<BR>it was created, by whom, for what purpose, how many VSPOs are in it,
+<BR>and when it expires.
+
+<P>Note that this Manager command shares the same name as the VSPO
+<BR>Feature @ginfo command, but this one has the syntax "@ginfo &lt;group&gt;"
+<BR>while the VSPO Feature one uses "@ginfo &lt;group&gt; is &lt;info-text&gt;" as
+<BR>its syntax.
+
+<P>Available to Managers with "VSPO management" responsibility.
+
+<H2><A NAME="@vspos">@vspos</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> @vspos</TD></TR></TABLE>
+
+<P>Lists all connected VSPO characters.
+
+<P>Available to Managers with "VSPO management" responsibilities.
+
+<P><B>Related Topics:</B>
+<BR><A HREF="manager_help.html#vspo-manager-tools">vspo-manager-tools</A> -- summarized tools available for VSPO system managers
+
+<H2><A NAME="@who-calls">@who-calls</A></H2>
+
+<P>See: <A HREF="#@grepcore">@grepcore</A>
+
+<H2><A NAME="@whoprofessors">@whoprofessors</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> @whoprofessors</TD></TR></TABLE>
+
+<P><B>Synonyms:</B> @whoprofs
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@professors
+
+<P>Gives @who-style listing of all connected people with their "professor" property set (which indicates they are a professional teacher).
+
+<P>It also goes through all characters and gives a count of the total number with their "prof" property set.
+
+<P>Available to any Manager.
+
+<H2><A NAME="@whosemail">@whosemail</A></H2>
+
+<P>See: <A HREF="#@wm">@wm</A>
+
+<H2><A NAME="@witnessed">@witnessed</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> @witnessed</TD></TR></TABLE>
+
+<P>Returns a list of all currently connected people who are being logged (generally through the @witness command).
+
+<H2><A NAME="@wm">@wm</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> @wm|wm &lt;string&gt;
+<BR>@wm+   &lt;string&gt;  (verbose output..shows processing progress - spammy)</TD></TR></TABLE>
+
+<P><B>Synonyms:</B>  @whosemail
+
+<P>This verb scans all users' .email and .all_connect_places for strings matching the given argument.
+
+<P>Available to Managers with "character applications" responsibility.
+
+<H2><A NAME="@zapobject">@zapobject</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> @zap &lt;object&gt;</TD></TR></TABLE>
+Marks or unmarks an object for recycling during the next unthemely object purge.
+
+<H2><A NAME="access-restrictions">access-restrictions</A></H2>
+
+The various ways to control access to a person's MOO character are
+<BR>summarized below.  See the help text on individual items for details.
+
+<P><A HREF="manager_help.html#@password">@password</A> -- change a character's password
+<BR><A HREF="manager_help.html#@boot">@boot</A> -- disconnects a connected person from their MOO character (no
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lasting effects)
+
+<P>The color list system allows you to tag or block various activities
+<BR>based on the domain name (or i.p. number) of the connection.
+<BR>----
+<BR><A HREF="manager_help.html#graylist">graylist</A>   -- details the color list system
+<BR><A HREF="manager_help.html#blacklist">blacklist</A>  -- (same)
+<BR><A HREF="manager_help.html#redlist">redlist</A>    -- (same)
+<BR><A HREF="manager_help.html#@graylist">@graylist</A>  -- mark a site for wizard notification on
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;connect/disconnect and tag @@who list
+<BR><A HREF="manager_help.html#@blacklist">@blacklist</A> -- block guest access from a site
+<BR><A HREF="manager_help.html#@redlist">@redlist</A>   -- block any access from a site
+<BR><A HREF="manager_help.html#@spooflist">@spooflist</A> -- block character applications (but not guest access)
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;from a site
+
+<P>Account locks are usually automatically generated, when someone tries
+<BR>to connect to an account and fails repeatedly.
+<BR>----
+<BR><A HREF="manager_help.html#@account-lock">@account-lock</A>     -- show account lock status for a character
+<BR><A HREF="manager_help.html#@unlock-character">@unlock-character</A> -- unlock a characters account before it was
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scheduled
+<BR><A HREF="manager_help.html#@unlock-account">@unlock-account</A>   -- (same)
+
+<P>Newting is a mechanism to temporary block connections to a person's
+<BR>MOO character.
+<BR>----
+<BR><A HREF="manager_help.html#@newt">@newt</A>      -- block connection to a character indefinitely
+<BR><A HREF="manager_help.html#@newted">@newted</A>    -- list people whose connection to their character is
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;blocked by @newt'ing
+<BR><A HREF="manager_help.html#@newts">@newts</A>     -- (same)
+<BR><A HREF="manager_help.html#@temp-newt">@temp-newt</A> -- set a specific duration for blocking connection to a
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;character
+<BR><A HREF="manager_help.html#@unnewt">@unnewt</A>    -- restore character for connections
+<BR><A HREF="manager_help.html#@denewt">@denewt</A>    -- (same)
+
+<P>Toading is a mechanism for removing a MOO character completely from
+<BR>the database, rendering them an ordinary object (that happens to be
+<BR>derived from $player).  It does not recycle all their owned objects,
+<BR>however.
+<BR>----
+<BR><A HREF="manager_help.html#@toad">@toad</A>   -- make someone into a toad 
+<BR><A HREF="manager_help.html#@untoad">@untoad</A> -- restore their player bit and entry in the $player_db
+
+<H2><A NAME="applications">applications</A></H2>
+
+There are three commands for processing character requests.  All applications initially are sent to the *character-request-pool (*char) mail list where they are open to all wizards to read.  Character application evaluation requires one of three options: accept an application, reject it, or place it on a pile of undecided cases. There are three mail lists to hold each of the three sets of processed applications: *created, *rejected and *undecided.
+
+<P>Accepting a request (with @create-character) will create the new character and set the notes, birthdate and hometown on the newly created character object. If the application was done by a VSPO, his/her character will be converted into a regular player object.    In either case, the application will be moved to *created.
+
+<P>To subscribe initially to the character application system mail folders, use:
+<BR>&nbsp;&nbsp;@subscribe $request_pool
+<BR>&nbsp;&nbsp;@subscribe $created_chars
+<BR>&nbsp;&nbsp;@subscribe $rejected_chars
+<BR>&nbsp;&nbsp;@subscribe $undecided
+<BR>Note that once you are subscribed to them you can refer to them as *char, *created, *rejected, and *undecided.  
+
+<P>Rejecting or being indecisive about an application will move it to the respective mail folders, i.e.  *rejected or *undecided.  Applications are moved to *undecided as indication that others should evaluate the application.
+
+<P><B>Related Topics:</B>
+<BR><A HREF="manager_help.html#@create-character">@create-character</A> -- create a character based on an application (aka
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"@created")
+<BR><A HREF="manager_help.html#@undecided">@undecided</A> -- mark a character application as "undecided" (aka "@unsure")
+<BR><A HREF="manager_help.html#@reject-character">@reject-character</A> -- reject a character application (aka "@rejected")
+<BR><A HREF="manager_help.html#@searchapplications">@searchapplications</A> -- search all applicaiton-related mail folders for
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;specified text
+<BR><A HREF="manager_help.html#@make-player">@make-player</A> -- create a registered character, bypassing the usual
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;application process.  This is NOT generally
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;recommended, since there will be several
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;characteristics unset on the resulting character.
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Don't use this unless you're sure you know what you
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;are doing.
+
+<H2><A NAME="blacklist">blacklist</A></H2>
+
+The Site Blacklist
+
+<P>$login maintains three lists of hosts/domains to support user registration schemes and blocking of connections from highly untrusted hosts:
+
+<P>&nbsp;&nbsp;.redlist   - all connections from these sites are disabled 
+<BR>&nbsp;&nbsp;.blacklist - character creation and guest logins are disabled
+<BR>&nbsp;&nbsp;.graylist  - advisory list of potential trouble spots (putting a site on the
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.graylist merely annotates it in @net-who listings).
+<BR>&nbsp;&nbsp;.spooflist - guests from these sites cannot use @request to request 
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a character
+
+<P>The lists are kept in a special format so it is highly recommended that you 
+<BR>either use $wiz:@*list/@un*list or the following verbs to query/update the 
+<BR>respective lists rather than bash them directly:
+
+<P>&nbsp;&nbsp;$login:*listed     (host)              is host is on .*list?
+<BR>&nbsp;&nbsp;$login:*list_add   (domain or subnet)  add domain or subnet to .*list
+<BR>&nbsp;&nbsp;$login:*list_remove(domain or subnet)  remove domain or subnet from .*list
+
+<P>where `*' is one of `black', `red', `gray', or `spoof'.
+
+<P>One may either specify a domain name (e.g., "baz.edu") or a numeric IP address (e.g., "36.0.23.17").  Domain names match all hosts underneath that domain, so, e.g., puting "baz.edu" on a list effectively adds "x.bax.edu" for all x as well.  
+<BR>Likewise, an incomplete numeric address, e.g., "128.42" will match that entire subnet, in this case all hosts whose IP numbers have the form "128.42.m.n" for arbitrary integers m and n.
+
+<P>One may also give a domain name containing a wildcard ("*"), e.g., "fritz*.baz.edu", in which case all hostnames matching in the sense of $string_utils:match_string() are considred to be on the list.  Wildcard matching should be avoided since it is more time-consuming.
+
+<P>It should be noted that, since there is no direct access to the domain name service from within the MOO, it is possible for a host to be blacklisted or redlisted via its domain name, and yet have someone be able to connect from that host (and, in the case of a blacklisted host, create a character) - this can happen if the name service is down and connection_name() on that character's connection thus has given the numeric IP address rather than the domain name.  Similarly, if you list a host by IP number alone, it will still be possible to get in via the site's domain name.  Thus to be completely assured of shutting out a site, you need to list it both by domain name and IP number.
+
+<H2><A NAME="character-messages">character-messages</A></H2>
+
+Messages on $manager
+
+<P>@newt_victim []
+<BR>@newt $wiz is [%n @newts %d (%[#d])]
+<BR>@programmer $wiz is [%d is now a programmer.]
+<BR>@programmer_victim [You are now a programmer.]
+<BR>@toad_victim [Have a nice life...]
+<BR>@toad $wiz is [%n @toads %d (%[#d])]
+<BR>@builder $wiz is [%d has just been made a builder by %n.]
+<BR>@builder_victim  [You have just been made a builder by %n.]
+<BR>@checkpoint_started [**** Checkpoint started (at %{time}) ****]
+<BR>@checkpoint_finished [Property not found]
+<BR>@checkpoint_failed [**** WARNING: CHECKPOINT FAILED *****]
+<BR>@next_checkpoint [     Next checkpoint scheduled for: %{next}]
+
+<P>See 'help $wiz:checkpoint_started_msg' for details of special substitutions within the checkpoint messages.
+
+<P>Also see: <A HREF="user_help.html#character-messages">character-messages</A> in General Help
+
+<H2><A NAME="graylist">graylist</A></H2>
+
+<P>See: <A HREF="#blacklist">blacklist</A>
+
+<H2><A NAME="manager-index">manager-index</A></H2>
+
+<TABLE BORDER=0 CELLSPACING=6>
+<TR><TD VALIGN="TOP"><A HREF="#@@who">@@who</A></TD><TD VALIGN="TOP"><A HREF="#@graylist">@graylist</A></TD><TD VALIGN="TOP"><A HREF="#@registerme">@registerme</A></TD><TD VALIGN="TOP"><A HREF="#@unredlist">@unredlist</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#@abort-shutdown">@abort-shutdown</A></TD><TD VALIGN="TOP"><A HREF="#@grep">@grep</A></TD><TD VALIGN="TOP"><A HREF="#@reject-character">@reject-character</A></TD><TD VALIGN="TOP"><A HREF="#@unspooflist">@unspooflist</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#@account-locks">@account-locks</A></TD><TD VALIGN="TOP"><A HREF="#@grepcore">@grepcore</A></TD><TD VALIGN="TOP"><A HREF="#@rejected">@rejected</A></TD><TD VALIGN="TOP"><A HREF="#@unsquelch">@unsquelch</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#@add-class">@add-class</A></TD><TD VALIGN="TOP"><A HREF="#@grmroom">@grmroom</A></TD><TD VALIGN="TOP"><A HREF="#@removeproject">@removeproject</A></TD><TD VALIGN="TOP"><A HREF="#@unsure">@unsure</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#@add-class-obj">@add-class-obj</A></TD><TD VALIGN="TOP"><A HREF="#@guests">@guests</A></TD><TD VALIGN="TOP"><A HREF="#@request">@request</A></TD><TD VALIGN="TOP"><A HREF="#@untoad">@untoad</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#@add-class-object">@add-class-object</A></TD><TD VALIGN="TOP"><A HREF="#@idle-boot-protect">@idle-boot-protect</A></TD><TD VALIGN="TOP"><A HREF="#@rm-class">@rm-class</A></TD><TD VALIGN="TOP"><A HREF="#@verify-owned">@verify-owned</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#@add-owner">@add-owner</A></TD><TD VALIGN="TOP"><A HREF="#@kill-vspo-group">@kill-vspo-group</A></TD><TD VALIGN="TOP"><A HREF="#@rm-class-object">@rm-class-object</A></TD><TD VALIGN="TOP"><A HREF="#@vspo-info">@vspo-info</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#@announce">@announce</A></TD><TD VALIGN="TOP"><A HREF="#@killtasks">@killtasks</A></TD><TD VALIGN="TOP"><A HREF="#@rmproject">@rmproject</A></TD><TD VALIGN="TOP"><A HREF="#@vspos">@vspos</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#@bad-email">@bad-email</A></TD><TD VALIGN="TOP"><A HREF="#@last-connected">@last-connected</A></TD><TD VALIGN="TOP"><A HREF="#@searchapplications">@searchapplications</A></TD><TD VALIGN="TOP"><A HREF="#@who-calls">@who-calls</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#@bday">@bday</A></TD><TD VALIGN="TOP"><A HREF="#@make-guest">@make-guest</A></TD><TD VALIGN="TOP"><A HREF="#@seeklastmod">@seeklastmod</A></TD><TD VALIGN="TOP"><A HREF="#@whoprofessors">@whoprofessors</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#@birthday">@birthday</A></TD><TD VALIGN="TOP"><A HREF="#@make-player">@make-player</A></TD><TD VALIGN="TOP"><A HREF="#@seeknew">@seeknew</A></TD><TD VALIGN="TOP"><A HREF="#@whosemail">@whosemail</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#@blacklist">@blacklist</A></TD><TD VALIGN="TOP"><A HREF="#@make-vspos">@make-vspos</A></TD><TD VALIGN="TOP"><A HREF="#@sendhome">@sendhome</A></TD><TD VALIGN="TOP"><A HREF="#@witnessed">@witnessed</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#@boot">@boot</A></TD><TD VALIGN="TOP"><A HREF="#@massmail">@massmail</A></TD><TD VALIGN="TOP"><A HREF="#@serverlog">@serverlog</A></TD><TD VALIGN="TOP"><A HREF="#@wm">@wm</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#@builder">@builder</A></TD><TD VALIGN="TOP"><A HREF="#@nail">@nail</A></TD><TD VALIGN="TOP"><A HREF="#@setoption">@setoption</A></TD><TD VALIGN="TOP"><A HREF="#@zapobject">@zapobject</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#@checkpoint">@checkpoint</A></TD><TD VALIGN="TOP"><A HREF="#@net-who">@net-who</A></TD><TD VALIGN="TOP"><A HREF="#@shout">@shout</A></TD><TD VALIGN="TOP"><A HREF="#access-restrictions">access-restrictions</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#@chown">@chown</A></TD><TD VALIGN="TOP"><A HREF="#@newpassword">@newpassword</A></TD><TD VALIGN="TOP"><A HREF="#@shutdown">@shutdown</A></TD><TD VALIGN="TOP"><A HREF="#applications">applications</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#@chown-group">@chown-group</A></TD><TD VALIGN="TOP"><A HREF="#@newproject">@newproject</A></TD><TD VALIGN="TOP"><A HREF="#@spooflist">@spooflist</A></TD><TD VALIGN="TOP"><A HREF="#blacklist">blacklist</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#@connect-places">@connect-places</A></TD><TD VALIGN="TOP"><A HREF="#@newt">@newt</A></TD><TD VALIGN="TOP"><A HREF="#@squelch">@squelch</A></TD><TD VALIGN="TOP"><A HREF="#character-messages">character-messages</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#@connectlog">@connectlog</A></TD><TD VALIGN="TOP"><A HREF="#@newted">@newted</A></TD><TD VALIGN="TOP"><A HREF="#@tags">@tags</A></TD><TD VALIGN="TOP"><A HREF="#graylist">graylist</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#@create-character">@create-character</A></TD><TD VALIGN="TOP"><A HREF="#@newts">@newts</A></TD><TD VALIGN="TOP"><A HREF="#@tasks">@tasks</A></TD><TD VALIGN="TOP"><A HREF="#manager-index">manager-index</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#@created">@created</A></TD><TD VALIGN="TOP"><A HREF="#@nobanish">@nobanish</A></TD><TD VALIGN="TOP"><A HREF="#@temp-newt">@temp-newt</A></TD><TD VALIGN="TOP"><A HREF="#manager-info">manager-info</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#@dbsize">@dbsize</A></TD><TD VALIGN="TOP"><A HREF="#@notag">@notag</A></TD><TD VALIGN="TOP"><A HREF="#@toad">@toad</A></TD><TD VALIGN="TOP"><A HREF="#manager-summary">manager-summary</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#@del-owner">@del-owner</A></TD><TD VALIGN="TOP"><A HREF="#@password">@password</A></TD><TD VALIGN="TOP"><A HREF="#@transfer">@transfer</A></TD><TD VALIGN="TOP"><A HREF="#news">news</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#@denewt">@denewt</A></TD><TD VALIGN="TOP"><A HREF="#@peepeditor">@peepeditor</A></TD><TD VALIGN="TOP"><A HREF="#@trend-db">@trend-db</A></TD><TD VALIGN="TOP"><A HREF="#redlist">redlist</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#@detoad">@detoad</A></TD><TD VALIGN="TOP"><A HREF="#@professor">@professor</A></TD><TD VALIGN="TOP"><A HREF="#@unblacklist">@unblacklist</A></TD><TD VALIGN="TOP"><A HREF="#server-tools">server-tools</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#@dump-database">@dump-database</A></TD><TD VALIGN="TOP"><A HREF="#@professors">@professors</A></TD><TD VALIGN="TOP"><A HREF="#@unbuilder">@unbuilder</A></TD><TD VALIGN="TOP"><A HREF="#spooflist">spooflist</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#@dusted">@dusted</A></TD><TD VALIGN="TOP"><A HREF="#@programmer">@programmer</A></TD><TD VALIGN="TOP"><A HREF="#@undecided">@undecided</A></TD><TD VALIGN="TOP"><A HREF="#tag-tools">tag-tools</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#@egrep">@egrep</A></TD><TD VALIGN="TOP"><A HREF="#@projects">@projects</A></TD><TD VALIGN="TOP"><A HREF="#@ungraylist">@ungraylist</A></TD><TD VALIGN="TOP"><A HREF="#user-management">user-management</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#@expire-group">@expire-group</A></TD><TD VALIGN="TOP"><A HREF="#@quota">@quota</A></TD><TD VALIGN="TOP"><A HREF="#@unlock-account">@unlock-account</A></TD><TD VALIGN="TOP"><A HREF="#vspo">vspo</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#@expiregroup">@expiregroup</A></TD><TD VALIGN="TOP"><A HREF="#@readlog">@readlog</A></TD><TD VALIGN="TOP"><A HREF="#@unlock-character">@unlock-character</A></TD><TD VALIGN="TOP"><A HREF="#vspo-manager-tools">vspo-manager-tools</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#@gaddroom">@gaddroom</A></TD><TD VALIGN="TOP"><A HREF="#@recycle">@recycle</A></TD><TD VALIGN="TOP"><A HREF="#@unnail">@unnail</A></TD><TD></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#@ginfo">@ginfo</A></TD><TD VALIGN="TOP"><A HREF="#@redlist">@redlist</A></TD><TD VALIGN="TOP"><A HREF="#@unnewt">@unnewt</A></TD><TD></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#@grant">@grant</A></TD><TD VALIGN="TOP"><A HREF="#@register">@register</A></TD><TD VALIGN="TOP"><A HREF="#@unprogrammer">@unprogrammer</A></TD><TD></TD></TR>
+</TABLE>
+
+<H2><A NAME="manager-info">manager-info</A></H2>
+
+Various information gathering and dissemination tools for wizards and managers.  Note that not all managers have access to every command on this list.
+
+<P><A HREF="manager_help.html#@@who">@@who</A>    -- @who listing with connection site info
+<BR><A HREF="manager_help.html#@net-who">@net-who</A> -- (same)
+<BR><A HREF="manager_help.html#@guests">@guests</A> -- @who listing of all guests
+<BR><A HREF="manager_help.html#@vspos">@vspos</A> -- @who listing of on-line VSPOs
+<BR><A HREF="manager_help.html#@professors">@professors</A> -- lists people on-line with "professor" property set (aka @whoprofs)
+<BR><A HREF="local_help.html#@wizards">@wizards</A> -- @who listing of wizards
+<BR><A HREF="user_help.html#@managers">@managers</A> -- list of on-line managers
+<BR>wizs - abbreviated list of connected wizards
+<BR><A HREF="manager_help.html#@last">@last</A>  -- displays the latest connections to the MOO
+<BR><A HREF="manager_help.html#@whosemail">@whosemail</A>  -- scans all users' .email and .all_connect_places for a
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;string
+
+<P><A HREF="manager_help.html#@connectlog">@connectlog</A> -- establish and manage connection tracking on a person
+<BR><A HREF="manager_help.html#@connect-places">@connect-places</A> -- list all places someone (recently) connected from
+
+<P>@userstats - lists the cumulative number of character accessing the MOO in history
+
+<P><A HREF="manager_help.html#@witnessed">@witnessed</A> -- returns a list of all connected people being logged
+<BR><A HREF="manager_help.html#@tags">@tags</A> -- Displays the recorded @tags on a person
+<BR><A HREF="manager_help.html#@readlog">@readlog</A> -- read the last 20 lines of the log being kept on a
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@witness'd person
+
+<P><A HREF="manager_help.html#@peepeditor">@peepeditor</A> -- look that who is in an editor and the text they're
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;editing
+
+<P><A HREF="manager_help.html#@seeknew">@seeknew</A> -- find objects created within the last specified amount of
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;time
+<BR><A HREF="manager_help.html#@seeklastmod">@seeklastmod</A> -- find objects and verbs modified within the specified time period
+
+<P><A HREF="manager_help.html#@squelch">@squelch</A> -- prevent everyone in the room from being able to speak
+<BR><A HREF="manager_help.html#@unsquelch">@unsquelch</A> -- release the speech impediment of those in the room
+<BR><A HREF="manager_help.html#@nail">@nail</A> -- prevent everyone in the room from being able to move
+<BR><A HREF="manager_help.html#@unnail">@unnail</A> -- release the people in the room to move if they wish
+
+<P><A HREF="manager_help.html#@shout">@shout</A> -- send a message to every connected MOO users
+
+<P><A HREF="manager_help.html#@tasks">@tasks</A> -- special varient of @forked useful during forkbombs (when
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;you should NOT use @forked)
+
+<P><A HREF="manager_help.html#@dbsize">@dbsize</A> -- counts number of objects lost by the $recycler system
+
+<P>These search the MOO verbs for a target.
+<BR>----
+<BR><A HREF="manager_help.html#@grep">@grep</A> -- check all verbs in the MOO (or a specific list of objects) for a string
+<BR><A HREF="manager_help.html#@egrep">@egrep</A> -- like @grep but uses a regular expression instead of a plain string
+<BR><A HREF="prog_help.html#@killgrep">@killgrep</A> -- kills a running @grep/@egrep search
+<BR><A HREF="manager_help.html#@grepcore">@grepcore</A> -- like @grep but only checks @corify'd objects
+<BR><A HREF="manager_help.html#@who-calls">@who-calls</A> -- looks for verbs that call a verb you specify
+
+<H2><A NAME="manager-summary">manager-summary</A></H2>
+
+The following commands, arranged by Manager responsibility, are available to Managers:
+
+<P>All Managers
+<BR><A HREF="manager_help.html#@peepeditor">@peepeditor</A> -- see what someone is working on in an editor
+<BR><A HREF="manager_help.html#@projects">@projects</A> -- list or edit manager/wizard projects
+<BR><A HREF="manager_help.html#@newproject">@newproject</A> -- add a new manager/wizard project
+<BR><A HREF="manager_help.html#@rmproject">@rmproject</A> -- remove a manager/wizard project
+<BR><A HREF="manager_help.html#@shout">@shout</A>    -- broadcasts the given text to all connected people
+<BR><A HREF="manager_help.html#@announce">@announce</A> -- same, but as an "announcement"
+<BR><A HREF="manager_help.html#@sendhome">@sendhome</A> -- move an object to somewhere more appropriate
+<BR><A HREF="manager_help.html#@zapobject">@zapobject</A> -- Marks or unmarks an object for recycling during the next unthemely object purge
+<BR><A HREF="manager_help.html#@seeknew">@seeknew</A> -- Searches the database for objects created within the last specified hours
+
+<P>Administration and Policy
+<BR><A HREF="manager_help.html#@massmail">@massmail</A> -- send mail to all characters or specified types
+
+<P>Character Applications
+<BR><A HREF="manager_help.html#applications">applications</A> -- summary of the character application system
+<BR><A HREF="manager_help.html#@create-character">@create-character</A> -- create a character based on an application (aka
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"@created")
+<BR><A HREF="manager_help.html#@reject-character">@reject-character</A> -- reject a character application (aka "@rejected")
+<BR><A HREF="manager_help.html#@undecided">@undecided</A>  -- mark a character application as "undecided" (aka "@unsure")
+<BR><A HREF="manager_help.html#@searchapplications">@searchapplications</A> -- search all applicaiton-related mail folders for
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;specified text
+<BR><A HREF="manager_help.html#@register">@register</A>   -- change a person's email address
+
+<P>VSPO Management
+<BR><A HREF="manager_help.html#@make-vspos">@make-vspos</A>  -- Creates a VSPO group
+<BR><A HREF="manager_help.html#@expiregroup">@expiregroup</A> -- sets a VSPO group to expire after standard warning time
+<BR><A HREF="manager_help.html#@kill-vspo-group">@kill-vspo-group</A> -- causes a VSPO group to expire immediately
+<BR><A HREF="manager_help.html#@chown-group">@chown-group</A> -- change the owner of a group
+<BR><A HREF="manager_help.html#@vspo-info">@vspo-info</A>   -- reports various info about a VSPO group
+<BR><A HREF="manager_help.html#@vspos">@vspos</A>       -- Lists all VSPO characters currently connected
+
+<P>Builder Management
+<BR><A HREF="manager_help.html#@builder">@builder</A> -- make someone a builder
+<BR><A HREF="wiz_help.html#@quota">@quota</A>   -- change a person's quota
+
+<P>Programmer Management
+<BR><A HREF="manager_help.html#@programmer">@programmer</A> -- give someone programmer permissions (a progbit)
+
+<P>Rooms and Exits
+<BR><A HREF="builder_help.html#@add-exit">@add-exit</A>        -- same as Builder versions but you don't need to
+<BR><A HREF="builder_help.html#@remove-exit">@remove-exit</A>     --   own the exit or the room
+<BR><A HREF="builder_help.html#@add-entrance">@add-entrance</A>    --
+<BR><A HREF="builder_help.html#@remove-entrance">@remove-entrance</A> --
+<BR><A HREF="manager_help.html#@gaddroom">@gaddroom</A>        -- add a room to the global room list on $local
+<BR><A HREF="manager_help.html#@grmroom">@grmroom</A>         -- similar, but remove it
+<BR>note: @rename and @addalias/@rmalias for exits are accessible
+
+<P>Server Management
+<BR><A HREF="manager_help.html#@shutdown">@shutdown</A>       -- shut down the MOO server
+<BR><A HREF="manager_help.html#@abort-shutdown">@abort-shutdown</A> -- abort an impending shutdown
+<BR><A HREF="manager_help.html#@dump-database">@dump-database</A>  -- force an immediate backup (checkpoint)
+
+<P>Ownership Transfers
+<BR><A HREF="manager_help.html#@chown">@chown</A>     -- change non-wizard-owned object ownership, including +c properties
+<BR><A HREF="manager_help.html#@grant">@grant</A>     -- change non-wizard-owned object ownership including all verbs and props
+<BR><A HREF="manager_help.html#@transfer">@transfer</A>  -- like @grant but for a set of objects specified
+<BR><A HREF="wiz_help.html#@add-owner">@add-owner</A> -- same as Builder but for object Manager doesn't own
+<BR><A HREF="wiz_help.html#@del-owner">@del-owner</A> -- same idea
+<BR><A HREF="manager_help.html#@recycle">@recycle</A>   --  Managers do NOT have direct @recycle ability, but must
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;first @grant or @chown the object to themselves
+
+<P>Access Restrictions
+<BR>(the commands below have been implemented, but not all commands relating to access restrictions have been moved from $wiz yet)
+<BR><A HREF="manager_help.html#@net-who">@net-who</A> -- currently conncted people, including host site
+<BR><A HREF="manager_help.html#@readlog">@readlog</A> -- read last 20 lines of log for someone @tag'd
+<BR><A HREF="manager_help.html#@connect-places">@connect-places</A> -- show recent hosts person has connected from
+<BR><A HREF="manager_help.html#@witnessed">@witnessed</A> -- list who is currently @witness'd
+<BR><A HREF="manager_help.html#@newts">@newts</A> -- list who is newted temporarily or indefinitely
+<BR><A HREF="manager_help.html#@idle-boot-protect">@idle-boot-protect</A> -- list or modify set of people not booted if idle
+<BR><A HREF="manager_help.html#@tags">@tags</A> -- list all people @tag'd and reason
+<BR><A HREF="manager_help.html#@bad-email">@bad-email</A> -- list non-VSPO characters with no email address set
+<BR><A HREF="manager_help.html#@denewt">@denewt</A> -- allow a person access to their character again
+<BR><A HREF="manager_help.html#@last">@last</A> -- report last few people who connected, or last connection time of a particular person
+<BR><A HREF="manager_help.html#@boot">@boot</A> -- close a person's connection to the MOO
+<BR><A HREF="manager_help.html#@detoad">@detoad</A> -- set the playerbit to 1 on a $player object
+<BR><A HREF="manager_help.html#@blacklist">@blacklist</A>  -- prevents guest connections from a particular site
+<BR><A HREF="manager_help.html#@graylist">@graylist</A> -- have connections from a site marked in the @@who list, and inform wizards and access managers when they connect
+<BR><A HREF="manager_help.html#@redlist">@redlist</A> -- don't allow any connects from a site (including registered characters)
+<BR><A HREF="manager_help.html#@spooflist">@spooflist</A> -- prevent guests from a site from @request'ing characters
+<BR><A HREF="manager_help.html#@unblacklist">@unblacklist</A> -- removes a site
+<BR><A HREF="manager_help.html#@ungraylist">@ungraylist</A> -- removes a site
+<BR><A HREF="manager_help.html#@unredlist">@unredlist</A> -- removes a site
+<BR><A HREF="manager_help.html#@unspooflist">@unspooflist</A> -- removes a site
+<BR><A HREF="manager_help.html#@noban">@noban</A> -- restrict who can use the @ban command
+<BR><A HREF="manager_help.html#@notag">@notag</A> -- restrict who can use the @tag command
+<BR><A HREF="manager_help.html#@account-locks">@account-locks</A> -- list all people with locked accounts
+<BR><A HREF="manager_help.html#@account-lock">@account-lock</A> -- list details of account lock for a single person
+<BR><A HREF="manager_help.html#@unlock-account">@unlock-account</A> -- unlock a locked user account
+<BR><A HREF="manager_help.html#@connectlog">@connectlog</A> -- track recent connections to a character
+<BR><A HREF="manager_help.html#@register">@register</A> -- change a person's email address
+<BR><A HREF="manager_help.html#@nail">@nail</A> -- restrict a person from changing locations (reversed with @unnail)
+<BR><A HREF="manager_help.html#@squelch">@squelch</A> -- restrict a person from speaking or emoting (reversed with @unsquelch)
+<BR><A HREF="manager_help.html#@temp-newt">@temp-newt</A> -- restrict access to a character for a set amount of time
+<BR><A HREF="manager_help.html#@newt">@newt</A> -- make a person's character temporarily inaccessible to them
+<BR><A HREF="manager_help.html#@toad">@toad</A> -- remove the player-bit from a character
+
+<P>Technical Support
+<BR>&nbsp;&nbsp;Note that in addition to the commands below, many routine MOO commands
+<BR>&nbsp;&nbsp;give essentially wizardly access to Managers responsible for "technical
+<BR>&nbsp;&nbsp;support."  This enables them to edit and modify most anything in the MOO
+<BR>&nbsp;&nbsp;except for things that are wizardly or wizard-owned.
+<BR><A HREF="manager_help.html#@tasks">@tasks</A> -- list queued tasks (like @forked but succinct)
+<BR><A HREF="prog_help.html#@forked">@forked</A> -- list queued tasks (extensive, but vulnerable to lag problems)
+<BR><A HREF="manager_help.html#@killtasks">@killtasks</A> -- kill one or more running queued tasks
+<BR><A HREF="manager_help.html#@dbsize">@dbsize</A> -- report how many valid objects are in the MOO
+<BR><A HREF="manager_help.html#@who-calls">@who-calls</A> -- searches the whole DB looking for calls to the specified verb
+<BR><A HREF="manager_help.html#@grepcore">@grepcore</A> -- performs a @grep limited to core objects
+<BR><A HREF="manager_help.html#@grep">@grep</A> -- can perform @grep across entire MOO database
+<BR><A HREF="manager_help.html#@egrep">@egrep</A> -- like @grep
+<BR><A HREF="manager_help.html#@make-guest">@make-guest</A> -- create a new $guest character (usually only used to set up a MOO)
+<BR><A HREF="manager_help.html#@serverlog">@serverlog</A> -- enter a line into the MOO's server log
+<BR><A HREF="manager_help.html#@make-player">@make-player</A> -- create a character with its player-bit set (bypasses char. app. system)
+<BR><A HREF="manager_help.html#@dusted">@dusted</A> -- displays all non-wizard owned objects that carry one or more wiz-permed verbs.
+<BR><A HREF="manager_help.html#@chown">@chown</A> -- change ownership of non-wizardly objects, verbs, or properties
+<BR><A HREF="manager_help.html#@verify-owned">@verify-owned</A> -- verify someone's .owned_objects list
+<BR><A HREF="manager_help.html#@add-class">@add-class</A> -- add a class to the @classes list
+<BR><A HREF="manager_help.html#@rm-class">@rm-class</A> -- same, but remove one
+<BR><A HREF="manager_help.html#@add-class-object">@add-class-object</A> -- add an object to a class for @class
+<BR><A HREF="manager_help.html#@rm-class-object">@rm-class-object</A> -- same, but remove one
+
+<P>NOTE: MOO technician managers are also able to use @set and the Note Editor to change object property values when they don't own the property.
+
+<P>There is a "general restriction" system for which Managers can have immunity (see `help $perm_utils:action_restricted').  In the eduCore by default, the only general restriction is on renaming characters, and managers with character application, access restriction, and technical responsibility are excepted, and can perform this renaming on others.
+
+<H2><A NAME="news">news</A></H2>
+
+Related topics for wizards and managers:
+<BR><A HREF="core_help.html#$news">$news</A> -- the MOO's news database (where $news_items are published).
+
+<P>Also see: <A HREF="user_help.html#news">news</A> in General Help
+
+<H2><A NAME="redlist">redlist</A></H2>
+
+<P>See: <A HREF="#blacklist">blacklist</A>
+
+<H2><A NAME="server-tools">server-tools</A></H2>
+
+This summarizes some server management tools.  See the individual
+<BR>entries for details.
+
+<P><A HREF="manager_help.html#@trend-db">@trend-db</A> -- shows the most recent checkpoint files' sizes
+
+<P><A HREF="manager_help.html#@serverlog">@serverlog</A> -- send a message to the server log
+
+<P><A HREF="manager_help.html#@shutdown">@shutdown</A> -- shut down the MOO completely
+<BR><A HREF="manager_help.html#@abort-shutdown">@abort-shutdown</A> -- abort an impending shutdown
+<BR><A HREF="manager_help.html#@dump-database">@dump-database</A> -- forces a checkpoint to be initiated ahead of schedule
+
+<P><A HREF="manager_help.html#@tasks">@tasks</A>     -- wizard's version of @forked that isn't as vulnerable to
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;forkbomb damage
+<BR><A HREF="manager_help.html#@killtasks">@killtasks</A> -- a wizard's version of @kill that isn't as vulnerable to
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;forkbomb interference
+
+<H2><A NAME="spooflist">spooflist</A></H2>
+
+<P>See: <A HREF="#blacklist">blacklist</A>
+
+<H2><A NAME="tag-tools">tag-tools</A></H2>
+
+The commands for managing the @tag and @banish systems are summarized
+<BR>here.  See the help text for the individual commands for details.
+
+<P><A HREF="manager_help.html#@tags">@tags</A>     -- lists all information on recorded taggings
+<BR><A HREF="manager_help.html#@notag">@notag</A>    -- shows whose @tag privileges have been withdrawn, or
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;specifies a person to be added or removed from the list.
+<BR><A HREF="manager_help.html#@nobanish">@nobanish</A> -- same as @notag but for @banish
+
+<H2><A NAME="user-management">user-management</A></H2>
+
+Some commands useful for managing characters are summarized below.
+<BR>See the help texts for individual entries for details.
+
+<P><A HREF="wiz_help.html#@add-owner">@add-owner</A> -- add a person to an object's additional owners list
+<BR><A HREF="wiz_help.html#@del-owner">@del-owner</A> -- remove a person from the additional owners list
+
+<P><A HREF="manager_help.html#@builder">@builder</A>    -- make someone a builder
+<BR><A HREF="manager_help.html#@programmer">@programmer</A> -- make someone a programmer
+<BR><A HREF="manager_help.html#@professor">@professor</A>  -- check status of person's "professor" property, and
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;optionally change it
+<BR><A HREF="wiz_help.html#@manager">@manager</A>    -- create MOO managers and control their abilities
+
+<P><A HREF="manager_help.html#@newpassword">@newpassword</A> --  send someone a new password
+<BR><A HREF="manager_help.html#@register">@register</A> -- set a new e-mail address for a registered character
+
+<P><A HREF="wiz_help.html#@quota">@quota</A> -- change a person's quota level
+
+<P><A HREF="manager_help.html#@readlog">@readlog</A> -- shows the last 20 lines in a @witness'd person's log
+
+<P><A HREF="manager_help.html#@idle-boot-protect">@idle-boot-protect</A> -- marks a person as exempted from booting on
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;extended idleness
+<BR><A HREF="manager_help.html#@boot">@boot</A> -- disconnects a person from their MOO character (no lasting
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;effects)
+
+<P><A HREF="manager_help.html#@chown">@chown</A>    -- changes the ownership of an object (but not any verb or
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;property ownerships)
+<BR><A HREF="manager_help.html#@grant">@grant</A>    -- transfers an object completely to a new owner, including
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;properties and verbs
+<BR><A HREF="manager_help.html#@transfer">@transfer</A> -- like @grant but accepts a list of objects to transfer
+
+<H2><A NAME="vspo">vspo</A></H2>
+
+Related topics for managers:
+<BR><A HREF="manager_help.html#vspo-manager-tools">vspo-manager-tools</A> -- a summary of manager-only tools for the vspo system
+
+<P>Also see: <A HREF="local_help.html#vspo">vspo</A> in Local Help
+
+<H2><A NAME="vspo-manager-tools">vspo-manager-tools</A></H2>
+
+<P>See: <A HREF="vspo_help.html#vspo-manager-tools">vspo-manager-tools</A> in VSPO Help
+
+</BODY></HTML>

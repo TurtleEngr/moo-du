@@ -1,0 +1,142 @@
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<TITLE>Setting Up the LambdaMOO Server for Win95/NT</TITLE>
+</HEAD>
+<BODY>
+<IMG SRC="/images/logo/DUlogo_banner1.gif" HEIGHT=77 WIDTH=609>
+<BR>
+<HR SIZE=4 WIDTH="100%">
+<H1>
+Setting Up the LambdaMOO Server for Win95/NT</H1>
+In order to run a MOO, including one based on the eDUcore, you must obtain
+compiled version of the LambdaMOO Server. Note that Diversity University
+does not provide the LambdaMOO Server. However, it is available free to
+the public through the work of several people who have participated in
+developing it over the years. The LambdaMOO Server is currently maintained
+by Erik Eostrom, who makes the Server source files available at:
+<UL>ftp://ftp.research.att.com/dist/eostrom/MOO/</UL>
+A version of the LambdaMOO Server pre-compiled for Win95/NT is available
+free to the public, thanks to Christopher Unkel. You will need to obtain
+a copy of this version from him in order to run a MOO, including one based
+on the eDUcore. It may be found at:
+<UL>http://www-personal.engin.umich.edu/~cunkel/WinMOO/</UL>
+To run a MOO based on Diversity University's eDUcore, follow these steps:
+
+<P>1. Obtain a copy of the LambdaMOO Server compiled for Win95/NT. Place
+the executable file ("WinMOO.exe") in the directory on your computer where
+the MOO database will be.
+
+<P>2. Obtain a copy of DU's eDUcore MOO core database, from:
+<UL>http://www.du.org/educore/database/</UL>
+Uncompress the package and place a copy of the "educore.db" file (the MOO
+core database) in the same directory as the LambdaMOO Server ("WinMOO.exe").
+Rename the "educore.db" file to some name appropriate for your MOO, generally
+based on the MOO's name (however, make sure you retain the ".db" extension).
+For this example, we'll assume "My MOO" is the name of the MOO and "ourmoo.db"
+is the name of the MOO database file. The "ourmoo" part is what we'll call
+the "MOO database file name prefix." It should have no spaces, and generally
+be all lowercase letters, with not more than eight characters.
+
+<P>3. Obtain the batch files Diversity University provides for starting
+a Win95/NT MOO. These are available as an archived set at the same place
+as the eDUcore database. Expand the archive and place the batch files in
+the same directory as the MOO database.
+
+<P>4. On Win95 systems, create a shortcut that will launch the LambdaMOO
+Server with your MOO database. To do this:
+
+<P>4.a. Right-click on the file "runmoo.bat" and choose "Create Shortcut"
+from the pop-up menu.
+
+<P>4.b. Rename the newly created shortcut to specify the name of the MOO
+it will launch (e.g. "Start OurMoo").
+
+<P>4.c. Right-click on the shortcut, and select "Properties" from the pop-up
+menu.
+
+<P>4.d. Select the "Shortcut" tab.
+
+<P>4.e. Add the MOO database file name prefix for your MOO to the end of
+the current value of the "Target" field. For instance, if the current value
+of that field is:
+<UL>C:/OURMOO/database/runmoo.bat</UL>
+Then change it to
+<UL>C:/OURMOO/database/runmoo.bat ourmoo</UL>
+4.f. Optionally, specify the port on which the MOO should listen for incoming
+Telnet connections by adding the port number as an additional parameter.
+For the previous example, you would change the "Target" field to:
+<UL>C:/OURMOO/database/runmoo.bat ourmoo 8888</UL>
+to start the MOO listening on port 8888. If you omit a port specification,
+the MOO will start listening on whatever port was specified when the LambdaMOO
+Server was compiled (7777 for the WinMOO version of the Server).
+
+<P>5. By default, the MOO will be run with outbound connections enabled.
+This allows the MOO to send email to people with registered characters,
+and enables various other useful functions. However, if the MOO will be
+run behind a firewall or in any other secure area, this function should
+be enabled. Outbound connections are enabled by the "-o" switch in the
+"runmoo.bat" line:
+<UL>WinMOO.exe -o -l %1.log %1.db %1.db %2</UL>
+You can change this to:
+<UL>WinMOO.exe -l %1.log %1.db %1.db %2</UL>
+to disable outbound connections.
+
+<P>6. Select the "OK" button to accept your changes.
+
+<P>7. Modify the runmoo.bat file to point to your MOO database's subdirectory.
+
+<P>8. Modify your system's AUTOEXEC.BAT file (or AUTOEXEC.NT under NT)
+to include the line:
+<UL>SET TZ=EST5EDT</UL>
+This sets your MOO to use U.S. Eastern Time. However, you can modify the
+timezone specification appropriately for your own timezone (e.g. PST8PDT).
+The format for the timezone specification is: tzn[+|-]hh[:mm[:ss]]dzn
+
+<P>Where:
+<UL>
+<LI>
+tzn is the three-letter time-zone name, such as PST or EST.</LI>
+
+<LI>
+hh, mm, and ss are the difference in hour, minutes, and seconds between
+local time and coordinated universal time. (This may be preceeded by a
++ or -.) For example, 8 for U.S. Pacific time or 5 for U.S. Eastern time.</LI>
+
+<LI>
+dzn is the three-letter daylight-saving-time zone. If daylight saving time
+is never in effect, omit this.</LI>
+</UL>
+8. Double-click the shortcut you created earlier (named "Start OurMoo"
+in the example) to run the MOO.
+<H2>
+Appendix A: Establishing an Automatic Nightly Backup System</H2>
+Diversity University strongly recommends you install and operate an archiving
+system, to save a copy of the MOO database each night. To do this, you'll
+need a utility that can execute a specified file periodically, on a schedule
+you supply. You may already have such a utility (e.g. the "Norton Scheduler"
+or "Norton Program Scheduler" that comes with Norton Utilities and Norton
+Antivirus), otherwise there are many available for downloading on the Internet
+(e.g. ClockMan95, LaunchPad, many others).
+
+<P>You will also need the GNU gzip utility for DOS (it works fine with
+Win95 and WinNT). Although there are many other compression applications
+available, the GNU gzip is free, widely available, and works well within
+batch files. It is available from many shareware archives on the Internet
+(e.g. "http://www.shareware.com/" or "http://www.winsite.com/"). The latest
+version's filename is "gzip124.zip" as of the date this was written.
+
+<P>There is a "dobackup.bat" file in the set of batch files Diversity University
+provides for Win95/NT users. You can configure this file for your system
+and run it with the scheduling utility to perform the nightly backups.
+You'll need to modify the "dobackup.bat" file to use your MOO database's
+subdirectory, and to point to your gzip.exe file.
+<CENTER><A HREF="../index.html"><IMG SRC="../images/eDUcore_logo_50.gif" BORDER=0 HEIGHT=50 WIDTH=153></A></CENTER>
+
+<CENTER><A HREF="../index.html">Diversity University eDUcore</A></CENTER>
+
+<HR SIZE=4 WIDTH="100%">
+<BR>Last modified 09Dec97
+<BR>Copyright &copy; 1997 <A HREF="http://www.du.org/">Diversity University</A>. All rights reserved.
+</BODY>
+</HTML>

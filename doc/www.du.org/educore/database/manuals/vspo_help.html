@@ -1,0 +1,742 @@
+<HTML><HEAD><TITLE>VSPO Help</TITLE></HEAD><BODY>
+
+<H1><HREF NAME="top">VSPO Help</A></H1>
+
+<H2><A NAME="@gaddfeature">@gaddfeature</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @gaddfeature &lt;groupnum&gt; &lt;feature&gt;</TD></TR></TABLE>
+
+<P>Add a feature to all characters of VSPO group &lt;groupnum&gt;.
+
+<P><B>Related Topics:</B>
+<BR><A HREF="vspo_help.html#@grmfeature">@grmfeature</A> -- Removes a feature from a VSPO group
+
+<H2><A NAME="@gaddmanagers">@gaddmanagers</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @gaddmanagers &lt;people&gt; for &lt;groupnum&gt;
+<BR>@gdelmanagers &lt;people&gt; for &lt;groupnum&gt;</TD></TR></TABLE>
+
+<P>Adds or removes a list of people (separated by spaces) to/from the manager list for the specified group.  Managers are treated as co-owners for the group and can do anything with it or its VSPOs that the owner can do (do not use this lightly!).  Likewise, any manager can also change the managers list for the group..
+
+<H2><A NAME="@gaudit">@gaudit</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @gaudit &lt;groupnum&gt;</TD></TR></TABLE>
+
+<P>This will list the audit information for VSPOs associated with group &lt;groupnum&gt;.  You are only able to list groups which you own or manage.
+
+<H2><A NAME="@gbuilder">@gbuilder</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @gbuilder &lt;person&gt;</TD></TR></TABLE>
+
+<P>This will make the specified person a builder, if they are a VSPO that you own or manage.
+
+<H2><A NAME="@gcensus">@gcensus</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @gcensus [&lt;person&gt;]</TD></TR></TABLE>
+
+<P>Will show a census summary for all VSPO groups accessible by you, or all groups controlled by &lt;person&gt; which are accessible by you if &lt;person&gt; is specified.
+
+<H2><A NAME="@gchange">@gchange</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> @gchange &lt;person&gt; to &lt;groupnum&gt;
+<BR>@gchange &lt;person1&gt; &lt;person2&gt; [ &lt;person3&gt; ...] to &lt;groupnum&gt;</TD></TR></TABLE>
+
+<P>Move one or more VSPOs from one VSPO group to another.  You must own both the source and the destination VSPO groups.
+
+<H2><A NAME="@gchown">@gchown</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @gchown &lt;object&gt; to &lt;person&gt;</TD></TR></TABLE>
+
+<P>Change the ownership of &lt;object&gt;, which belongs to you or a VSPO of a group of yours, to &lt;person&gt; (who needs to be either you or a VSPO of a group of yours as well).
+
+<H2><A NAME="@gdelmanagers">@gdelmanagers</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @gaddmanagers &lt;people&gt; for &lt;groupnum&gt;
+<BR>@gdelmanagers &lt;people&gt; for &lt;groupnum&gt;</TD></TR></TABLE>
+
+<P>Adds or removes a list of people (separated by spaces) to/from the manager list for the specified group.  Managers are treated as co-owners for the group and can do anything with it or its VSPOs that the owner can do (do not use this lightly!).  Likewise, any manager can also change the managers list for the group..
+
+<H2><A NAME="@gdescribe">@gdescribe</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @gdescribe &lt;groupnum&gt; as &lt;description&gt;</TD></TR></TABLE>
+
+<P>Set the descriptions of all characters of VSPO group &lt;groupnum&gt; to be &lt;description&gt;.
+
+<H2><A NAME="@gemail">@gemail</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @gemail &lt;groupnum&gt;</TD></TR></TABLE>
+
+<P>E-mails an message to all vspo group members with set addresses and MOOmails the rest.
+
+<H2><A NAME="@gexpire">@gexpire</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @gexpire &lt;groupnum&gt; is &lt;date&gt;</TD></TR></TABLE>
+
+<P>Change the expiration date for a VSPO group you own or manage.  &lt;date&gt; can be in any of a number of forms, including:
+
+<P>09/10/94                     - Change expiration date to Sept 10th, 1994.
+<BR>Jan 23 2004 12:00            - January 23rd, 2004, at 12 noon
+<BR>tomorrow                     - This time of day, tomorrow.
+<BR>+2 days, 5 hours, 3 minutes  - 2 days, 5 hours and 3 minutes from now.
+
+
+<P>..or any reasonable combination of the above or a few other less common syntaxes (basically it should understand most of the forms a human would).  You will be prompted before the change is made to ensure that it interpreted your date correctly.
+<BR>Please note that the system isn't as smart as one would like, and may not understand certain dates you give it.  If this happens, try specifying the date differently (e.g. January 1, 1999).
+
+<H2><A NAME="@gflag">@gflag</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @gflag &lt;flag&gt; for &lt;groupnum&gt;</TD></TR></TABLE>
+
+<P>Set or unset one of the flags (options) for a group you control.  Specifying a flag by itself or with a "+" in front of it will enable that option, specifying it with "-" or "!" in front of it will disable it.  Currently valid flags are:
+
+<P>&nbsp;&nbsp;keepowned  - If this flag is set, when the group reaches its expiration
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;date and the VSPOs are recycled, all of their owned objects
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;will be transferred to the group's owner instead of being
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;recycled with the VSPOs.  Use this option if your VSPOs are
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;working on a project that you would like to keep around
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;longer than the VSPO group will be.
+
+<P>nogroupnotify - When set, VSPOs are not sent the first, general or
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the final VSPO group expiration notices, only the
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;group owner receives them.
+
+<H2><A NAME="@gfollow">@gfollow</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @gfollow &lt;groupnum&gt;
+<BR>@gfollow! &lt;groupnum&gt;
+<BR>@gunfollow &lt;groupnum&gt;</TD></TR></TABLE>
+
+<P>Make a VSPO group (all initialized and connected characters thereof) follow you automatically when you walk or teleport.  If the question-mark version is used, even sleeping VSPOs are made to follow you.
+<BR>@gunfollow reverses the effect of @gfollow.
+
+<H2><A NAME="@ggather">@ggather</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @gmove &lt;groupnum&gt; to &lt;location&gt;
+<BR>@gmove! &lt;groupnum&gt; to &lt;location&gt;
+<BR>@ggather &lt;groupnum&gt;
+<BR>@ggather! &lt;groupnum&gt;</TD></TR></TABLE>
+
+<P>Teleport all characters (the initialized ones) of VSPO group &lt;groupnum&gt; that are on-line to &lt;location&gt; or teleport them all to where you currently are.  If the exclamation-mark version of a verb is used, _all_ intialized VSPOs are moved, even the ones not connected.
+
+<H2><A NAME="@ggender">@ggender</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @ggender &lt;groupnum&gt; is &lt;gender&gt;</TD></TR></TABLE>
+
+<P>Set all characters of the specified VSPO group &lt;groupnum&gt; to have gender &lt;gender&gt;.
+
+<H2><A NAME="@ginfo">@ginfo</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @ginfo &lt;groupnum&gt; is &lt;info&gt;</TD></TR></TABLE>
+
+<P>Set the information text &lt;info&gt; of all characters of the specified VSPO group &lt;groupnum&gt;.
+
+<H2><A NAME="@ginit">@ginit</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @ginit &lt;groupnum&gt;</TD></TR></TABLE>
+
+<P>This will go through each VSPO in the specified group which does not posess a name and prompt you for one.  Once it receives an acceptable name, it will generate a random password for the new student and tell you what it is.  Then, it will prompt you for an email-address for that account.  This process can be aborted by typing @abort at any point.
+
+<P>It will automatically add the suffix that was inputted when the group was created, if that field is blank, it will prompt you for a suffix. There is another verb, @gsuffix that you can use to change the suffix if there was a mistake.
+
+<H2><A NAME="@ginit-all">@ginit-all</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @ginit-a &lt;groupnum&gt;</TD></TR></TABLE>
+
+<P>This is a modification of the normal @ginit command. It will automatically initiate each VSPO with a prompted alphanumeric string and a number which will be incremented. You can not set e-mail addresses; they are automatically set to the VSPO managers. You do have the option of setting one password for all accounts or individual passwords. You can stop the process by using @abort at the beginning input questions, otherwise it will initiate all of the previouslly un-initiated VSPOs. This is useful for people who want to quickly start up a workshop or VSPO group.
+
+<H2><A NAME="@ginteresting">@ginteresting</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">@ginter &lt;group number&gt;
+<BR>@guninter &lt;group number&gt;</TD></TR></TABLE>
+
+<P>Adds [removes] all members of vspo &lt;group number&gt; to your `interesting people' list.
+
+<P>This is only useful if you've added the $login_watcher feature, which has an "@interesting" command that notifies you when people connect or disconnect.
+
+<H2><A NAME="@glinelength">@glinelength</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @glinelen &lt;groupnum&gt; is &lt;number&gt;</TD></TR></TABLE>
+
+<P>Set the linelength for all characters in VSPO group &lt;groupnum&gt; to &lt;number&gt;.
+
+<H2><A NAME="@glist">@glist</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @glist[-e] &lt;groupnum&gt;</TD></TR></TABLE>
+
+<P>This will list the information and VSPOs associated with group &lt;groupnum&gt;.  You are only able to list groups which you own.  @glist provides a list of all members, and @glist-e provides their email addresses also.
+
+<H2><A NAME="@glist-email">@glist-email</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @glist[-e] &lt;groupnum&gt;</TD></TR></TABLE>
+
+<P>This will list the information and VSPOs associated with group &lt;groupnum&gt;.  You are only able to list groups which you own.  @glist provides a list of all members, and @glist-e provides their email addresses also.
+
+<H2><A NAME="@gmass">@gmass</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> @gmass &lt;group number&gt; [on/off]</TD></TR></TABLE>
+
+<P>Sets the massmail option in your vspo group to on or off. If no argument is used, it lists what the settings of the members of your group is currently.
+
+<H2><A NAME="@gmove">@gmove</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @gmove &lt;groupnum&gt; to &lt;location&gt;
+<BR>@gmove! &lt;groupnum&gt; to &lt;location&gt;
+<BR>@ggather &lt;groupnum&gt;
+<BR>@ggather! &lt;groupnum&gt;</TD></TR></TABLE>
+
+<P>Teleport all characters (the initialized ones) of VSPO group &lt;groupnum&gt; that are on-line to &lt;location&gt; or teleport them all to where you currently are.  If the exclamation-mark version of a verb is used, _all_ intialized VSPOs are moved, even the ones not connected.
+
+<H2><A NAME="@gnewpassword">@gnewpassword</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @gnewpass &lt;person&gt; is &lt;password&gt;
+<BR>@gnewpass-a &lt;groupnum&gt; is &lt;password&gt;</TD></TR></TABLE>
+
+<P>This will assign a new password to a VSPO or an entire VSPO-group.
+
+<H2><A NAME="@gnotify">@gnotify</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @gnotify &lt;groupnum&gt;</TD></TR></TABLE>
+
+<P>Mails expiration date notifications out to recently active (in the last 4 months) VSPO group members.  Sends email to those with set addresses and MOOmail to the rest.
+
+<H2><A NAME="@gpagelength">@gpagelength</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @gpagelen &lt;groupnum&gt; is &lt;number&gt;</TD></TR></TABLE>
+
+<P>Set the pagelength for all characters in VSPO group &lt;groupnum&gt; to &lt;number&gt;.
+
+<H2><A NAME="@gprogrammer">@gprogrammer</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @gprogrammer &lt;person&gt;</TD></TR></TABLE>
+
+<P>This will make the specified person a programmer, if they are a VSPO that you own or manage.
+
+<H2><A NAME="@gquota">@gquota</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @gquota &lt;person&gt; is &lt;number&gt; [&lt;reason&gt;]</TD></TR></TABLE>
+
+<P>Set a person's quota to &lt;number&gt;.  The current maximum number of objects or amount of bytes that a single VSPO can own is set by $vspo_registry.max_quota.  Using this command will trigger mail to be sent to a system-mailing-list that wizards read regularly.
+
+<H2><A NAME="@gregister">@gregister</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @gregister &lt;person&gt; as &lt;email&gt;
+<BR>@gregister-a &lt;groupnum&gt; as &lt;email&gt;</TD></TR></TABLE>
+
+<P>Change the email address of a VSPO or an entire VSPO group.  You must be an owner or manager of any such individual VSPO or VSPO group, of course.
+
+<H2><A NAME="@grename">@grename</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @grename &lt;groupnum&gt; to &lt;anything&gt;</TD></TR></TABLE>
+
+<P>Change the label of a given VSPO group that you own or manage.
+
+<H2><A NAME="@grestrict">@grestrict</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @grestrict &lt;restrictions&gt; for &lt;person&gt;
+<BR>@gunrestrict &lt;restrictions&gt; for &lt;person&gt;
+<BR>@grestrict-a &lt;restrictions&gt; for &lt;groupnum&gt;
+<BR>@gunrestrict-a &lt;restrictions&gt; for &lt;groupnum&gt;</TD></TR></TABLE>
+
+<P>Add or remove the given restrictions to/from the specified person or to/from all people in the specified group (if you are allowed to, of course).
+
+<P>Current possibilities for restrictions are:
+
+<P>&nbsp;&nbsp;speak     - make it so e cannot make any noise.
+<BR>&nbsp;&nbsp;move      - make it so e cannot leave their current location.
+<BR>&nbsp;&nbsp;page      - make it so e cannot page others.
+<BR>&nbsp;&nbsp;teleport  - make it so e cannot use @go.
+<BR>&nbsp;&nbsp;rename    - make it so e cannot change eir name or aliases.
+
+<H2><A NAME="@grmfeature">@grmfeature</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @grmfeature &lt;groupnum&gt; &lt;feature&gt;</TD></TR></TABLE>
+
+<P>Remove a feature from all characters of VSPO group &lt;groupnum&gt;.
+
+<H2><A NAME="@groups">@groups</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @groups [&lt;person&gt;]</TD></TR></TABLE>
+
+<P>This will show all groups accessible by you, or all groups owned by &lt;person&gt; which are accessible by you if &lt;person&gt; is specified.
+
+<H2><A NAME="@gsethome">@gsethome</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @gsethome &lt;location&gt; for &lt;groupnum&gt;</TD></TR></TABLE>
+
+<P>Sets the home of all people of the specified VSPO group &lt;groupnum&gt; to &lt;location&gt; and adds them as residents there.  If the verb encounters an already set home on one of the VSPOs it prompts for an answer to "Change it anyway?" for that specific case.  
+
+<H2><A NAME="@gshowurl">@gshowurl</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> @gshowurl &lt;URL&gt; to &lt;groupnumber or person&gt;</TD></TR></TABLE>
+
+<P>Displays the URL to everyone in the specified VSPO group or to the person, if they are using an MCP-aware Telnet client within the MOO's integrated Web interface.
+
+<H2><A NAME="@gsuffix">@gsuffix</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> @gsuffix &lt;group number&gt; is &lt;new suffix&gt;</TD></TR></TABLE>
+
+<P>To change the suffix that is appended to all members of group &lt;group number&gt; to &lt;new suffix&gt;.
+
+<H2><A NAME="@gunfollow">@gunfollow</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @gfollow &lt;groupnum&gt;
+<BR>@gfollow! &lt;groupnum&gt;
+<BR>@gunfollow &lt;groupnum&gt;</TD></TR></TABLE>
+
+<P>Make a VSPO group (all initialized and connected characters thereof) follow you automatically when you walk or teleport.  If the question-mark version is used, even sleeping VSPOs are made to follow you.
+<BR>@gunfollow reverses the effect of @gfollow.
+
+<H2><A NAME="@guninit">@guninit</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @guninit &lt;vspo&gt;</TD></TR></TABLE>
+
+<P>Uninitialize a VSPO which has been incorrectly initialized with @ginit.  This will allow you erase an initialization and make the specified object be available once again for @ginit to use, if you should make a mistake.
+
+<H2><A NAME="@guninteresting">@guninteresting</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> @ginter &lt;group number&gt;
+<BR>@guninter &lt;group number&gt;</TD></TR></TABLE>
+
+<P>Adds [removes] all members of vspo &lt;group number&gt; to your interesting list.
+
+<H2><A NAME="@gwhat">@gwhat</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @gwhat &lt;person&gt;</TD></TR></TABLE>
+
+<P>This will list which VSPO group the specified person belongs to, if they are a VSPO that you own or manage.
+
+<H2><A NAME="@gwho">@gwho</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @gwho &lt;groupnum&gt;
+<BR>@gwho-all &lt;groupnum&gt;</TD></TR></TABLE>
+
+<P>This will show a @who listing of all initialized VSPOs in the specified group, if you have access to the specified group.  @gwho lists all connected VSPOs from the group, @gwho-all lists all VSPOs in the group whether they're connected or not.
+
+<H2><A NAME="gpage">gpage</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  gpage &lt;groupnum&gt; [with] &lt;message&gt;</TD></TR></TABLE>
+
+<P>Page all members of VSPO group &lt;groupnum&gt; that are connected with &lt;message&gt;.
+
+<H2><A NAME="vspo">vspo</A></H2>
+
+Educators, instructors or other individuals who would like to bring
+<BR>temporary groups of people into the MOO may request and 
+<BR>create `Visiting Student Player Object' groups.
+
+<P>VSPO groups allow their owners to administrate and create MOO
+<BR>characters.  VSPO Administrators assign names, passwords, builder or
+<BR>programmer status, building quota, etc. for members of their VSPO
+<BR>group. VSPO users have a tremendous responsibility towards their
+<BR>fellow VSPO users and the MOO at large.
+
+<P>For information on how to request a VSPO group, type: help VSPO-intro.
+
+<P>At this point, having decided to set up a VSPO group, it may help to
+<BR>take a look at the commands available to a VSPO owner. 
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type: help vspo-index
+
+<P>Additional help topics:
+<BR><A HREF="vspo_help.html#VSPO-intro">VSPO-intro</A>        -- to see a basic introduction to VSPOs
+<BR><A HREF="vspo_help.html#VSPO-setup">VSPO-setup</A>        -- to see help on setting up the VSPO group 
+<BR><A HREF="manager_help.html#VSPO-info">VSPO-info</A>         -- to see help on viewing group information
+<BR><A HREF="vspo_help.html#VSPO-group">VSPO-group</A>        -- to see help on managing groups
+<BR><A HREF="vspo_help.html#VSPO-individuals">VSPO-individuals</A>  -- to see help on managing individuals
+<BR><A HREF="vspo_help.html#VSPO-online">VSPO-online</A>       -- to see help commands when the group is online
+
+<H2><A NAME="vspo-complete">vspo-complete</A></H2>
+
+<P>See: <A HREF="#vspo">vspo</A>, <A HREF="user_help.html#$vsfo">$vsfo</A> in General Help, <A HREF="#VSPO-setup">VSPO-setup</A>, <A HREF="#VSPO-information">VSPO-information</A>, <A HREF="#VSPO-group-management">VSPO-group-management</A>, <A HREF="#VSPO-individuals-management">VSPO-individuals-management</A>, and <A HREF="#VSPO-online">VSPO-online</A>
+
+<H2><A NAME="VSPO-FO">VSPO-FO</A></H2>
+
+<P>See: <A HREF="#vspo-introduction">vspo-introduction</A>
+
+<H2><A NAME="vspo-group-management">vspo-group-management</A></H2>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*Help VSPO Management-Groups*
+
+<P>1) Addmanagers - To add or remove manager(s) from the group:
+
+<P>&nbsp;&nbsp;&nbsp;type: @gaddmanagers &lt;character(s)&gt; for &lt;groupnumber&gt;
+<BR>&nbsp;&nbsp;&nbsp;type: @gdelmanagers &lt;character(s)&gt; for &lt;groupnumber&gt;
+
+<P>2) Newpassword - To change a password for an individual or entire group:
+
+<P>&nbsp;&nbsp;&nbsp;type: @gnewpass &lt;character&gt; is &lt;password&gt;
+<BR>&nbsp;&nbsp;&nbsp;type: @gnewpass-all &lt;groupnumber&gt; is &lt;password&gt;
+
+<P>3) Groupflag - Set or unset one of the flags for the group:
+
+<P>&nbsp;&nbsp;&nbsp;type: @gflag &lt;+flag&gt; for &lt;groupnumber&gt; to add a flag
+<BR>&nbsp;&nbsp;&nbsp;type: @gflag &lt;-flag&gt; for &lt;groupnumber&gt; to delete a flag
+
+<P>&nbsp;&nbsp;&nbsp;Current valid flags are:
+<BR>&nbsp;&nbsp;&nbsp;keepowned - When set, at the expiration date of the VSPO group,
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;objects will be transferred to group owner instead of
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;recycled.
+<BR>&nbsp;&nbsp;&nbsp;nogroupnotify - When set, VSPOs are not sent the first general or
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the final VSPO group expiration notices, only the
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;group owner receives them.
+
+<P>4) Expiration - To change the expiration of the group to an earlier date:
+
+<P>&nbsp;&nbsp;&nbsp;type: @gexpire &lt;groupnumber&gt; is &lt;date&gt;
+<BR>&nbsp;&nbsp;&nbsp;&lt;date&gt; forms: 01/31/99; Jan 31 1999 17:30; tomorrow; -2 days, 3hours
+
+<P>5) Notify-group - To notify group members of the impending group expiration date:  
+
+<P>&nbsp;&nbsp;&nbsp;type: @gnotify &lt;groupnumber&gt;
+
+<P>6) Rename-group - To change the label of the group:
+
+<P>&nbsp;&nbsp;&nbsp;type: @grename &lt;groupnumber&gt; to &lt;renamed&gt;
+
+<P>7) Add all group members to your list of interesting people so you can watch logins.
+
+<P>&nbsp;&nbsp;&nbsp;type: @ginter &lt;groupnumber&gt;
+
+<P>8) Remove all group members from your list of interesting people.
+
+<P>&nbsp;&nbsp;&nbsp;type: @guninter &lt;groupnumber&gt;
+
+<P>9) Display an Internet resource at a given URL to all the members of
+<BR>&nbsp;&nbsp;&nbsp;the group.  Note that only VSPOs that are using the MOO's
+<BR>&nbsp;&nbsp;&nbsp;integrated Web interface will have the URL displayed.  You can
+<BR>&nbsp;&nbsp;&nbsp;specify a person to be shown the URL instead of an entire VSPO group.
+
+<P>&nbsp;&nbsp;&nbsp;type: @gshowurl &lt;URL&gt; to &lt;groupnumber or person&gt;
+<BR>------
+<BR>Summary:
+<BR><A HREF="vspo_help.html#@gaddmanagers">@gaddmanagers</A> -- to add or remove manager(s) from the group
+<BR><A HREF="vspo_help.html#@gnewpass">@gnewpass</A>     -- to change a password for an individual or entire group
+<BR><A HREF="vspo_help.html#@gflag">@gflag</A>        -- set or unset one of the flags for the group
+<BR><A HREF="vspo_help.html#@gexpire">@gexpire</A>      -- to change the expiration of the group to an earlier date
+<BR><A HREF="vspo_help.html#@gnotify">@gnotify</A>      -- to notify group members of the impending group
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;expiration date
+<BR><A HREF="vspo_help.html#@grename">@grename</A>      -- to change the label of the group
+<BR><A HREF="vspo_help.html#@ginter">@ginter</A>       -- add all group members to your list of interesting people
+<BR><A HREF="vspo_help.html#@guninter">@guninter</A>     -- remove all group members from your list of
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;interesting people
+<BR><A HREF="vspo_help.html#@gshowurl">@gshowurl</A>     -- display an Internet resource at a given URL to all
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the members of the group
+<BR>------
+
+<H2><A NAME="VSPO-index">VSPO-index</A></H2>
+
+<TABLE BORDER=0 CELLSPACING=6>
+<TR><TD VALIGN="TOP"><A HREF="#@gaddfeature">@gaddfeature</A></TD><TD VALIGN="TOP"><A HREF="#@ggender">@ggender</A></TD><TD VALIGN="TOP"><A HREF="#@gquota">@gquota</A></TD><TD VALIGN="TOP"><A HREF="#gpage">gpage</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#@gaddmanagers">@gaddmanagers</A></TD><TD VALIGN="TOP"><A HREF="#@ginfo">@ginfo</A></TD><TD VALIGN="TOP"><A HREF="#@gregister">@gregister</A></TD><TD VALIGN="TOP"><A HREF="#vspo">vspo</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#@gaudit">@gaudit</A></TD><TD VALIGN="TOP"><A HREF="#@ginit">@ginit</A></TD><TD VALIGN="TOP"><A HREF="#@grename">@grename</A></TD><TD VALIGN="TOP"><A HREF="#vspo-complete">vspo-complete</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#@gbuilder">@gbuilder</A></TD><TD VALIGN="TOP"><A HREF="#@ginit-all">@ginit-all</A></TD><TD VALIGN="TOP"><A HREF="#@grestrict">@grestrict</A></TD><TD VALIGN="TOP"><A HREF="#VSPO-FO">VSPO-FO</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#@gcensus">@gcensus</A></TD><TD VALIGN="TOP"><A HREF="#@ginteresting">@ginteresting</A></TD><TD VALIGN="TOP"><A HREF="#@grmfeature">@grmfeature</A></TD><TD VALIGN="TOP"><A HREF="#vspo-group-management">vspo-group-management</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#@gchange">@gchange</A></TD><TD VALIGN="TOP"><A HREF="#@glinelength">@glinelength</A></TD><TD VALIGN="TOP"><A HREF="#@groups">@groups</A></TD><TD VALIGN="TOP"><A HREF="#VSPO-index">VSPO-index</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#@gchown">@gchown</A></TD><TD VALIGN="TOP"><A HREF="#@glist">@glist</A></TD><TD VALIGN="TOP"><A HREF="#@gsethome">@gsethome</A></TD><TD VALIGN="TOP"><A HREF="#vspo-individuals-management">vspo-individuals-management</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#@gdelmanagers">@gdelmanagers</A></TD><TD VALIGN="TOP"><A HREF="#@glist-email">@glist-email</A></TD><TD VALIGN="TOP"><A HREF="#@gshowurl">@gshowurl</A></TD><TD VALIGN="TOP"><A HREF="#vspo-information">vspo-information</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#@gdescribe">@gdescribe</A></TD><TD VALIGN="TOP"><A HREF="#@gmass">@gmass</A></TD><TD VALIGN="TOP"><A HREF="#@gsuffix">@gsuffix</A></TD><TD VALIGN="TOP"><A HREF="#VSPO-INTRODUCTION">VSPO-INTRODUCTION</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#@gemail">@gemail</A></TD><TD VALIGN="TOP"><A HREF="#@gmove">@gmove</A></TD><TD VALIGN="TOP"><A HREF="#@gunfollow">@gunfollow</A></TD><TD VALIGN="TOP"><A HREF="#vspo-manager-tools">vspo-manager-tools</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#@gexpire">@gexpire</A></TD><TD VALIGN="TOP"><A HREF="#@gnewpassword">@gnewpassword</A></TD><TD VALIGN="TOP"><A HREF="#@guninit">@guninit</A></TD><TD VALIGN="TOP"><A HREF="#vspo-online">vspo-online</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#@gflag">@gflag</A></TD><TD VALIGN="TOP"><A HREF="#@gnotify">@gnotify</A></TD><TD VALIGN="TOP"><A HREF="#@guninteresting">@guninteresting</A></TD><TD VALIGN="TOP"><A HREF="#vspo-setup">vspo-setup</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#@gfollow">@gfollow</A></TD><TD VALIGN="TOP"><A HREF="#@gpagelength">@gpagelength</A></TD><TD VALIGN="TOP"><A HREF="#@gwhat">@gwhat</A></TD><TD></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#@ggather">@ggather</A></TD><TD VALIGN="TOP"><A HREF="#@gprogrammer">@gprogrammer</A></TD><TD VALIGN="TOP"><A HREF="#@gwho">@gwho</A></TD><TD></TD></TR>
+</TABLE>
+
+<H2><A NAME="vspo-individuals-management">vspo-individuals-management</A></H2>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*Help VSPO Management-Individuals*
+
+<P>1) Builder Status - To grant an individual Builder's status:
+
+<P>&nbsp;&nbsp;&nbsp;type: @gbuilder &lt;character&gt;
+
+<P>&nbsp;&nbsp;&nbsp;The person must have knowledge of the MOO's Building Code and/or
+<BR>demonstrated equivalent capabilities.  VSPO owner may be held
+<BR>responsible for the actions of their VSPO characters.
+
+<P>2) Programmer Status - To grant an individual Programmer's status:
+
+<P>&nbsp;&nbsp;&nbsp;type: @gprogrammer &lt;character&gt;
+
+<P>&nbsp;&nbsp;&nbsp;The person must adhere to the MOO's programmer policies, and
+<BR>&nbsp;&nbsp;&nbsp;maintain a working relationship with a mentor wizard or
+<BR>&nbsp;&nbsp;&nbsp;programmer.
+
+<P>3) Quota Status - To set a character's building quota:
+
+<P>&nbsp;&nbsp;&nbsp;type: @gquota &lt;character&gt; is &lt;number&gt; [&lt;reason&gt;]
+
+<P>4) Change Group - To move a character from one group to another:
+
+<P>&nbsp;&nbsp;&nbsp;type: @gchange &lt;character&gt; to &lt;group number&gt;
+
+<P>5) Change Ownership - To change the ownership of an object:
+
+<P>&nbsp;&nbsp;&nbsp;@type: @gchown &lt;object&gt; to &lt;character&gt;
+<BR>-------
+<BR>Summary:
+<BR><A HREF="vspo_help.html#@gbuilder">@gbuilder</A>   -- to grant an individual Builder's status
+<BR><A HREF="vspo_help.html#gprogrammer">gprogrammer</A> -- yo grant an individual Programmer's status
+<BR><A HREF="vspo_help.html#@gquota">@gquota</A>     -- to set a character's building quota
+<BR><A HREF="vspo_help.html#@gchange">@gchange</A>    -- to move a character from one group to another
+<BR><A HREF="vspo_help.html#@gchown">@gchown</A>     -- to change the ownership of an object
+<BR>-------
+
+<H2><A NAME="vspo-information">vspo-information</A></H2>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*Help VSPO-Info*
+
+<P>1) Groups - To show all groups owned or accessible by you:
+
+<P>&nbsp;&nbsp;&nbsp;type: @groups &lt;character&gt;
+<BR>&nbsp;&nbsp;&nbsp;This shows all groups accessible by specified character.
+
+<P>2) List-group - To list all VSPOs of group &lt;groupnumber&gt; and information
+<BR>&nbsp;&nbsp;&nbsp;(name of group, owner, manager, storage space used, expiration date):
+
+<P>&nbsp;&nbsp;&nbsp;type: @glist &lt;groupnumber&gt;
+
+<P>3) What-group - To list which VSPO group a character belongs to:
+
+<P>&nbsp;&nbsp;&nbsp;type: @gwhat &lt;character&gt;
+
+<P>4) Census-group - To show a census summary for all groups accessible by you
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;or a specified character:
+
+<P>&nbsp;&nbsp;&nbsp;type: @gcensus &lt;character&gt;
+
+<P>5) Gwho-all - To see a @who listing of all initialized VSPOs in a group:
+
+<P>&nbsp;&nbsp;&nbsp;type: @gwho &lt;groupnumber&gt; to list all connected from the group
+<BR>&nbsp;&nbsp;&nbsp;type: @gwho-all &lt;groupnumber&gt; to list all from group, connected or not.
+<BR>-------
+<BR>Summary:
+<BR><A HREF="vspo_help.html#@groups">@groups</A>  -- show all groups owned or accessible by you
+<BR><A HREF="vspo_help.html#@glist">@glist</A>   -- list all VSPOs of group
+<BR><A HREF="vspo_help.html#@gwhat">@gwhat</A>   -- list which VSPO group a character belongs to
+<BR><A HREF="vspo_help.html#@gcensus">@gcensus</A> -- show a census summary for groups
+<BR><A HREF="vspo_help.html#@gwho">@gwho</A>    -- see a @who listing of all initialized VSPOs in a group
+<BR>-------
+
+<H2><A NAME="VSPO-INTRODUCTION">VSPO-INTRODUCTION</A></H2>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*Working with a VSPO Group* 
+
+<P>1) Adding the VS Teacher FO
+
+<P>The VSPO system works in conjunction with a feature object that carries 
+<BR>those commands VSPO group owners need to administrate their groups.  
+<BR>To use it, you must first add it to your list of feature objects:
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;type:  @addfeature $vsfo
+
+<P>You should get confirmation that the VS Teacher FO ($vsfo) was added
+<BR>as a feature.
+<BR>(Don't be confused by the apparent switch between VSPO and vsfo).
+<BR>Now you may proceed to study its help documentation, which is divided into
+<BR>five categories:
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;type:  help VSPO-setup (to see help on setting up the VSPO group 
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;type:  help VSPO-info  (to see help on viewing group information)
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;type:  help VSPO-group (to see help on managing groups)
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;type:  help VSPO-individuals (to see help on managing individuals)
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;type:  help VSPO-online (to see help commands when the group is online)
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;type:  mailme help VSPO-complete (to have the complete set of VSPO
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;texts sent to your e-mail address)
+
+<P>You can also receive more detailed information about specific commands 
+<BR>within these categories by typing: help &lt;command&gt;.
+
+<P>You should also subscribe to the *VSPO Mail List, where you may post
+<BR>questions and meet other VSPO group administrators: 
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;type:  @subscribe *VSPO
+
+<P>If you need more detailed information, please contact a manager or all of
+<BR>them at once (by addressing a letter to *managers).  Thank you.
+
+<P>2)  Requesting a VSPO group
+
+<P>Compose a letter addressed to *managers that contains a brief description of
+<BR>the project or event for which you need a VSPO group, whether it is a free 
+<BR>or fee-based class, a one to three word label for the group, a suffix
+<BR>that you want appended to the name of each group member, the number of
+<BR>people in the group, and the duration the group will exist.
+
+<P>You'll be contacted by a manager, who may wish to discuss your project,
+<BR>and then be granted a VSPO group number, and are now ready to begin
+<BR>setting up your VSPO group.
+
+<H2><A NAME="vspo-manager-tools">vspo-manager-tools</A></H2>
+
+The following commands are available to Managers with "VSPO management" responsibility.  They are not available to VSPO owners.
+
+<P><A HREF="manager_help.html#@make-vspos">@make-vspos</A> -- Creates a VSPO group
+<BR><A HREF="manager_help.html#@expire-group">@expire-group</A> -- sets a VSPO group to expire after standard warning time
+<BR><A HREF="manager_help.html#@kill-vspo-group">@kill-vspo-group</A> -- causes a VSPO group to expire immediately
+<BR><A HREF="manager_help.html#@chown-group">@chown-group</A>  -- change the owner of a group
+<BR><A HREF="manager_help.html#@vspo-info">@vspo-info</A> -- reports various info about a VSPO group
+<BR><A HREF="manager_help.html#@vspos">@vspos</A> -- Lists all VSPO characters currently connected
+
+<H2><A NAME="vspo-online">vspo-online</A></H2>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*Help VSPO Online Commands*
+
+<P>1) Page Group - To page all characters of a VSPO group with a message:
+
+<P>&nbsp;&nbsp;&nbsp;type: gpage &lt;groupnumber&gt; [with] &lt;message&gt;
+
+<P>2) Follow Me - To have all characters automatically follow you:
+
+<P>&nbsp;&nbsp;&nbsp;type: @gfollow &lt;groupnumber&gt; to have active group members follow you
+<BR>&nbsp;&nbsp;&nbsp;type: @gffollow! &lt;groupnumber&gt; to have all group members follow you
+<BR>&nbsp;&nbsp;&nbsp;type: @gunfollow &lt;groupnumber&gt; to reverse the effect of follow-me
+<BR>&nbsp;&nbsp;&nbsp;type: @gunfollow! &lt;groupnumber&gt; to reverse the effect of follow-me!
+
+<P>3) Move Group - To teleport all characters (active/inactive) to a room:
+
+<P>&nbsp;&nbsp;&nbsp;type: @gmove &lt;groupnumber&gt; to &lt;location&gt; to move active characters only
+<BR>&nbsp;&nbsp;&nbsp;type: @gmove! &lt;groupnumber&gt; to &lt;location&gt; to move all characters
+<BR>&nbsp;&nbsp;&nbsp;type: @ggather &lt;groupnumber&gt; to gather active characters to you
+<BR>&nbsp;&nbsp;&nbsp;type: @ggather! &lt;groupnumber&gt; to gather all characters to you
+
+<P>4) Restrict Group - To restrict a person or group:
+
+<P>&nbsp;&nbsp;&nbsp;type: @grestrict &lt;restrictions&gt; for &lt;person&gt;
+<BR>&nbsp;&nbsp;&nbsp;type: @gunrestrict &lt;restrictions&gt; for &lt;person&gt;
+<BR>&nbsp;&nbsp;&nbsp;type: @grestrict-a &lt;restrictions&gt; for &lt;groupnumber&gt;
+<BR>&nbsp;&nbsp;&nbsp;type: @gunrestrict-a &lt;restrictions&gt; for &lt;groupnumber&gt;
+
+<P>&nbsp;&nbsp;&nbsp;Current possible restrictions are:
+
+<P>&nbsp;&nbsp;&nbsp;speak - makes it so character or group cannot make any noise
+<BR>&nbsp;&nbsp;&nbsp;move - make it so character or group cannot leave their current location
+<BR>&nbsp;&nbsp;&nbsp;page - make it so character or group cannot page others
+<BR>&nbsp;&nbsp;&nbsp;teleport - make it so character or group cannot teleport
+<BR>&nbsp;&nbsp;&nbsp;rename - make it so character or group cannot change their name or alias
+<BR>-------
+<BR>Summary:
+<BR><A HREF="vspo_help.html#gpage">gpage</A>      -- page all characters of a VSPO group with a message
+<BR><A HREF="vspo_help.html#@gfollow">@gfollow</A>   -- have active group members follow you
+<BR><A HREF="vspo_help.html#@gmove">@gmove</A>     -- teleport all characters (active/inactive) to a room
+<BR><A HREF="vspo_help.html#@ggather">@ggather</A>   -- teleport all characters (active/inactive) to where you are
+<BR><A HREF="vspo_help.html#@grestrict">@grestrict</A> -- restrict a person or group in some way
+<BR>-------
+
+<H2><A NAME="vspo-setup">vspo-setup</A></H2>
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*Help VSPO-Setup*
+
+<P>These commands will help you set up a VSPO group and covers the following:
+
+<P>1)  Initializing a new VSPO group - to begin, see what groups are
+<BR>accessible by you:
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;type:  @groups
+
+<P>You will notice that all groups have a number assigned to them.
+<BR>To refer to a group directly type: @group &lt;groupnumber&gt;
+
+<P>A) Initializing a VSPO group assigns character names and email-addresses.
+<BR>B) Passwords can be assigned randomly or assigned by you.
+<BR>C) Before initializing your group, gather your list of character names,
+<BR>email-addresses, and passwords if you want to select them.
+<BR>D) Write down random password #s, or assign by using the @newpassword command.
+<BR>E) Don't worry if the list is not complete, you may always add later.
+
+<P>To launch the initialization process:
+
+<P>&nbsp;&nbsp;&nbsp;type:  @ginit &lt;group-number&gt; 
+
+<P>This will allow you to create new characters under the VSPO group number.
+<BR>They will automatically have the 2- or 3-letter suffix that was assigned
+<BR>when the group was created or if there is none assigned, you will be
+<BR>prompted for one.
+<BR>Passwords will either be randomly generated, or specifically assigned by you.
+<BR>You may choose to use your own e-mail address, or the person's.
+<BR>You may abort the process by typing @abort at any time.
+
+<P>2)  Uninitializing a VSPO group - To uninitialize an incorrect group:
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;type: @guninit VSPO &lt;groupnumber&gt;
+
+<P>This will allow you to erase an initialization and make the VSPO available
+<BR>for @init-group again.
+
+<P>3) Changing a group's suffix:
+
+<P>&nbsp;&nbsp;&nbsp;type: @gsuffix &lt;groupnumber&gt; is &lt;newsuffix&gt;
+
+<P>This will change the suffix of members of the group to the specified value
+<BR>when they are created using @ginit. This doesn't change the value of
+<BR>previous created members. You will have to change their names manually.
+
+<P>4) Registering an e-mail address for a VSPO group or individual- to register:
+
+<P>&nbsp;&nbsp;&nbsp;type: @gregister &lt;character&gt; as &lt;e-mail address&gt;
+<BR>or type: @gregister-a &lt;groupnumber&gt; as &lt;e-mail address&gt;
+
+<P>This will change the email address of an individual or group.
+<BR>You must be an owner or manager of the VSPO or group to do so.
+
+<P>5) Setting a home for a VSPO - To set a home for a group:
+
+<P>&nbsp;&nbsp;&nbsp;type: @gsethome &lt;location&gt; for &lt;groupnumber&gt;
+
+<P>This will set the home for the group and make them residents.
+<BR>The VSPOs will connect to this location when logging in.
+
+<P>6) Describing a VSPO - To describe the individuals in the group:
+
+<P>&nbsp;&nbsp;&nbsp;type: @gdescribe &lt;groupnumber&gt; as &lt;description&gt;
+
+<P>This will set the description for every character in the group.
+
+<P>7) Setting information VSPO - To set the \"information\" text for a group: &lt;- *
+
+<P>&nbsp;&nbsp;&nbsp;type: @ginfo &lt;groupnumber&gt; as &lt;info&gt;
+
+<P>Information text typically explains about what a person's interests, both in
+<BR>and online, particularly describing their interest in the particular MOO,
+<BR>as opposed to the description, which primarily says what their character
+<BR>looks like.
+
+<P>8) Setting gender for a VSPO group - To set the gender for a group:
+
+<P>&nbsp;&nbsp;&nbsp;type: @ggender &lt;groupnumber&gt; is &lt;gender&gt;
+
+<P>9) Setting linelength for a VSPO group - To set linelength for a group:
+
+<P>&nbsp;&nbsp;&nbsp;type: @glinelen &lt;groupnumber&gt; is &lt;number&gt;
+
+<P>10) Setting pagelength for a VSPO group - To set pagelength for a group:
+
+<P>&nbsp;&nbsp;&nbsp;type: @gpagelen &lt;groupnumber&gt; is &lt;number&gt;
+
+<P>11) Adding a feature for a VSPO group - To add a feature for a group:
+
+<P>&nbsp;&nbsp;&nbsp;type: @gaddfeature &lt;groupnumber&gt; &lt;feature&gt;
+
+<P>&nbsp;&nbsp;&nbsp;This will add a feature to all group members.
+
+<P>21) Removing a feature for a VSPO group - To remove a feature for a group:
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;type: @grmfeature &lt;groupnumber&gt; &lt;feature&gt;
+<BR>-------
+<BR>Summary:
+<BR><A HREF="vspo_help.html#@groups">@groups</A>      -- list your VSPO groups
+<BR><A HREF="vspo_help.html#@ginit">@ginit</A>       -- initialize a VSPO group
+<BR><A HREF="vspo_help.html#@guninit">@guninit</A>     -- uninitialize one
+<BR><A HREF="vspo_help.html#@gsuffix">@gsuffix</A>     -- change the character name suffix for a group
+<BR><A HREF="vspo_help.html#@gregister">@gregister</A>   -- register an e-mail address for a VSPO group or
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;individual
+<BR><A HREF="vspo_help.html#@gsethome">@gsethome</A>    -- set a home for a VSPO group
+<BR><A HREF="vspo_help.html#@gdescribe">@gdescribe</A>   -- describe a VSPO group's characters
+<BR><A HREF="manager_help.html#@ginfo">@ginfo</A>       -- set the @info for a group
+<BR><A HREF="vspo_help.html#@ggender">@ggender</A>     -- set the gender for a group
+<BR><A HREF="vspo_help.html#@glinelen">@glinelen</A>    -- set the displayed line lingth for a group
+<BR><A HREF="vspo_help.html#@gpagelen">@gpagelen</A>    -- set the displayed page length for a group
+<BR><A HREF="vspo_help.html#@gaddfeature">@gaddfeature</A> -- add a feature object for a group
+<BR>-------
+
+</BODY></HTML>

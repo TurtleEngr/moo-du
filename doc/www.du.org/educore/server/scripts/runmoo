@@ -1,0 +1,31 @@
+#!/bin/sh
+
+# To use this script, change the values of MOOname and MOOhome to reflect 
+# the file name and subdirectory of your MOO's database file.
+
+# The script assumes that you have created a backup.logs subdirectory in 
+# the directory where your MOO database file is located.  Logs are written 
+# here, and the nightly backup task script also assumes the existence of 
+# this directory.
+
+# The script assumes that the ps command is in the /usr/ucb directory, and 
+# you may need to change the appropriate line if this is not the case.
+
+MOOname="du"
+MOOhome="/usr/du/world/moo"
+
+cd $MOOhome
+
+umask 007
+if [ -r moo.pid ] && /usr/ucb/ps `cat moo.pid` >&-; then
+  echo "The MOO server is already running."
+  exit 1
+fi
+echo "Moving files..."
+cat $MOOname.log >> backup.logs/$MOOname.old_logs
+rm -f $MOOname.log
+echo "Starting server..."
+echo `date`: Restarted by $USER >> $MOOname.restart.log
+ulimit -n `ulimit -Hn`  # set the file-descriptor limit to the max allowed
+nohup ./moo $MOOname.db $MOOname.db 8888 > $MOOname.log 2>&1 &
+echo $! > moo.pid

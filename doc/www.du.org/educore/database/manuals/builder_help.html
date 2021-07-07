@@ -1,0 +1,1425 @@
+<HTML><HEAD><TITLE>Builder Help</TITLE></HEAD><BODY>
+
+<H1><HREF NAME="top">Builder Help</A></H1>
+
+<H2><A NAME="$mail_recipient">$mail_recipient</A></H2>
+
+<P>See: <A HREF="user_help.html#$mail_recipient">$mail_recipient</A> in General Help
+
+<H2><A NAME="@accept">@accept</A></H2>
+
+<P>See: <A HREF="#room-security">room-security</A>
+
+<H2><A NAME="@add-entrance">@add-entrance</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @add-entrance &lt;exit-object-number&gt;</TD></TR></TABLE>
+
+<P>Add the exit with the given object number as a recognized entrance to the current room (that is, one whose use is not considered teleportation).  Usually, @dig does this for you, but it doesn't if you don't own the room in question.  Instead, it tells you the object number of the new exit and you have to find the owner of the room and get them to use the @add-entrance command to link it up.
+
+<H2><A NAME="@add-exit">@add-exit</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @add-exit &lt;exit-object-number&gt;</TD></TR></TABLE>
+
+<P>Add the exit with the given object number as a conventional exit from the current room (that is, an exit that can be invoked simply by typing its name, like 'east').  Usually, @dig does this for you, but it doesn't if you don't own the room in question.  Instead, it tells you the object number of the new exit and you have to find the owner of the room and get them to use the @add-exit command to link it up.
+
+<H2><A NAME="@add-monitored">@add-monitored</A></H2>
+
+A set of functions in the Generic Room to monitor and maintain objects that need to stay in that room. The object then acts like it is magnetized to the room.
+
+<P><TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> @add-monitored &lt;object&gt; for here - to add an object to a room's list
+<BR>@remove-monitored &lt;object&gt; for here - to remove said object
+<BR>@list-monitored for here - shows you what objects are defined.</TD></TR></TABLE>
+
+<P>Sometimes, when you want to @add-monitored an object, the routine will tell you the object's home is improperly set. Use @sethome &lt;object&gt; to &lt;object&gt; to set that object's home. It can be to the room or to a container within the room. This is where the object will be returned when it is finished.
+
+<P>Related messages (in the room):
+<BR>&nbsp;&nbsp;&nbsp;@monitored_return here is ... - the message the forgetful person sees when leaving the room.
+<BR>&nbsp;&nbsp;&nbsp;@monitored_gohome here is ... - the message that should be seen in the room where the object should stay.
+
+
+<H2><A NAME="@add-owned">@add-owned</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @add-owned &lt;object&gt;</TD></TR></TABLE>
+
+<P>Adds an object to your .owned_objects property in case it managed not to get updated properly upon creation of that object.  Checks to ensure that the objects is really owned by you and otherwise belongs in your .owned_objects property. 
+
+<P><B>Related Topics:</B>
+<BR><A HREF="builder_help.html#@audit">@audit</A> -- list the objects you own
+
+<H2><A NAME="@add-owner">@add-owner</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @add-owner &lt;user&gt; for &lt;object&gt;
+<BR>@del-owner &lt;user&gt; for &lt;object&gt;</TD></TR></TABLE>
+
+<P>Add or remove an additional owner for the specified object.  You must be an owner of the object to use this command.  Ownership for character (user) objects can only be changed by wizards.
+
+<P>Additional owners have most of the same building abilities and control over the given object as the primary owner does.  They can rename the object, change its description, message, and properties, and can perform any owner-only operations/commands that the object is designed to support. Programming restrictions (such as changing verbs, adding or removing properties, etc) are not affected, however.
+
+<H2><A NAME="@audit">@audit</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @audit [&lt;person&gt;] [for &lt;string&gt;] [from &lt;number&gt;] [to &lt;number&gt;] [with bytes]</TD></TR></TABLE>
+
+<P>`@audit'        prints a report of all of the objects you own.
+<BR>`@audit &lt;person&gt;' prints the same report for another &lt;person&gt;.
+
+<P>The `for' string restricts the search to objects whose names begin with that string.
+<BR>It is also possible to restrict the range of object numbers to include only those above a given number (`from') or below a given number (`to').
+<BR>If "with bytes" is included, and byte measurement is implemented, includes object sizes in bytes since their last measurement.
+
+<P>All forms of @audit print a report:
+
+<P>&nbsp;&nbsp;&nbsp;#14 Gemba                          [The Pool]
+<BR>&nbsp;&nbsp;#144 Popgun                         [Gemba]
+<BR>&nbsp;#1479 Cockatoo                      *[The Living Room]
+<BR>&nbsp;#1673 Bottom of Swimming Pool       
+<BR>&nbsp;#2147 Cavern                        &lt;-*west
+<BR>&nbsp;#2148 tunnel                         Bottom of Swimming -&gt;Cavern
+
+<P>The first column is the object's number, the second its name. The third column shows the object's location: Gemba is in The Pool, and is carrying the Popgun (#144).
+<BR>For exits, the third column shows source -&gt;dest.
+<BR>For rooms, the third column shows any entrances owned by someone else.
+<BR>Object location, exit sources and destinations owned by another person are preceded by a *.
+
+<P>@audit uses a property .owned_objects on the user's character, for speed.  This property is updated at the time of each object creation and destruction and ownership change.  The verb @auditdb (same args as @audit) actually searches through the entire database for objects.
+
+<P><B>Related Topics:</B>
+
+<P><A HREF="prog_help.html#@prospectus">@prospectus</A> -- similar, but gives some additional information
+<BR><A HREF="manager_help.html#@verify-owned">@verify-owned</A> -- checks if all objects on your "owned_objects" list are yours
+<BR><A HREF="builder_help.html#@add-owned">@add-owned</A> -- adds an object to your "owned_objects" list, if it was missing
+<BR><A HREF="builder_help.html#@sort-owned">@sort-owned</A> --sorts your owned objects list by object number
+<BR><A HREF="builder_help.html#@auditDB">@auditDB</A> -- less efficient version of @audit, searches database directly
+<BR><A HREF="builder_help.html#@audit-weight">@audit-weight</A> -- size in bytes of an object or all someone's objects
+
+<H2><A NAME="@audit-weight">@audit-weight</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> @audit-weight [&lt;object&gt;] [for &lt;match-string&gt;]
+<BR>@aw</TD></TR></TABLE>
+
+<P>This command shows the size in bytes of the specified &lt;object&gt; or if &lt;object&gt; is a user character, shows the sizes of all the objects that person owns.  It uses the most recently measured size for the object, which may not be completely up to date.  
+
+<P>If no &lt;object&gt; is given, it defaults to the user character of the person issuing the command.
+
+<P>If a &lt;match-string&gt; is given, only objects whose name contains that string are listed.
+
+<P><B>Related Topics:</B>
+<BR><A HREF="builder_help.html#@audit">@audit</A> -- list objects someone owns; it has a "with bytes" option
+<BR><A HREF="builder_help.html#@measure">@measure</A> -- similar to @audit-weight but with more options; also it
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;can force a remeasurement of an object's size to update
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the saved value
+
+<H2><A NAME="@auditDB">@auditDB</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> @auditDB [&lt;person&gt;] [from &lt;start&gt;] [to &lt;end&gt;] [for &lt;matching string&gt;]</TD></TR></TABLE>
+
+<P>Returns a list of objects owned by &lt;person&gt;, optionally with object
+<BR>numbers between &lt;start&gt; and &lt;end&gt;, and with a name containing
+<BR>&lt;matching string&gt;.  If &lt;person&gt; is omitted, the person issuing the
+<BR>command is taken as default.
+
+<P>@auditDB functions like @audit, but instead of using the person's "owned_objects" list it searches the entire database directly.  This is inefficient, and should only be used if there is a reason to think the person's owned objects list is corrupted.
+
+<P><B>Related Topics:</B>
+<BR><A HREF="builder_help.html#@audit">@audit</A> -- a more efficient method of getting a list of a person's owned objects
+
+<H2><A NAME="@backup">@backup</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> @backup &lt;object&gt; to &lt;note&gt;
+<BR>@backup &lt;object&gt; to mail</TD></TR></TABLE>
+
+<P>&nbsp;&nbsp;Saves information about the &lt;object&gt; that can be used to recreate
+<BR>it in the event of its destruction.  The "to mail" format sends the
+<BR>backup text to the user by e-mail.  It is sent to the user's e-mail
+<BR>address (if valid) irregardless of their mail options settings.  The
+<BR>"to &lt;note&gt;" format requires the the user be able to write to the
+<BR>note.
+
+<H2><A NAME="@chparent">@chparent</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @chparent &lt;object&gt; to &lt;new parent&gt;</TD></TR></TABLE>
+
+<P>Changes the parent of the named object to be the named parent.  The object acquires all the verb and property definitions of its parent.  Newly acquired properties are initilialized with `clear' values so that they inherit whatever values are currently assigned to the parent's corresponding properties (see `help @clearproperty').
+
+<P>If the person does not own &lt;new parent&gt;, it must have been set `fertile'.  &lt;object&gt; must be owned by the person.  Neither &lt;object&gt; nor any descendant can define any property which already exist on &lt;new parent&gt;.  Use @check-chparent (see `help @check-chparent') to list such property conflicts.
+
+<P>It is also sometimes the case that you will own some object and want to @chparent some child of that object that you do not own.  Use @disinherit (see `help @disinherit') in such situations.
+
+<H2><A NAME="@classes">@classes</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @classes
+<BR>@classes &lt;class-name&gt; ...</TD></TR></TABLE>
+
+<P>The administrators have identified several useful classes of objects in the database.  The @classes command is used to see which classes exist and what their member objects are.
+
+<P>The first form simply lists all of the defined classes along with short descriptions of the membership of each.
+
+<P>The second form prints an indented listing of that subset of the object parent/child hierarchy containing the objects in the class(es) you specify.
+
+<P>Note that unless it has been modified by the local administration, the @classes command only identifies objects associated with the original eduCore.
+
+<H2><A NAME="@close">@close</A></H2>
+
+<P>See: <A HREF="#room-security">room-security</A>
+
+<H2><A NAME="@contents">@contents</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @contents object</TD></TR></TABLE>
+
+<P>A quick way to find out the contents of an object.  Prints out the names and object numbers of all direct contents.  This can be useful when you need to refer to something by object number because something is wrong with its aliases.
+
+<P><B>Example:</B>
+<BR>&nbsp;&nbsp;@contents here
+<BR>&nbsp;&nbsp;The Entrance Hall(#19) contains:
+<BR>&nbsp;&nbsp;Strasbourg Clock(#71)   mirror at about head height(#7444)
+
+<H2><A NAME="@count">@count</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @count 
+<BR>@countDB</TD></TR></TABLE>
+
+<P>Prints out the number of objects you own.  Do not be surprised if this is one larger than you think it should be: remember that your character object is owned by you as well, even though you didn't create it in the usual way.
+
+<P>The @countDB form searches the whole database for objects you own, which is less efficient, but can be useful to determine if your "owned_objects" list is incorrect.  The results from @count and @countDB should be identical, else there are errors in your "owned_objects" list.
+
+<H2><A NAME="@countDB">@countDB</A></H2>
+
+<P>See: <A HREF="#@count">@count</A>
+
+<H2><A NAME="@create">@create</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @create &lt;class-name&gt; named "&lt;names&gt;"
+<BR>@create &lt;parent-object&gt; named "&lt;names&gt;"</TD></TR></TABLE>
+
+<P>The main command for creating objects other than rooms and exits (for them, see 'help @dig'; it's much more convenient).
+
+<P>The first argument specifies the 'parent' of the new object: loosely speaking, the 'kind' of object you're creating.  &lt;class-name&gt; is one of the four standard classes of objects: $note, $letter, $thing, or $container.  As time goes on, more 'standard classes' may be added.  If the parent you have in mind for your new object isn't one of these, you may use the parent's name (if it's in the same room as you) or else its object number (e.g., #4562).
+
+<P>The &lt;names&gt; are given in the same format as in the @rename command:
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;name-and-alias&gt;,&lt;alias&gt;,...,&lt;alias&gt; [preferred]
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;name&gt;:&lt;alias&gt;,...,&lt;alias&gt; [not preferred]
+
+<P>See 'help @rename' for a discussion of the difference between a name and an alias.
+
+<H2><A NAME="@del-owner">@del-owner</A></H2>
+
+<P>See: <A HREF="#@add-owner">@add-owner</A>
+
+<H2><A NAME="@deny">@deny</A></H2>
+
+<P>See: <A HREF="#room-security">room-security</A>
+
+<H2><A NAME="@dig">@dig</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @dig "&lt;new-room-name&gt;"
+<BR>@dig &lt;exit-spec&gt; to "&lt;new-room-name&gt;"
+<BR>@dig &lt;exit-spec&gt; to &lt;old-room-object-number&gt;</TD></TR></TABLE>
+
+<P>This is the basic building tool.  The first form of the command creates a new room with the given name.  The new room is not connected to anywhere else; it is floating in limbo.  The @dig command tells you its object number, though, so you can use the @move command to get there easily.
+
+<P>The second form of the command not only creates the room, but one or two exits linking your current location to (and possibly from) the new room.  An &lt;exit-spec&gt; has one of the following two forms:
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;names&gt;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;names&gt;|&lt;names&gt;
+<BR>where the first form is used when you only want to create one exit, from your current room to the new room, and the second form when you also want an exit back, from the new room to your current room.  In any case, the &lt;names&gt; piece is just a list of names for the exit, separated by commas; these are the names of the commands people can type to use the exit.  It is usually a good idea to include explicitly the standard abbreviations for direction names (e.g., 'n' for 'north', 'se' for 'southeast', etc.).  DO NOT put spaces in the names of exits; they are useless in MOO. The "&lt;names&gt; or "&lt;names&gt;|&lt;names&gt;" should have no spaces in it at all (see the examples below).
+
+<P>The third form of the command is just like the second form except that no new room is created; you instead specify by object number the other room to/from which the new exits will connect.
+
+<P>NOTE: You must own the room at one end or the other of the exits you create.  If you own both, everything is hunky-dorey.  If you own only one end, then after creating the exits you should write down their object numbers.  You must then get the owner of the other room to use @add-exit and @add-entrance to link your new exits to their room. If you are digging from a public space (a hallway in a building for instance), you can contact any wizard to connect you.
+
+<P><B>Examples:</B>
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;@dig "The Conservatory"
+<BR>creates a new room named "The Conservatory" and prints out its object number.
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;@dig north,n to "The North Pole"
+<BR>creates a new room and also an exit linking the person's current location to the new room; people would say either 'north' or 'n' to get from here to the new room.  No way to get back from that room is created.
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;@dig west,w|east,e,out to "The Department of Auto-Musicology"
+<BR>creates a new room and two exits, one taking people from here to the new room (via the commands 'west' or 'w') and one taking them from the new room to here (via 'east', 'e', or 'out').
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;@dig up,u to #7164
+<BR>creates an exit leading from the person's current room to #7164, which must be an existing room.
+
+<H2><A NAME="@disinherit">@disinherit</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">   @disinherit &lt;object&gt; 
+<BR>@disinherit &lt;object&gt; [from &lt;parent&gt;]</TD></TR></TABLE>
+
+<P>Synonym:  @disown
+
+<P>This command is used to remove an unwanted child from an object you own.  If you owned said child, you could use @chparent; this command is to cover the other case, namely where you don't own the child.  
+
+<P>Both forms of this command chparent &lt;object&gt; to its grandparent, provided you own the parent.  The second form matches the string you supply for &lt;object&gt; against the list of children of the given &lt;parent&gt;.
+
+<P>Turning off the fertile bit (.f) for a particular object prevents others from creating children of it or chparenting to it (see `help @chmod').
+<BR>Note also that, though the name might seem to indicate otherwise, this command does not change the ownership of any object.
+
+<H2><A NAME="@disown">@disown</A></H2>
+
+<P>See: <A HREF="#@disinherit">@disinherit</A>
+
+<H2><A NAME="@display">@display</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> @display &lt;object&gt;.[property]
+<BR>,[inherited_property]
+<BR>:[verb]
+<BR>;[inherited_verb]</TD></TR></TABLE>
+
+<P>@display is a fancy version of @show.  As @show, it can select individual verbs or properties to display.  In addition, it can display all the verbs or properties defined on an object, or all the verbs or properties defined on any of the object's ancestors.  Don't specify a property or verbname after the punctuation mark to get the "all" feature.  Its display is more compact than that of @show (it uses a one-line format, and truncates values that don't fit in the value field).
+
+<P>You may mix properties and verbs on the command line, but the parser may become confused.  (E.g. @display object,: displays all properties including inherited ones plus all locally defined verbs on the object.)
+
+<P><B>Examples:</B>
+<BR>Individual property:
+<BR>&nbsp;&nbsp;@display poolsweep.count
+<BR>&nbsp;&nbsp;.count                   yduJ (#68)            r c    8
+
+<P>Individual verb:
+<BR>&nbsp;&nbsp;@display poolsweep:tell
+<BR>&nbsp;&nbsp;#3560:tell                     yduJ (#68)           rxd    this none this
+
+<P>All properties, including one truncated value:
+<BR>&nbsp;&nbsp;@display poolsweep.
+<BR>&nbsp;&nbsp;poolsweep (#3560) [ readable ]
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;Owned by yduJ (#68).
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;Child of generic thing (#5).
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;Location The Pool (#1428).
+<BR>&nbsp;&nbsp;.gagged                  yduJ (#68)            r c    0
+<BR>&nbsp;&nbsp;.count                   yduJ (#68)            r c    8
+<BR>&nbsp;&nbsp;.messages                yduJ (#68)            r c    {"The poolsweep stir..
+<BR>&nbsp;&nbsp;.index                   yduJ (#68)            r c    2
+<BR>&nbsp;&nbsp;.quantum                 yduJ (#68)            r c    20
+
+<P>Inherited verbs, edited for brevity, showing verbs from various parents, with owners, permissions, and argument lists.
+<BR>&nbsp;&nbsp;@d poolsweep;
+<BR>&nbsp;&nbsp;poolsweep (#3560) [ readable ]
+<BR>&nbsp;&nbsp;&nbsp;#3560:tell                     yduJ (#68)           rxd    this none this
+<BR>&nbsp;&nbsp;&nbsp;#3560:description              yduJ (#68)           rxd    this none this
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#5:"g*et t*ake"             Haakon (#2)          rxd    this none none
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#5:"d*rop th*row"           Haakon (#2)          rxd    this none none
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#5:moveto                   Haakon (#2)          rxd    this none this
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#1:description              Haakon (#2)          rxd    this none this
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#1:look_self                Haakon (#2)          rxd    this none this
+
+<P>Some aspects of @display can be customized (see `help @display-options').
+
+<H2><A NAME="@eject">@eject</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> @eject[!][!] &lt;object&gt; [from &lt;place&gt;]</TD></TR></TABLE>
+
+<P>This command is used to remove unwanted objects from places you own.  People thus removed are unceremoniously dumped in their homes (unless that's this room, in which case they are dumped in the default character starting place).  Other kinds of objects are checked for a .home property and sent there if possible, otherwise they get thrown into $nowhere.  Unlike @move, @eject does *not* check to see if the object wants to be moved, and with the destination being what it is, there is no question of the destination refusing the move, either.  Generally, you should only resort to @eject if @move doesn't work.
+
+<P>`@eject &lt;object&gt;' removes &lt;object&gt; from the current room, whereas `@eject &lt;object&gt; from &lt;place&gt;' removes the object from the specified location (in most cases, &lt;place&gt; will need to be specified as an object number).  In either case, this command only works if you own the room/entity from which the object is being ejected.
+
+<P>`@eject ... from me' suffices to get rid of some unwanted object in your inventory.
+
+<P>The verbs @eject! and @eject!! are provided for those rare situations in which @eject does not work.  @eject! does not check for .home properties, sending the offending object to #-1 immediately, but with a notification.  @eject!! is just like @eject! but provides no notification to the object.
+
+<P>See 'help room-messages' for a list of messages one can set regarding the @eject command.
+
+<H2><A NAME="@eject!">@eject!</A></H2>
+
+<P>See: <A HREF="#@eject">@eject</A>
+
+<H2><A NAME="@eject!!">@eject!!</A></H2>
+
+<P>See: <A HREF="#@eject">@eject</A>
+
+<H2><A NAME="@entrances">@entrances</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @entrances</TD></TR></TABLE>
+
+<P>Prints a list of all recognized entrances to the current room (but only if you own the room).  A recognized entrance is one whose use is not considered to be teleportation.
+
+<H2><A NAME="@exclude">@exclude</A></H2>
+
+<P>See: <A HREF="#room-security">room-security</A>
+
+<H2><A NAME="@exits">@exits</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @exits</TD></TR></TABLE>
+
+<P>Prints a list of all conventional exits from the current room (but only if you own the room).  A conventional exit is one that can be used simply by typing its name, like 'east'.
+
+<H2><A NAME="@invitations">@invitations</A></H2>
+
+<P>See: <A HREF="#@invites">@invites</A>
+
+<H2><A NAME="@invite">@invite</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> @invite &lt;person&gt;
+<BR>or  @invite &lt;person&gt; for &lt;time&gt;</TD></TR></TABLE>
+
+<P>Invite the specified person to join you in your current location.  This is often used as the response to a @knock.  &lt;time&gt;, if provided specifies the amount of time that the room should be held open for the person to enter.  It should be a time interval in the format "&lt;number&gt; &lt;unit&gt; [&lt;number&gt; &lt;unit&gt;]", where &lt;number&gt; is a number and &lt;unit&gt; specifies hours/minutes/seconds/etc. (such as "1 hour 20 minutes").  The time interval may range from seconds to weeks, months, and years.
+
+<P>The @invite command allows you to bypass the room's current security settings (if you control the room) for the specified amount of time, letting an invited person in regardless of how the other security on the room is set up.  After the time interval expires, the security settings automatically revert to normal (basically, like a temporary @accept that you don't have to worry about forgetting to undo).
+
+<P>If you do not specify a &lt;time&gt;, the default is 15 minutes.
+
+<P>There are a couple of settable messages you can use to customize your invitations:
+<BR>&nbsp;&nbsp;@invitation me is "&lt;message&gt;" - What the invitee sees when you invite them.
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;%@ is substituted with the time interval.
+<BR>&nbsp;&nbsp;@oinvite me is "&lt;message&gt;"    - What others in your room see when you invite
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;someone into the room.
+
+<H2><A NAME="@invites">@invites</A></H2>
+
+All invitations you do with @invite that require the invited person to join within a given time frame to join without conflicting with possible room security settings can be looked at with this verb.
+
+<P><TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> @invites
+<BR>or  @invitations</TD></TR></TABLE>
+
+<P>You may only see the invitation lists of rooms you control or own.
+
+<P>Please consult "help @invite" and "help @uninvite" for more information.
+
+<H2><A NAME="@kids">@kids</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @kids object</TD></TR></TABLE>
+
+<P>A quick way to find out the children of an object.  Prints out the names and object numbers of the found children.  Note: this is not a list of all descendents, just direct children.
+
+<P><B>Example:</B>
+<BR>&nbsp;&nbsp;@kids #3107
+<BR>&nbsp;&nbsp;Generic Body of Chlorinated Water(#3107) has 3 kids.
+<BR>&nbsp;&nbsp;The Pool(#1428)   The Hot Tub(#388)   Deep Blue Underground Pool(#17340)
+
+<H2><A NAME="@locations">@locations</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @locations object</TD></TR></TABLE>
+
+<P>Prints out the names and object numbers of all containing objects.
+
+<P><B>Example:</B>
+<BR>&nbsp;&nbsp;@locations ur-Rog
+<BR>&nbsp;&nbsp;ur-Rog(#6349)   ur-Rog's Display Case(#6355)   Editorial Boardroom(#5747)
+
+<H2><A NAME="@lock">@lock</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @lock &lt;object&gt; with &lt;key expression&gt;</TD></TR></TABLE>
+
+<P>Set a lock on &lt;object&gt; to restrict its use.  See 'help locking' for general information about locking and 'help keys' for the syntax and semantics of key expressions.
+
+<P><B>Related Topics:</B>
+<BR><A HREF="builder_help.html#keys">keys</A> -- how to create a &lt;key-expression&gt; for locks
+<BR><A HREF="builder_help.html#@unlock">@unlock</A> -- clearing the lock on an object
+<BR><A HREF="builder_help.html#@security">@security</A> -- a sophisticated room security system, outlined here
+
+<P>[N.B.  In the case of rooms, you are actually better off setting room.free_entry to 0 thus preventing teleportation and then @locking the various entrances.  The problem with @locking the room itself is that this can make it impossible to drop objects in the room.]
+
+<P>eduCore:  A vastly improved security system is available for rooms through the @security system.  We suggest you use only the @security system for room security and not apply any @lock or other outdated schemes.  
+
+<H2><A NAME="@lock_for_open">@lock_for_open</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">
+<BR>@lock_for_open &lt;container&gt; with &lt;key expression&gt;</TD></TR></TABLE>
+
+<P>Set the lock on &lt;container&gt; which restricts who can open it.  See 'help locking' for general information about locking and 'help keys' for the syntax and semantics of key expressions.
+
+<P>See 'help containers' for information on containers.
+
+<H2><A NAME="@measure">@measure</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> @measure object &lt;object name&gt;
+<BR>@measure summary &lt;person&gt;
+<BR>@measure new &lt;person&gt;
+<BR>@measure breakdown &lt;object name&gt;</TD></TR></TABLE>
+
+<P>A collection of routines to measure the sizes in bytes of objects in the database.  This provides a good measure of just how much real memory space objects are taking up.  Note that object sizes are cached and only updated periodically.  You can force an immediate remeasurement with the "@measure object" varient.  
+
+<P>@measure object - updates the stored object size and reports the result
+<BR>@measure summary -  reports total owned object size in bytes, and the time last surveyed
+<BR>@measure new - measures objects the &lt;person&gt; owns that have not ever been measured
+<BR>@measure breakdown - gives detailed technical info on sizes of each part of an object
+
+<P><B>Related Topics:</B>
+<BR><A HREF="builder_help.html#@audit">@audit</A> -- You can also append "with bytes" to the @audit command to see byte sizes
+<BR><A HREF="builder_help.html#@audit-weight">@audit-weight</A> -- a quick sorted summary of objects' sizes in bytes
+
+<H2><A NAME="@newmessage">@newmessage</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @newmessage &lt;message-name&gt; [&lt;message&gt;] [on &lt;object&gt;]</TD></TR></TABLE>
+
+<P>Add a message property to an object (default is the character issuing the command), and optionally set its value.  For use by non-programmers, who aren't allowed to add properties generally.  
+
+<P><B>Related Topics:</B>
+<BR><A HREF="builder_help.html#@unmessage">@unmessage</A> -- removes a message property from an object
+
+<H2><A NAME="@opacity">@opacity</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">
+<BR>@opacity &lt;container&gt; is &lt;integer&gt;</TD></TR></TABLE>
+
+<P>The opacity can take on one of three values:
+<BR>&nbsp;&nbsp;&nbsp;0:  The container is transparent and you can always see into it.
+<BR>&nbsp;&nbsp;&nbsp;1:  The container is opaque, and you cannot see into it when closed
+<BR>&nbsp;&nbsp;&nbsp;2:  The container is a black hole, and you can never see into it whether closed or open.  
+
+<P>The default @opacity is 1.
+
+<H2><A NAME="@open">@open</A></H2>
+
+<P>See: <A HREF="#room-security">room-security</A>
+
+<H2><A NAME="@parents">@parents</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @parents object</TD></TR></TABLE>
+
+<P>A quick way to find out the ancestry of an object.  Prints out the names and object numbers of all ancestors.
+
+<P><B>Example:</B>
+<BR>&nbsp;&nbsp;@parents Haakon
+<BR>&nbsp;&nbsp;Haakon(#2)   generic wizard(#218)   generic programmer(#217)   generic 
+<BR>&nbsp;&nbsp;player(#6)   Root Class(#1)
+
+<H2><A NAME="@personal">@personal</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> @personal
+<BR>@personal &lt;person&gt;
+<BR>@personal &lt;object&gt;</TD></TR></TABLE>
+
+<P>&nbsp;&nbsp;This command can be used to list or mark objects that are personal.
+<BR>Using "@personal" alone lists your objects that are marked personal.
+<BR>If you specify a person then that person's personal objects are
+<BR>listed.  If you specify an object however, it toggles that object as
+<BR>being either personal or part of a project.
+<BR>&nbsp;&nbsp;Check the help information for "project-system" for more details on
+<BR>personal and project objects and quota.  Note that once the project
+<BR>system is fully implemented, the @personal command will be extraneous
+<BR>and removed.
+<BR>&nbsp;&nbsp;Synonymous command: @private
+
+<H2><A NAME="@private">@private</A></H2>
+
+<P>See: <A HREF="#@personal">@personal</A>
+
+<H2><A NAME="@publicize">@publicize</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> @publicize</TD></TR></TABLE>
+
+<P>This command sets all your owned objects "readable" in the sense that programmers can then examine the characteristics of it that aren't specifically set unreadable.  This does not allow people to read note text, for instance, since that is specifically set to be unreadable even if the object itself is "readable." 
+
+<P>This command is generally only relevent for programmers who have been making unreadable objects, and now wish to enable other programmers to be able to examine their work.
+
+<H2><A NAME="@quota">@quota</A></H2>
+
+To get a larger quota, talk to a wizard.  They will take a look at what you've done with the objects you've built so far and make a determination about whether or not it would be a net gain for the MOO community if you were to build some more things.  If so, they will increase your quota; if not, they will try to explain some ways in which you could build things that were more useful, entertaining, or otherwise interesting to other people.  Wizards may be more impressed by objects which are interactive and employ a fair number of verbs.
+
+<P>Also see: <A HREF="local_help.html#quota">quota</A> in Local Help
+
+<H2><A NAME="@realm">@realm</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> @realm [owners] [from root] [missing descendants]</TD></TR></TABLE>
+
+<P>Displays a part of the parenting tree of objects on the MOO, i.e. all
+<BR>the descendants of a given object owned by particular people.
+
+<P>owners:      a list of people whose objects you are interested in. If
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;one of these is * or !, @realm will display objects only if
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;they belong to people you didn't mention. (defaults to you)
+<BR>root:        the object which is an ancestor of all the objects you are
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;interested in. (defaults to $root_class).
+<BR>descendants: a list of objects (descendants of root) which you are not
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;interested in. Neither they nor their descendants will be
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;displayed.
+
+<P>@realm also displays the objects which are ancestors of root, and, if it
+<BR>is not redundant, the owners of all objects. @realm has a habit of
+<BR>running out of ticks if you try displaying large chunks of the MOO.
+
+<H2><A NAME="@recreate">@recreate</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> @recreate &lt;object&gt; as &lt;parent&gt; named &lt;name spec&gt;</TD></TR></TABLE>
+
+<P>This is a combination of @create and @chparent.  It takes an existing object, completely strips it of any verbs, properties, and values for inherited properties.  This object is then reshaped into a child of the parent specified, as though @create had been called, but retaining the same object number as the original.
+
+<P>The &lt;parent&gt; and &lt;name spec&gt; arguments are as in @create.
+
+<H2><A NAME="@recycle">@recycle</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @recycle &lt;object-name-or-number&gt;</TD></TR></TABLE>
+
+<P>Destroys the indicated object utterly .  Naturally, you may only do this to objects that you own.
+
+<P>Until the object has been recreated in some new form, it is available to the "@unrecycle" command.
+
+<H2><A NAME="@remove-entrance">@remove-entrance</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @remove-entrance &lt;entrance&gt;</TD></TR></TABLE>
+
+<P>Remove the specified entrance from the current entrances list of the room.  Entrance may be either the name or object number of an entrance to this room.
+
+<H2><A NAME="@remove-exit">@remove-exit</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @remove-exit &lt;exit&gt;</TD></TR></TABLE>
+
+<P>Remove the specified exit from the current exits list of the room.  Exit may be either the name or object number of an exit from this room.
+
+<H2><A NAME="@residents">@residents</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> @resident &lt;person&gt;
+<BR>@resident !&lt;person&gt;
+<BR>@resident
+<BR>@residents</TD></TR></TABLE>
+
+<P>Adds or removes a person from the residents list of a room.  The residents list controls who is allowed to use @sethome in that room.  This defaults to just the owner of the room; by manipulating the residents list you may allow additional people to use that room as their home.
+
+<P>Some other systems besides @sethome use a room's residents list.  For instance, self-cleaning rooms will often assume that any object listed among a room's residents shouldn't be ejected.  The @resident command will accept any object, and not just people's characters.
+
+<P>@resident &lt;person&gt;  -  adds that person to the list.  
+<BR>@resident !&lt;person&gt;  -  removes that &lt;person&gt; from the list.
+<BR>@resident with no arguments (or just @residents) simply displays the current list (which may be "none", indicating no additional people besides the owner may use that room as their home).
+
+<P><B>Related Topics:</B>
+<BR><A HREF="user_help.html#@sethome">@sethome</A> -- set a particular room as your character's home
+
+<H2><A NAME="@security">@security</A></H2>
+
+<P>See: <A HREF="#room-security">room-security</A>
+
+<H2><A NAME="@set">@set</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @set &lt;object&gt;.&lt;prop-name&gt; to &lt;value&gt;</TD></TR></TABLE>
+
+<P>Changes the value of the specified object's property to the given value.
+
+<P>If no &lt;value&gt; is given, then the user is prompted for lines of text.  This can be used for setting a text property.
+
+<P>You must have permission to modify the property, either because you own the property or if it is writable.
+
+<P>@set is a valid abbreviation for @setprop.
+
+<P>Also see: <A HREF="#@setprop">@setprop</A>
+
+<H2><A NAME="@set-domain">@set-domain</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> @set-domain &lt;room&gt; to &lt;domain&gt;
+<BR>@set-domain</TD></TR></TABLE>
+
+<P>This command (and it's alias @setdomain) set the domain for the
+<BR>specified room.  The &lt;room&gt; can be omitted to mean "where I am." The
+<BR>first form sets the domain directly, while the second invokes an
+<BR>interactive domain setting session.  Use "help domain-system" for
+<BR>more complete information on the domain system in general.
+
+<P><B>Related Topics:</B>
+
+<P>@domain - shows what domain a person or object is in
+<BR>@domains - shows the domplete set of enclosing domains
+
+<H2><A NAME="@setprop">@setprop</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @set &lt;object&gt;.&lt;prop-name&gt; to &lt;value&gt;</TD></TR></TABLE>
+
+<P>Changes the value of the specified object's property to the given value.
+
+<P>If no &lt;value&gt; is given, then the user is prompted for lines of text.  This can be used for setting a text property.
+
+<P>You must have permission to modify the property, either because you own the property or if it is writable.
+
+
+<H2><A NAME="@sort-owned">@sort-owned</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @sort-owned</TD></TR></TABLE>
+
+<P>Sorts your .owned_objects property so @audit shows up sorted.  See help @audit for more information.
+
+<H2><A NAME="@uninvite">@uninvite</A></H2>
+
+With @uninvite you may revoke invitations given with the "@invite &lt;person&gt; for &lt;time&gt;" syntax (which disables room security for &lt;person&gt; for the specified &lt;time&gt;).
+
+<P><TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> @uninvite &lt;person&gt;</TD></TR></TABLE>
+
+<P>This only works from within rooms you own, of course, which means that you can only revoke invitations you made yourself. You can alway obtain an inivtation list for a room you own with @invites.
+
+<P>Also see "help @invite" and "help @invites".
+
+<H2><A NAME="@unlock">@unlock</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @unlock &lt;object&gt;</TD></TR></TABLE>
+
+<P>Clear any lock that might exist on the given object.  See 'help locking' for general information about locking.
+
+<H2><A NAME="@unlock_for_open">@unlock_for_open</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">
+<BR>@unlock_for_open &lt;container&gt;</TD></TR></TABLE>
+
+<P>Clears the lock which restricts who may open &lt;container&gt;.  See 'help locking' for general information about locking. 
+
+<P>See 'help containers' for information on containers.
+
+<H2><A NAME="@unmessage">@unmessage</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @unmessage &lt;message-name&gt; [from &lt;object&gt;]</TD></TR></TABLE>
+
+<P>Remove a message property from an object (default is the character issuing the command).
+
+<P><B>Related Topics:</B>
+<BR><A HREF="builder_help.html#@newmessage">@newmessage</A> -- adds a message property to an object
+
+<H2><A NAME="@unrecycle">@unrecycle</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @unrecycle &lt;object-number&gt;</TD></TR></TABLE>
+
+<P>Restores a previously recycled object and information stored on it, if it is still available.  As the term "recycling" suggests, objects that undergo that process will be available to be used again by any user.  Once an object you recycled is used for a new object you can not restore it.
+
+<P>You can only unrecycle objects you previously recycled (and hence owned).
+
+<H2><A NAME="@verify-owned">@verify-owned</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @verify-owned</TD></TR></TABLE>
+
+<P>Checks that all the objects in your .owned_objects property are actually owned by you, and effects repairs if needed.  See help @audit for more information.
+
+<H2><A NAME="builder-index">builder-index</A></H2>
+
+<TABLE BORDER=0 CELLSPACING=6>
+<TR><TD VALIGN="TOP"><A HREF="#$mail_recipient">$mail_recipient</A></TD><TD VALIGN="TOP"><A HREF="#@eject">@eject</A></TD><TD VALIGN="TOP"><A HREF="#@recycle">@recycle</A></TD><TD VALIGN="TOP"><A HREF="#encrypt">encrypt</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#@accept">@accept</A></TD><TD VALIGN="TOP"><A HREF="#@eject!">@eject!</A></TD><TD VALIGN="TOP"><A HREF="#@remove-entrance">@remove-entrance</A></TD><TD VALIGN="TOP"><A HREF="#exit-messages">exit-messages</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#@add-entrance">@add-entrance</A></TD><TD VALIGN="TOP"><A HREF="#@eject!!">@eject!!</A></TD><TD VALIGN="TOP"><A HREF="#@remove-exit">@remove-exit</A></TD><TD VALIGN="TOP"><A HREF="#exit-transparency">exit-transparency</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#@add-exit">@add-exit</A></TD><TD VALIGN="TOP"><A HREF="#@entrances">@entrances</A></TD><TD VALIGN="TOP"><A HREF="#@residents">@residents</A></TD><TD VALIGN="TOP"><A HREF="#exits">exits</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#@add-monitored">@add-monitored</A></TD><TD VALIGN="TOP"><A HREF="#@exclude">@exclude</A></TD><TD VALIGN="TOP"><A HREF="#@security">@security</A></TD><TD VALIGN="TOP"><A HREF="#fertile-objects">fertile-objects</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#@add-owned">@add-owned</A></TD><TD VALIGN="TOP"><A HREF="#@exits">@exits</A></TD><TD VALIGN="TOP"><A HREF="#@set">@set</A></TD><TD VALIGN="TOP"><A HREF="#gopher">gopher</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#@add-owner">@add-owner</A></TD><TD VALIGN="TOP"><A HREF="#@invitations">@invitations</A></TD><TD VALIGN="TOP"><A HREF="#@set-domain">@set-domain</A></TD><TD VALIGN="TOP"><A HREF="#inheritance">inheritance</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#@audit">@audit</A></TD><TD VALIGN="TOP"><A HREF="#@invite">@invite</A></TD><TD VALIGN="TOP"><A HREF="#@setprop">@setprop</A></TD><TD VALIGN="TOP"><A HREF="#keys">keys</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#@audit-weight">@audit-weight</A></TD><TD VALIGN="TOP"><A HREF="#@invites">@invites</A></TD><TD VALIGN="TOP"><A HREF="#@sort-owned">@sort-owned</A></TD><TD VALIGN="TOP"><A HREF="#letters">letters</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#@auditDB">@auditDB</A></TD><TD VALIGN="TOP"><A HREF="#@kids">@kids</A></TD><TD VALIGN="TOP"><A HREF="#@uninvite">@uninvite</A></TD><TD VALIGN="TOP"><A HREF="#locking">locking</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#@backup">@backup</A></TD><TD VALIGN="TOP"><A HREF="#@locations">@locations</A></TD><TD VALIGN="TOP"><A HREF="#@unlock">@unlock</A></TD><TD VALIGN="TOP"><A HREF="#mail">mail</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#@chparent">@chparent</A></TD><TD VALIGN="TOP"><A HREF="#@lock">@lock</A></TD><TD VALIGN="TOP"><A HREF="#@unlock_for_open">@unlock_for_open</A></TD><TD VALIGN="TOP"><A HREF="#mail-recipients">mail-recipients</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#@classes">@classes</A></TD><TD VALIGN="TOP"><A HREF="#@lock_for_open">@lock_for_open</A></TD><TD VALIGN="TOP"><A HREF="#@unmessage">@unmessage</A></TD><TD VALIGN="TOP"><A HREF="#messages">messages</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#@close">@close</A></TD><TD VALIGN="TOP"><A HREF="#@measure">@measure</A></TD><TD VALIGN="TOP"><A HREF="#@unrecycle">@unrecycle</A></TD><TD VALIGN="TOP"><A HREF="#misc-builder-info">misc-builder-info</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#@contents">@contents</A></TD><TD VALIGN="TOP"><A HREF="#@newmessage">@newmessage</A></TD><TD VALIGN="TOP"><A HREF="#@verify-owned">@verify-owned</A></TD><TD VALIGN="TOP"><A HREF="#negative_quota">negative_quota</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#@count">@count</A></TD><TD VALIGN="TOP"><A HREF="#@opacity">@opacity</A></TD><TD VALIGN="TOP"><A HREF="#builder-index">builder-index</A></TD><TD VALIGN="TOP"><A HREF="#ownership">ownership</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#@countDB">@countDB</A></TD><TD VALIGN="TOP"><A HREF="#@open">@open</A></TD><TD VALIGN="TOP"><A HREF="#builder-summary">builder-summary</A></TD><TD VALIGN="TOP"><A HREF="#project-system">project-system</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#@create">@create</A></TD><TD VALIGN="TOP"><A HREF="#@parents">@parents</A></TD><TD VALIGN="TOP"><A HREF="#building">building</A></TD><TD VALIGN="TOP"><A HREF="#room-messages">room-messages</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#@del-owner">@del-owner</A></TD><TD VALIGN="TOP"><A HREF="#@personal">@personal</A></TD><TD VALIGN="TOP"><A HREF="#common_quota">common_quota</A></TD><TD VALIGN="TOP"><A HREF="#room-security">room-security</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#@deny">@deny</A></TD><TD VALIGN="TOP"><A HREF="#@private">@private</A></TD><TD VALIGN="TOP"><A HREF="#container-messages">container-messages</A></TD><TD VALIGN="TOP"><A HREF="#room-security-examples">room-security-examples</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#@dig">@dig</A></TD><TD VALIGN="TOP"><A HREF="#@publicize">@publicize</A></TD><TD VALIGN="TOP"><A HREF="#containers">containers</A></TD><TD VALIGN="TOP"><A HREF="#rooms">rooms</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#@disinherit">@disinherit</A></TD><TD VALIGN="TOP"><A HREF="#@quota">@quota</A></TD><TD VALIGN="TOP"><A HREF="#creation">creation</A></TD><TD VALIGN="TOP"><A HREF="#thing-messages">thing-messages</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#@disown">@disown</A></TD><TD VALIGN="TOP"><A HREF="#@realm">@realm</A></TD><TD VALIGN="TOP"><A HREF="#decrypt">decrypt</A></TD><TD VALIGN="TOP"><A HREF="#topology">topology</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#@display">@display</A></TD><TD VALIGN="TOP"><A HREF="#@recreate">@recreate</A></TD><TD VALIGN="TOP"><A HREF="#domain-system">domain-system</A></TD><TD></TD></TR>
+</TABLE>
+
+<H2><A NAME="builder-summary">builder-summary</A></H2>
+
+Help summaries that provide background information and point to relevent commands can be found under the following help topics:
+
+<P><A HREF="builder_help.html#creation">creation</A> -- making, unmaking, and listing your rooms, exits, and other objects
+<BR><A HREF="builder_help.html#ownership">ownership</A> -- an explanation of object ownership
+<BR><A HREF="user_help.html#descriptions">descriptions</A> -- setting the names and descriptive texts for new objects
+<BR><A HREF="builder_help.html#topology">topology</A> -- making and listing the connections between rooms and exits
+<BR><A HREF="builder_help.html#room-security">room-security</A> -- describes the available advanced room security features
+<BR><A HREF="builder_help.html#exits">exits</A> -- extensive notes on exits for builders
+<BR><A HREF="prog_help.html#domain-system">domain-system</A> -- details of the domain system that groups rooms
+<BR><A HREF="prog_help.html#locking">locking</A> -- controlling use of and access to your objects
+<BR><A HREF="manager_help.html#VSPO">VSPO</A> -- management of VSPO characters
+<BR><A HREF="wiz_help.html#mail-recipients">mail-recipients</A> -- creating and managing mail folders and mail lists
+<BR><A HREF="builder_help.html#misc-builder-info">misc-builder-info</A> -- things that didn't fit into any other catagory
+
+<H2><A NAME="building">building</A></H2>
+
+There are a number of commands available to people for building new parts of the MOO.  Help on them is available under the following topics:
+
+<P><A HREF="builder_help.html#creation">creation</A> -- making, unmaking, and listing your rooms, exits, and other objects
+<BR><A HREF="builder_help.html#topology">topology</A> -- making and listing the connections between rooms and exits
+<BR><A HREF="user_help.html#descriptions">descriptions</A> -- setting the names and descriptive texts for new objects
+<BR><A HREF="prog_help.html#locking">locking</A> -- controlling use of and access to your objects
+
+<P>Also see: <A HREF="local_help.html#building">building</A> in Local Help
+
+<H2><A NAME="common_quota">common_quota</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @quota</TD></TR></TABLE>
+
+<P>Each person has a limit as to how many objects that person may create, called their 'quota'.  Every object they create lowers the quota by one and every object they recycle increases it by one.  If the quota goes to zero, then that person may not create any more objects (unless, of course, they recycle some first).
+
+<P>The @quota command prints out your current quota.
+
+<P>The quota mechanism is intended to solve a long-standing problem in many VR worlds: database bloat.  The problem is that a large number of people build a large number of dull objects and areas that are subsequently never used or visited.  The database becomes quite large and difficult to manage without getting substantially more interesting.  With the quota system, we can make it possible for people to experiment and learn while simultaneously keeping random building to acceptable levels.
+
+<H2><A NAME="container-messages">container-messages</A></H2>
+
+Several kinds of messages can be set on a container object; they are printed to various audiences at certain times whenever an attempt is made to use the container.  The ones whose names begin with 'o' are always shown prefixed with the name of the person making the attempt and a single space character.  The standard pronoun substitutions (with respect to the person) are made on each message before it is printed; see 'help pronouns' for details.
+
+<P>The default message is given in brackets after each name below:
+
+<P>@empty[It is empty.]
+<BR>&nbsp;&nbsp;Printed in place of the contents list when the container is empty.
+
+<P>@open  [You open %d.]
+<BR>&nbsp;&nbsp;Printed to the person who successfully opens the container.
+
+<P>@oopen  [opens %d.]
+<BR>&nbsp;&nbsp;Printed to others in the same room if the person successfully opens the container.
+
+<P>@open_fail  [You can't open that.]
+<BR>&nbsp;&nbsp;Printed to the person who cannot open the container.
+
+<P>@oopen_fail  []
+<BR>&nbsp;&nbsp;Printed to others in the room when a person fails to open a container.
+
+<P>@close  [You close %d.]
+<BR>&nbsp;&nbsp;Printed to the person who closes a container.
+
+<P>@oclose  [closes %d.]
+<BR>&nbsp;&nbsp;Printed to others in the room when a person closes a container.
+
+<P>@put  [You put %d in %i.]
+<BR>&nbsp;&nbsp;Printed to a person when an object is successfully placed in a container.
+
+<P>@oput  [puts %d in %i.]
+<BR>&nbsp;&nbsp;Printed to others in the room when a person successfully places an object in a container.
+
+<P>@put_fail  [You can't put %d in that.]
+<BR>&nbsp;&nbsp;Printed when a person fails to put an object in a container.
+
+<P>@oput_fail  []
+<BR>&nbsp;&nbsp;Printed to others in the room when a person fails to place an object in a container.
+
+<P>@remove  [You remove %d from %i.]
+<BR>&nbsp;&nbsp;Printed when a person succeeds in removing an object from a container.
+
+<P>@oremove  [removes %d from %i.]
+<BR>&nbsp;&nbsp;Printed to others in the room when a person succeeds in removing an object from a container.
+
+<P>@remove_fail  [You can't remove that.]
+<BR>&nbsp;&nbsp;Printed when a person fails to remove an object from a container.
+
+<P>@oremove_fail  []
+<BR>&nbsp;&nbsp;Printed to others in the room when a person fails to remove an object from a container.
+
+<H2><A NAME="containers">containers</A></H2>
+
+Containers have a separate lock to determine if a person may open them. 
+<BR>&nbsp;&nbsp;See the following help topics:
+
+<P><A HREF="builder_help.html#@lock_for_open">@lock_for_open</A> -- setting the lock for opening a container
+<BR><A HREF="builder_help.html#@unlock_for_open">@unlock_for_open</A> -- clearing the lock
+
+<P>You can make a container by creating a child of the standard container, $container.
+<BR><A HREF="builder_help.html#@create">@create</A> -- command for creating new objects
+
+<P>Containers have a large number of messages which get printed when people act upon them. 
+<BR><A HREF="builder_help.html#container-messages">container-messages</A> -- describes the various messages you can set on containers
+
+<P>Containers have opacity. 
+<BR><A HREF="builder_help.html#@opacity">@opacity</A> -- describes the various opacity settings for containers
+
+<P>Also see: <A HREF="user_help.html#containers">containers</A> in General Help
+
+<H2><A NAME="creation">creation</A></H2>
+
+The primary means for people to extend the MOO is for them to create new objects with interesting behavior.  There are convenient commands for creating and recycling objects and for keeping track of the objects you've created.  Help is available on these commands in the following topics:
+
+<P><A HREF="builder_help.html#inheritance">inheritance</A> -- summary of how inheritance works in object-oriented
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;systems like the MOO
+<BR><A HREF="builder_help.html#ownership">ownership</A> -- describes object ownership, listing relevent commands
+<BR><A HREF="builder_help.html#@dig">@dig</A> -- conveniently building new rooms and exits
+<BR><A HREF="builder_help.html#@create">@create</A> -- making other kinds of objects
+<BR><A HREF="manager_help.html#@recycle">@recycle</A> -- destroying objects you no longer want
+<BR><A HREF="builder_help.html#@unrecycle">@unrecycle</A> -- restore an object if it hasn't already been used for
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;something else
+<BR><A HREF="wiz_help.html#@quota">@quota</A> -- determining how many more objects you can build
+<BR><A HREF="builder_help.html#@count">@count</A> -- determining how many objects you already own
+<BR><A HREF="builder_help.html#@audit">@audit</A> -- listing all of your objects
+<BR><A HREF="wiz_help.html#@classes">@classes</A> -- listing all of the public classes available for your use
+<BR><A HREF="builder_help.html#@realm">@realm</A> -- listing the parenting tree for objects owned by one or more people
+<BR><A HREF="user_help.html#@move">@move</A> -- moving your objects from place to place
+<BR><A HREF="builder_help.html#@recreate">@recreate</A> -- recreate an object you own into something else
+
+<H2><A NAME="decrypt">decrypt</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  decrypt &lt;note&gt;</TD></TR></TABLE>
+
+<P>Removes any restriction on who may read the named note or letter.  Only the owner of a note may do this.
+
+<H2><A NAME="domain-system">domain-system</A></H2>
+
+<A HREF="builder_help.html#@set-domain">@set-domain</A> -- change the domain of a room
+<BR>@verify - verify that the rooms in &lt;domain&gt; seem to belong (`@verify &lt;domain&gt;') 
+
+<P>Also see: <A HREF="user_help.html#domain-system">domain-system</A> in General Help
+
+<H2><A NAME="encrypt">encrypt</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  encrypt &lt;note&gt; with &lt;key-expression&gt;</TD></TR></TABLE>
+
+<P>Restricts the set of people who can read the named note or letter to those for whom the given key expression is true.  Only the owner of a note may do this.
+
+<P><B>Related Topics:</B>
+<BR><A HREF="builder_help.html#keys">keys</A> -- how to specify a &lt;key-expression&gt; for encryption
+
+<H2><A NAME="exit-messages">exit-messages</A></H2>
+
+Several kinds of messages can be set on an exit object (see 'help messages' for instructions on doing so); they are printed to various audiences at certain times whenever an attempt is made to go through the exit.  The ones whose names begin with 'o' are always shown prefixed with the name of the person making the attempt and a single space character.  The standard pronoun substitutions (with respect to the person) are made on each message before it is printed; see 'help pronouns' for details.
+
+<P>The default message is given in brackets after each name below:
+
+<P>@leave  [You go %t.]
+<BR>&nbsp;&nbsp;Printed to the person just before they successfully use the exit.
+
+<P>@oleave  [has left.]
+<BR>&nbsp;&nbsp;Printed to others in the source room when a person successfully uses the exit.
+
+<P>@arrive  []
+<BR>&nbsp;&nbsp;Printed to the person just after they successfully use the exit.
+
+<P>@oarrive  [has arrived.]
+<BR>&nbsp;&nbsp;Printed to others in the destination room when a person successfully uses the exit.
+
+<P>@nogo  [You can't go that way.]
+<BR>&nbsp;&nbsp;Printed to the person when they fail in using the exit.
+
+<P>@onogo  []
+<BR>&nbsp;&nbsp;Printed to others when a person fails in using the exit.
+
+<P>@see_thru  []
+<BR>&nbsp;&nbsp;Printed to someone before the destination room description when
+<BR>they look through a transparent exit (%d is subbed with the name of
+<BR>the destination room). 
+<BR><A HREF="builder_help.html#exit-transparency">exit-transparency</A> -- See "help exit-transparency" for more info on
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;transparent exits.
+
+<H2><A NAME="exit-transparency">exit-transparency</A></H2>
+
+By default, all exits in the MOO are "transparent", meaning that when you look at them ('look north', for example) you can see the description of the room beyond.  There are several ways to customize the way this information is presented.
+
+<P>The most basic way is simply to give your exit a description with the @describe command.  Any exits with their own descriptions are considered to be "opaque" and will only show their own descriptions when people look at them.  To make an exit transparent again, you can simply set its description to nothing ('@describe &lt;exit&gt; as ""').
+
+<P>You can change the message that gets displayed by a transparent exit before the room description by setting the 'see_thru' message on the exit (see 'help messages' for info on how to set messages on objects).  In the see_thru message, all pronoun substitutions are as normal except that "%d" is substituted to the name of the destination room.
+
+<P>You can also change what type of room description the exit displays.  To do this, type '@set &lt;exit&gt;.transparency to &lt;number&gt;', where the &lt;number&gt; is one of the following:
+<BR>&nbsp;-1 - The word "Nothing." is displayed for the room description, regardless
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;of what the room actually looks like.
+<BR>&nbsp;&nbsp;0 - Nothing at all is displayed for the room desc, regardless of what the
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;room actually looks like (thus the see_thru messaged is the only text
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;displayed)
+<BR>&nbsp;&nbsp;1 - The brief description (what people would see if they entered the room
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;with their 'brief' setting on) is displayed.  This typically includes
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the room's title, exits, and contents, but no description.
+<BR>&nbsp;&nbsp;2 - The room's .description text is displayed (but no title, exits,
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;contents, etc)
+<BR>&nbsp;&nbsp;3 - The room's full description is displayed (the same as if you had typed
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'look' while inside the room)
+
+<P>(3 is the default setting for exit transparency)
+
+<H2><A NAME="exits">exits</A></H2>
+
+** Notes for Builders **
+
+<P>&nbsp;&nbsp;New builders are often surprised to find that exits are actual MOO
+<BR>objects (child objects of $exit).  In addition, each exit object
+<BR>handles only one-way travel, so exits are typically created in pairs,
+<BR>which gives the functionality of a two-way exit.  Although it adds a
+<BR>level of complexity, having exits be objects and one-way provides
+<BR>immense flexibility for builders (even if most of us never take
+<BR>advantage of that).
+<BR>&nbsp;&nbsp;Most of the time, you'll create exits using the "@dig" command,
+<BR>which creates exits, creates a room if needed, and then links up the
+<BR>exits appropriately.  One common builder task is to connect rooms
+<BR>owned by two different people.  To prevent people from adding exits
+<BR>to and from rooms against the room owner's wishes, the MOO's security
+<BR>system allows you to build such exits but doesn't register them with
+<BR>the attached room unless the exit's creator is also the room owner.
+<BR>If someone else creates an exit from your room, and you wish to
+<BR>register it as a valid exit, you'd enter "@add-exit &lt;object_number&gt;"
+<BR>while standing in that room.  Similarly, an exit leading to your room
+<BR>(an entrance) would be registered with the "@add-entrance" command.
+<BR>As usual, you can retrieve the exit's object number by using the
+<BR>"@audit" command.
+<BR>&nbsp;&nbsp;Exits have various properties you can set, including a moderate
+<BR>number of messages (use "@messages &lt;exit name&gt;") to see them.  The
+<BR>help text for "exit-messages" provides a detailed description of what
+<BR>each message is used for.
+<BR>&nbsp;&nbsp;In addition, exits have two other properties: obviousness and
+<BR>transparency.  An "obvious" exit is one that people will see when
+<BR>they look around the room or use the "ways" command.  By default, all
+<BR>exits are obvious, but you can change the setting with:
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;@set &lt;exit&gt;.obvious to 0
+<BR>Setting the "obvious" property to 1 restores it to obviousness.
+<BR>&nbsp;&nbsp;"Transparency" is the property that controls what people see when
+<BR>they specifically look at the exit.  A transparent exit is like an
+<BR>open door, and looking "at" it lets you see what's in the room it
+<BR>leads to.  The help topic "exit-transparency" details how to use the
+<BR>transparency property.
+
+<P>Related topics
+<BR><A HREF="builder_help.html#@exits">@exits</A>        -- available to the room owner for listing all a room's
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exits
+<BR><A HREF="builder_help.html#@dig">@dig</A>          -- the primary tool for building rooms and connecting
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;them with exits
+<BR><A HREF="builder_help.html#@add-entrance">@add-entrance</A> -- add an exit owned by someone else to your room's
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;entrances list
+<BR><A HREF="builder_help.html#@remove-entrance">@remove-entrance</A> -- remove the entrance
+<BR><A HREF="builder_help.html#@add-exit">@add-exit</A>     -- add an exit owned by someone else to your room
+<BR><A HREF="builder_help.html#@remove-exit">@remove-exit</A>  -- remove the exit
+<BR><A HREF="builder_help.html#exit-messages">exit-messages</A> -- what messages can be set on exits
+<BR><A HREF="builder_help.html#exit-transparency">exit-transparency</A> -- details of setting exit transparency
+<BR><A HREF="builder_help.html#@set">@set</A>          -- a general command for setting properties on objects
+
+<P>Also see: <A HREF="user_help.html#exits">exits</A> in General Help
+
+<H2><A NAME="fertile-objects">fertile-objects</A></H2>
+
+&nbsp;&nbsp;&nbsp;&nbsp;Objects are "fertile" when they are publically available as
+<BR>generic objects, or templates, for others to use when creating
+<BR>objects of their own.  Unless you are a wizard or own the parent
+<BR>object, you can only use fertile objects to "@create" from.
+
+<P>To make an object you own fertile, you can use either of:
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;@set &lt;object&gt;.f to 1
+<BR>or
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;@chmod &lt;object&gt; +f
+
+<P>Additional topics:
+<BR><A HREF="builder_help.html#@create">@create</A>     -- the main command for creating new objects from existing templates
+<BR><A HREF="builder_help.html#inheritance">inheritance</A> -- about object inheritance in the MOO
+
+<H2><A NAME="gopher">gopher</A></H2>
+
+<A HREF="builder_help.html#@create">@create</A> -- create a child of $gopher_slate to make your own
+
+<P>Also see: <A HREF="user_help.html#gopher">gopher</A> in General Help
+
+<H2><A NAME="inheritance">inheritance</A></H2>
+
+&nbsp;&nbsp;Almost every object in the MOO is a "child" of another MOO object.
+<BR>The "parent" object serves as a kind of template for creating the
+<BR>child object.  Child objects "inherit" all the characteristics of
+<BR>their parent, plus they may have additional characteristics of their
+<BR>own.  In this way, a child object is a kind of specialized form (or
+<BR>instance) of its parent.  The child may itself have child objects,
+<BR>which will then inherit the properties of both its parent and
+<BR>grandparent objects.
+<BR>&nbsp;&nbsp;One class of characteristics that are inherited are commands.  If
+<BR>an object has a "take" command that allows people to pick it up, all
+<BR>its child objects will also have a "take" command.  As long as the
+<BR>child's "take" command hasn't been specifically modified, it will be
+<BR>identical to that of the parent object.
+<BR>&nbsp;&nbsp;You might notice that the @create command requires you to specify
+<BR>what the parent object of the object you are creating should be.  In
+<BR>this way, nearly all the objects in the MOO are derived from one of
+<BR>the primal objects: $thing, $room, $note, $player, $container.
+<BR>Though some MOO objects may not have one of these objects at their
+<BR>parent, they probably have one of them as a grandparent or
+<BR>greatgrandparent.  Builders can examine the heirarchy of object
+<BR>parentage with the @parents and @kids commands.
+
+<P><B>Related Topics:</B>
+<BR><A HREF="builder_help.html#@create">@create</A> -- create a new object from an existing parent object
+<BR><A HREF="builder_help.html#@kids">@kids</A> -- list an object's child objects
+<BR><A HREF="builder_help.html#@parents">@parents</A> -- list an object's parent objects
+<BR><A HREF="builder_help.html#@chparent">@chparent</A> -- change the parent of one of your objects
+<BR><A HREF="builder_help.html#@disinherit">@disinherit</A> -- @chparent an object to its grandmother (grandfather?)
+<BR><A HREF="builder_help.html#@disown">@disown</A> -- same as @disinherit
+
+<H2><A NAME="keys">keys</A></H2>
+
+LambdaMOO supports a simple but powerful notation for specifying locks on objects, encryption on notes, and other applications.  The idea is to describe a constraint that must be satisfied concerning what some object must be or contain in order to use some other object.
+
+<P>The constraint is given in the form of a logical expression, made up of object numbers connected with the operators 'and', 'or', and 'not' (written '&amp;&amp;', '||', and '!', for compatibility with the MOO programming language).  When writing such expressions, though, one usually does not use object numbers directly, but rather gives their names, as with most MOO commands.
+
+<P>These logical expressions (called 'key expressions') are always evaluated in the context of some particular 'candidate' object, to see if that object meets the constraint.  To do so, we consider the candidate object, along with every object it contains (and the ones those objects contain, and so on), to be 'true' and all other objects to be 'false'.
+
+<P>As an example, suppose the character Munchkin wanted to lock the exit leading to his home so that only he and the holder of his magic wand could use it.  Further, suppose that Munchkin was object #999 and the wand was #1001.  Munchkin would use the '@lock' command to lock the exit with the following key expression:
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;me || magic wand
+<BR>and the system would understand this to mean
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#999 || #1001
+<BR>That is, people could only use the exit if they were (or were carrying) either #999 or  #1001.
+
+<P>To encrypt a note so that it could only be read by Munchkin or someone carrying his book, his bell, and his candle, Munchkin would use the 'encrypt' command with the key expression
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;me || (bell &amp;&amp; book &amp;&amp; candle)
+
+<P>Finally, to keep people from taking a large gold coffin through a particularly narrow  exit, Munchkin would use this key expression:
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;! coffin
+<BR>That is, the expression would be false for any object that was or was carrying the coffin.
+
+<P>There is one other kind of clause that can appear in a key expression:
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;? &lt;object&gt;
+<BR>This is evaluated by testing whether the given object is unlocked for the candidate object; if so, this clause is true, and otherwise, it is false.  This allows you to have several locks all sharing some single other one; when the other one is changed, all of the locks change their behavior simultaneously.
+
+<P>[Note to programmers: The internal representation of key expressions, as stored in .key on every object, for example, is very simple and easy to construct on the fly.  For details, see 'help key-representation'.]
+
+<H2><A NAME="letters">letters</A></H2>
+
+<A HREF="builder_help.html#@create">@create</A> -- to create a letter, make a child of $letter
+<BR><A HREF="user_help.html#write">write</A> -- write text on the letter
+<BR><A HREF="builder_help.html#encrypt">encrypt</A> -- encrypt the letter so only specific people can read or burn it
+
+<P>Also see: <A HREF="user_help.html#letters">letters</A> in General Help
+
+<H2><A NAME="locking">locking</A></H2>
+
+It is frequently useful to restrict the use of some object.  For example, one might want to keep people from using a particular exit unless they're carrying a bell, a book, and a candle.  Alternatively, one might allow anyone to use the exit unless they're carrying that huge golden coffin in the corner.  LambdaMOO supports a general locking mechanism designed to make such restrictions easy to implement, usually without any programming.
+
+<P>Every object supports a notion of being 'locked' with respect to certain other objects.  For example, the exit above might be locked for any object that was carrying the coffin object but unlocked for all other objects.  In general, if some object 'A' is locked for another object, 'B', then 'B' is usually prevented from using 'A'.  Of course, the meaning of 'use' in this context depends upon the kind of object.
+
+<P>The various standard classes of objects use locking as follows:
+<BR>&nbsp;&nbsp;+ Rooms and containers refuse to allow any object inside them if they're locked for it.
+<BR>&nbsp;&nbsp;+ Exits refuse to transport any object that they're locked for.
+<BR>&nbsp;&nbsp;+ Things (including notes and letters) cannot be moved to locations that they're locked for.
+
+<P>There are two sides to locking:
+<BR>&nbsp;&nbsp;+ How is it specified whether one object is locked for another one?
+<BR>&nbsp;&nbsp;+ What is the effect of an object being locked?
+<BR>Note that these two questions are entirely independent: one could invent a brand-new way to specify locking, but the effect of an exit being locked would be unchanged.
+
+<P>There is a default way to specify locks on objects; the following help topics cover the relevant commands:
+
+<P><A HREF="builder_help.html#@lock">@lock</A> -- setting a lock on an object
+<BR><A HREF="builder_help.html#@unlock">@unlock</A> -- clearing the lock on an object
+<BR><A HREF="builder_help.html#keys">keys</A> -- describes the language used to describe lock keys
+<BR><A HREF="builder_help.html#room-security">room-security</A> -- summary of advanced room security features
+
+<H2><A NAME="mail">mail</A></H2>
+
+Builders topics:
+<BR><A HREF="wiz_help.html#mail-recipients">mail-recipients</A> -- how to create a mail folder
+
+<P>Also see: <A HREF="user_help.html#mail">mail</A> in General Help
+
+<H2><A NAME="mail-recipients">mail-recipients</A></H2>
+
+Setting or Changing Access for Mail Recipients
+<BR>----------------------------------------------
+<BR>First off, let it be said that unless you really think a new mail folder will serve a worthwhile purpose, think twice about creating it.  Any MOO quickly accumulated dozens (or even hundreds) of mail folders, most of which are never used because noone but the creator has any interest.
+
+<P>Given that, most of the time, people wish to establish a mail folder that anyone can post to and anyone can read.  The procedure for this is:
+
+<P>&nbsp;&nbsp;&nbsp;1. Create a child of $mail_recipient. The names and aliases should have no spaces (use underlines or hypens instead).  Test the name and each alias beforehand (using "@mail on *&lt;name&gt;") to make sure no other mail folder already has that name or alias.  
+<BR>&nbsp;&nbsp;&nbsp;2. Give your new &lt;mail folder&gt; a decription.  This should generally be one or two sentances describing what the mail folder is for.
+<BR>&nbsp;&nbsp;&nbsp;3. For a free posting/free reading folder, enter:  @set &lt;mail folder&gt;.readers to 1
+<BR>&nbsp;&nbsp;&nbsp;4. Finally, if you want the folder to appear in the "@subscribe" listing, use:  @move &lt;mail folder&gt; to $mail_agent
+
+<P>Mail recipients can be made much more specific about who can post and who can read postings.  There are several commands available for changing who can do various things to/with your mail recipient:  
+
+<P>@restrict/@unrestrict &lt;folder&gt;    - Specify whether the list is readable by
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;everyone or only specific people.
+<BR>@moderate/@unmoderate &lt;folder&gt;    - Specify whether the list is postable by
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;everyone or only specific "moderators".
+<BR>@add-&lt;type&gt; &lt;person&gt; for &lt;folder&gt; - Add someone to the list of &lt;type&gt; people
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for the mail recipient, or..
+<BR>@del-&lt;type&gt; &lt;person&gt; for &lt;folder&gt; - Remove the specified person from the
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;type&gt; list.
+
+<P>&lt;type&gt; can be any of the following:
+<BR>&nbsp;&nbsp;reader    - Person can read messages on the list (implies @restrict)
+<BR>&nbsp;&nbsp;writer    - Person can remove or renumber messages on the list, or perform
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;other administrative operations (such as use these commands)
+<BR>&nbsp;&nbsp;moderator - Person can post mail to the list (implies @moderate)
+<BR>&nbsp;&nbsp;forward   - Person (or mail recipient) is automatically forwarded a copy
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;of any message posted to the list
+<BR>&nbsp;&nbsp;notify    - Person is notified immediately when new mail is posted to the
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;list
+<BR>&nbsp;&nbsp;blocked   - Person is specifically restricted from posting to the list
+
+<P>It is also possible to view your mail recipient's current configuration with the command:
+<BR>&nbsp;&nbsp;@setup for &lt;folder&gt;
+
+<H2><A NAME="messages">messages</A></H2>
+
+<A HREF="builder_help.html#thing-messages">thing-messages</A> -- the messages on objects that can be taken and dropped
+<BR><A HREF="builder_help.html#container-messages">container-messages</A> -- the messages on objects that can contain other objects
+<BR><A HREF="builder_help.html#room-messages">room-messages</A> -- the messages on rooms
+<BR><A HREF="builder_help.html#exit-messages">exit-messages</A> -- the messages on exit objects
+
+<P><B>Related Topics:</B>
+<BR><A HREF="user_help.html#@messages">@messages</A> -- show the messages on an object
+<BR><A HREF="builder_help.html#@newmessage">@newmessage</A> -- very occasionally needed to allow builders to add new types of messages
+<BR><A HREF="builder_help.html#@unmessage">@unmessage</A> -- removes a messsage added with @newmessage
+
+<P>Also see: <A HREF="user_help.html#messages">messages</A> in General Help
+
+<H2><A NAME="misc-builder-info">misc-builder-info</A></H2>
+
+<A HREF="builder_help.html#@contents">@contents</A> -- show the contents of an object
+<BR><A HREF="builder_help.html#@backup">@backup</A> -- prepare a backup text image of an object in case it's somehow lost or damaged
+<BR><A HREF="builder_help.html#@personal">@personal</A> -- mark one of your objects as "private" or "public"
+<BR><A HREF="builder_help.html#@set">@set</A> -- set some "properties" on an object
+<BR><A HREF="prog_help.html#@display">@display</A> -- display some technical characteristics of an object
+<BR><A HREF="builder_help.html#@publicize">@publicize</A> -- set all your objects "readable"
+
+<H2><A NAME="negative_quota">negative_quota</A></H2>
+
+The initial quota for new builders is 0.
+<BR>Those of you who were around before this are covered by a grandfather clause
+<BR>i.e., you get to keep your over-quota objects.  However this means that 
+<BR>your quota for creating new objects may now be *more than* used up, i.e.,
+<BR>negative.  In particular, this means that if you recycle an object, 
+<BR>you will not be able to @create one in its place.
+
+<P>You can, however, re-use your over-quota objects by using the @recreate 
+<BR>command instead (see `help recreate').
+
+<H2><A NAME="ownership">ownership</A></H2>
+
+&nbsp;&nbsp;Every object in the MOO is owned.  Mostly, objects are owned by MOO
+<BR>characters, and MOO characters are owned by themselves.  When objects
+<BR>are created, they are generally owned by their creator, although
+<BR>wizards are able to change the ownership of objects.
+<BR>&nbsp;&nbsp;Builders can find out what objects they own using the @audit or
+<BR>@prospectus commands.  An "owned_objects" property on every character
+<BR>keeps track of the objects owned by that character.  Sometimes,
+<BR>however, that list gets corrupted, so several commands are available
+<BR>to verify and correct it.  In addition, some commands have "DB"
+<BR>versions, that instead of using the character's "owned_objects"
+<BR>property, will scan every object in the MOO and check its ownership
+<BR>directly.
+
+<P>&nbsp;&nbsp;In addition to a primary owner, objects may have "additional
+<BR>owners" who have limited ownership priviledges for the object.  For
+<BR>instance, additional owners can edit an object's description.  The
+<BR>set of abilities additional owners have depends on the particular
+<BR>object.  Only an object's primary owner can add additional owners.
+<BR>You can find out an object's owner and additional owners using the
+<BR>"examine" command.
+
+<P><B>Related Topics:</B>
+<BR><A HREF="builder_help.html#@audit">@audit</A> -- list owned objects
+<BR><A HREF="wiz_help.html#@add-owner">@add-owner</A> -- add an additional owner
+<BR><A HREF="wiz_help.html#@del-owner">@del-owner</A> -- remove an additional owner
+<BR><A HREF="prog_help.html#@prospectus">@prospectus</A> -- similar, but gives some additional information
+<BR><A HREF="manager_help.html#@verify-owned">@verify-owned</A> -- checks if all objects on your "owned_objects" list are yours
+<BR><A HREF="builder_help.html#@add-owned">@add-owned</A> -- adds an object to your "owned_objects" list, if it was missing
+<BR><A HREF="builder_help.html#@sort-owned">@sort-owned</A> --sorts your owned objects list by object number
+<BR><A HREF="builder_help.html#@auditDB">@auditDB</A> -- less efficient version of @audit, searches database directly
+
+<H2><A NAME="project-system">project-system</A></H2>
+
+&nbsp;&nbsp;The project system is a means of organizing user objects according
+<BR>to their intended function.  Under this system, all objects are
+<BR>either "personal" or "project" objects and the quota allotment for
+<BR>each is regulated independently.  That means you have a certain quota
+<BR>alloted for personal objects, and also seperate quota allocations for
+<BR>each of your projects.  Projects may be shared, in which case all the
+<BR>co-owners of that project have access to it's quota allotment for
+<BR>creating objects associated with that project.  Each project will
+<BR>have a description, a list of co-owners, and a list of associated
+<BR>objects.
+<BR>&nbsp;&nbsp;The project system will benefit users by allowing them to organize
+<BR>their work better.  In addition, it will greatly facilitate
+<BR>cooperatively developed projects, since all co-owners of a project
+<BR>will also be co-owners of each object associated with the project.
+<BR>Finally, it will help the administrators track what is being worked
+<BR>on by who, why the work is being done, and what the progress is on
+<BR>each project.
+<BR>&nbsp;&nbsp;The current plan is that new builders will be alloted 4 personal
+<BR>objects (enough for their character, a room, and two exits), same as
+<BR>they are currently.  If they become co-owner of a project, their
+<BR>personal quota allotment will be extended to 8 objects.  The limit of
+<BR>personal objects will be 8 and all created objects beyond that will
+<BR>be associated with some project.
+<BR>&nbsp;&nbsp;There will be a transition period during the implementation of the
+<BR>project system, when objects will appear on your @audit list even
+<BR>after they have been allocated to a project.  Once the project system
+<BR>is complete however, the @audit command will list your personal
+<BR>objects plus a list of the projects you are a co-owner of.  Using
+<BR>"@audit &lt;project name&gt;" will list the objects associated with a
+<BR>specific project.
+<BR>&nbsp;&nbsp;At this early stage of development, the only command associated
+<BR>with the project system is @personal, which can be used to list your
+<BR>personal objects, or to mark an object as personal or not.  see "help
+<BR>@personal" for more details.
+
+<H2><A NAME="room-messages">room-messages</A></H2>
+
+Some messages relating to a particular room can be customized (see `help messages' for instructions on changing messages); they are printed to various audiences when a person or other object is ejected from the room, or tries to enter when they don't have access to the room.  The standard pronoun substitutions are made on each message before it is printed; see  `help pronouns' for details.
+
+<P>The available messages are as follows:
+
+<P>&nbsp;@ejection        - What you see when you eject something from the room.
+<BR>&nbsp;@victim_ejection - What the ejected object sees.
+<BR>&nbsp;@oejection       - What everybody else in the room sees.
+<BR>&nbsp;@inside_repel    - Told to an object trying to illegally enter a room from
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"inside" (see `help room-security').
+<BR>&nbsp;@pinside_repel   - Told to the person trying to move the object (if the person
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;isn't the same as the object itself).
+<BR>&nbsp;@oinside_repel   - Told to everyone in the room when an object tries to enter
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;illegally from "inside".
+<BR>&nbsp;@walk_repel      - Told to an object trying to enter illegally through a
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;registered entrance to the room.
+<BR>&nbsp;@pwalk_repel     - Told to the person responsible for moving it...
+<BR>&nbsp;@owalk_repel     - Told to everyone in the room...
+<BR>&nbsp;@teleport_repel  - Told to an object trying to illegally teleport into a
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;room from "outside".
+<BR>&nbsp;@pteleport_repel - Told to the person responsible for moving it...
+<BR>&nbsp;@oteleport_repel - Told to everyone in the room...
+<BR>&nbsp;@who_location    - Text appended to room's name in @who listing
+
+<P>Related Topics:  messages        - How to set customizable messages on objects.
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pronouns        - How to use pronoun substitution within messages
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;room-security   - Restricting access to a room.
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@eject          - Forceably remove an object from a room.
+
+<H2><A NAME="room-security">room-security</A></H2>
+
+Securing a Room
+<BR>---------------
+<BR>There are several options available for ensuring that only who and what you want to are able to enter one of your rooms.
+
+<P>The commands that control general room security are:
+<BR>&nbsp;&nbsp;@open         - Make the room open to everyone and everything.
+<BR>&nbsp;&nbsp;@close        - Make the room only accept things according to the security
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;settings established with @accept, @deny, and @exclude.
+<BR>&nbsp;&nbsp;@security     - List the current security settings on the room.
+<BR>&nbsp;&nbsp;@accept &lt;people/things&gt; for &lt;types&gt;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Add or remove people or things from the "accept" list for
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;specified type(s) of entry.  (see below for a more detailed
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;explanation of security lists)
+<BR>&nbsp;&nbsp;@deny &lt;people/things&gt; for &lt;types&gt;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Add or remove people or things from the "deny" list for
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;specified type(s) of entry.
+<BR>&nbsp;&nbsp;@exclude &lt;people/things&gt; for &lt;types&gt;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Add or remove people or things from the "exclude" list for
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;specified type(s) of entry.
+
+<P>Security Types
+<BR>--------------
+<BR>There are several different types of entrance to a room, and you can define different parameters for each type of entry.  The available options are as follows:
+
+<P>&nbsp;&nbsp;walk     - Who/what can enter through a registered entrance to the room.
+<BR>&nbsp;&nbsp;teleport - Who/what can enter by teleporting to the room from outside.
+<BR>&nbsp;&nbsp;inside   - Who/what can be dropped or moved into the room by
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;someone/something already there.
+<BR>&nbsp;&nbsp;general  - restrictions that apply if none of the above do.
+
+<P>Thus it is possible to specify that nobody can teleport into the room from outside, but that certain people can walk into a room via an entrance and put things there.
+
+<P>Note that none of these security restrictions have any effect on the owner of the room or any object in the @residents list for that room, which are always allowed in.
+
+<P>Note:  While inside/outside checking is fairly thorough, due to limitations in the MOO system it is not foolproof, and it could appear under unusual situations as though something was entering from "inside" when in fact it was not.  Thus requirements dependent on "inside" vs. "outside" should not be used when absolute security is required.
+
+<P>@accept, @deny, and @exclude
+<BR>----------------------------
+<BR>For each type of entry you can specify an "accept", "deny", and "exclude" list.  Whether something is allowed into a room, based on these lists, is evaluated as follows:
+
+<P>&nbsp;o  If the accept list isn't empty, then the entering object must be on the
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;list in order to enter.
+<BR>&nbsp;o  If the object is on the deny list, then it is not allowed to enter (even
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;if it is also on the accept list).
+<BR>&nbsp;o  If the object is a descendant of any of the objects on the exclude list,
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;is owned by anyone on the exclude list, or is being moved by anyone on
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;the exclude list, it is not allowed into the room.
+
+<P>The accept and deny lists allow you to explicitly allow or disallow specific objects into your room.  The exclude list allows you to specify not to let in certain types of objects, or objects owned by certain people.  (Warning:  It is probably a bad idea to put wizards on the exclude list, as they generally own a good portion of the generic objects on the MOO)
+<BR>The key difference between the @deny and the @exclude commands is that @deny will keep out a specific object or person.  Using @exclude will keep out the specified object or any of its decendent objects, and is therefore appropriate for keeping out "all objects descended from the generic following dog" for instance. The @exclude command also keeps out all objects owned by the specified object, so if the excluded object is a person, that person and all they own will be restricted from entering the room.
+
+<P>To change one of these lists, you must use the @accept, @deny, or @exclude command in the following manner:
+
+<P>&nbsp;&nbsp;@accept/@deny/@exclude &lt;people/things&gt; for &lt;types&gt;
+
+<P>Where &lt;people/things&gt; is a list of people and things to add to the appropriate list, and &lt;types&gt; is a list of one or more types of entry, as specified in 'security types', above.  For each entry in &lt;people/things&gt;, if you put an exclamation mark (!) before it it will remove that object from the list, instead of adding it.
+
+<P><B>Example:</B>  @deny Bad_Person !Person_Who_Apologized Annoying_Geek for general
+<BR>&nbsp;..would add Bad_Person and Annoying_Geek to the "deny" list for "general" access, and would remove Person_Who_Apologized from that list.
+
+<P>Note:  You can also specify 'all' as one of the people or things to accept/deny/exclude, which will apply to everyone and everything.  Thus you can '@deny all for teleport' to keep everyone from teleporting into the room.
+
+<P><B>Related Topics:</B>
+<BR>&nbsp;&nbsp;<A HREF="builder_help.html#room-security-examples">room-security-examples</A> -- Some examples of these commands, with
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;explanations
+<BR>&nbsp;&nbsp;<A HREF="builder_help.html#room-messages">room-messages</A> -- Customizable messages for rooms.
+<BR>&nbsp;&nbsp;<A HREF="user_help.html#Movement">Movement</A>      -- Getting around the MOO.
+<BR>&nbsp;&nbsp;<A HREF="builder_help.html#@eject">@eject</A>        -- Forceably remove an object from a room.
+<BR>&nbsp;&nbsp;<A HREF="prog_help.html#@residents">@residents</A>    -- Add or remove registered residents of a room.
+<BR>&nbsp;&nbsp;<A HREF="builder_help.html#@invite">@invite</A>       -- Temporarily open the security for a specified person
+<BR>&nbsp;&nbsp;<A HREF="builder_help.html#@invites">@invites</A>      -- shows who is invited
+<BR>&nbsp;&nbsp;<A HREF="builder_help.html#@uninvite">@uninvite</A>     -- Revoke the @invite for a person
+
+<H2><A NAME="room-security-examples">room-security-examples</A></H2>
+
+These are some examples of commands from the @security system for room security.  Note that the @security system is bypassed if you use @invite to temporarily open the security to a specified person.  In addition, residents of the room (added with the @residents command) are always excepted from room security same as the room's owner.  
+
+<P>@security
+<BR>Shows what the current security of the room is.  Note that if you have not activated the security (with @close) then it will inevitably show that anyone may enter.  You'll only see the security settings you've added if you first @close the room and then use @security to check.
+
+<P>@close
+<BR>Turns on whatever room security you've set.  If absolutely nothing has been set, then "@deny all for general" is assumed, meaning no uninvited people may enter.
+
+<P>@open
+<BR>Deactivates the room security, allowing anyone and anything to enter.
+
+<P>@deny Hooligan for general
+<BR>The person named "Hooligan" is not allowed into the room.
+
+<P>@deny Hooligan for teleport
+<BR>Hooligan may enter the room only through mechanisms other than teleporting.  Command for teleporting include @go and @join.  Non-teleporting mechanisms include using the room's entrances/exits.
+
+<P>@exclude Hooligan for general
+<BR>Neither Hooligan, the horse he rode in on, nor any other things Hooligan owns may enter the room.
+
+<P>@exclude !Hoolian for general
+<BR>OK, take Hoolian off the @exclude list.
+
+<P>@accept Glenda for general
+<BR>Even when room security is active, Glenda will always be permitted in the room.
+
+<P>@deny all for teleport
+<BR>People may only enter the room through non-teleporting means (presumably an exit/entrance).
+
+<P>@accept all for walking
+<BR>Essentially equivalent to "@deny all for teleport" but the precise meaning is "Even when room security is on, anyone not otherwise excluded may enter if they do so using a room entrance/exit.
+
+<P><B>Related Topics:</B>
+
+<P><A HREF="builder_help.html#@security">@security</A>  -- All those show the "room-security text"
+<BR><A HREF="builder_help.html#@accept">@accept</A>    --
+<BR><A HREF="builder_help.html#@deny">@deny</A>      --
+<BR><A HREF="builder_help.html#@close">@close</A>     --
+<BR><A HREF="builder_help.html#@open">@open</A>      --
+<BR><A HREF="prog_help.html#@resident">@resident</A>  -- Set who is considered a resident, and thus always entitled to enter
+
+<H2><A NAME="rooms">rooms</A></H2>
+
+Additional topics for builders
+<BR><A HREF="prog_help.html#@residents">@residents</A> -- list or set who (and what) is a room resident
+<BR><A HREF="builder_help.html#topology">topology</A> -- making and listing the connections between rooms and exits
+<BR><A HREF="builder_help.html#room-security">room-security</A> -- describes the available advanced room security features
+<BR><A HREF="builder_help.html#exits">exits</A> -- extensive notes on exits for builders
+<BR><A HREF="prog_help.html#domain-system">domain-system</A> -- details of the domain system that groups rooms
+<BR>@add-monitored - mark items as not removable from the room
+<BR>@remove-monitored - don't monitor an object
+<BR>@list-monitored - what is monitored
+
+<P>Also see: <A HREF="user_help.html#rooms">rooms</A> in General Help
+
+<H2><A NAME="thing-messages">thing-messages</A></H2>
+
+Several kinds of messages can be set on 'things', objects that have $thing as an ancestor (see 'help messages' for instructions on doing so).  They are printed to various audiences under various circumstances when an attempt is made to 'take' or 'drop' a thing.  The ones whose names begin with 'o' are always shown prefixed with the name of the character making the attempt and a single space character.  The standard pronoun substitutions (with respect to that character) are made on each message before it is printed; see 'help pronouns' for details.
+
+<P>The default message is given in brackets after each name below:
+
+<P>@take_failed  [You can't pick that up.]
+<BR>&nbsp;&nbsp;Printed to a person who fails to take the object.
+
+<P>@otake_failed []
+<BR>&nbsp;&nbsp;Printed to others in the same room if a person fails to take the object.
+
+<P>@take_succeeded  [You take %t.]
+<BR>&nbsp;&nbsp;Printed to a person who succeeds in taking the object.
+
+<P>@otake_succeeded  [picks up %t.]
+<BR>&nbsp;&nbsp;Printed to others in the same room if a person succeeds in taking the object.
+
+<P>@drop_failed  [You can't seem to drop %t here.]
+<BR>&nbsp;&nbsp;Printed to a person who fails to drop the object.
+
+<P>@odrop_failed [tries to drop %t but fails!]
+<BR>&nbsp;&nbsp;Printed to others in the same room if a person fails to drop the object.
+
+<P>@drop_succeeded  [You drop %t.]
+<BR>&nbsp;&nbsp;Printed to a person who succeeds in dropping the object.
+
+<P>@odrop_succeeded  [drops %t.]
+<BR>&nbsp;&nbsp;Printed to others in the room if a person succeeds in dropping the object.
+
+<H2><A NAME="topology">topology</A></H2>
+
+The topology of the MOO universe is determined by the rooms that exist and the exits that connect them.  Several commands are available for creating and discovering the topology of the MOO.  Help on them is available under the following topics:
+
+<P><A HREF="builder_help.html#@dig">@dig</A> -- creating new rooms and exits
+<BR><A HREF="builder_help.html#@add-exit">@add-exit</A> -- adding exits owned by other people from your rooms
+<BR><A HREF="builder_help.html#@add-entrance">@add-entrance</A> -- adding entrances owned by other people to your rooms
+<BR><A HREF="builder_help.html#@exits">@exits</A> -- listing all of the conventional exits from your rooms
+<BR><A HREF="builder_help.html#@entrances">@entrances</A> -- listing all of the conventional entrances to your rooms
+<BR><A HREF="prog_help.html#@resident">@resident</A> -- listing or changing the residents of your rooms
+
+</BODY></HTML>

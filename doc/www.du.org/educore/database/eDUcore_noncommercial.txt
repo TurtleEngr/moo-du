@@ -1,0 +1,188 @@
+LIMITED LICENSE FOR NON-COMMERCIAL USE OF THE DIVERSITY UNIVERSITY EDUCORE MOO 
+DATABASE SOFTWARE
+
+1. INTRODUCTION. Please read this License Agreement ("License") carefully 
+since it contains important contract rights and obligations between you 
+("you") and DU Educational Technology Services, Inc. ("DUETS, Inc."), as well 
+as important limitations on those rights. Agreement to this License is 
+required for use of the Software and Documentation, as defined below.
+
+2. CHANGES. This License may be changed by DUETS, Inc. providing notice of a 
+change in the same location or manner that it makes the form of this License 
+(or any later versions) generally available. You may terminate this License at 
+any time, including at any time after DUETS, Inc. posts a notice of change. In 
+any event, DUETS, Inc. may not make a change to this License that requires 
+payment from you unless you specifically agree in writing.
+
+3. DEFINITIONS. This License applies to the Software and the Documentation. 
+The "Software" is the Diversity University eDUcore MOO Database and associated 
+components. A "MOO Database" is a Multi-user-domain Object Oriented ("MOO") 
+database that when accessed by a MOO Server can be used to simulate a virtual 
+reality world. A "MOO Server" is software that interprets a MOO Database, and 
+performs those functions on the machine on which it runs to allow users to 
+access a virtual world simulated by the MOO. Together a MOO Database and a MOO 
+Server comprise a "MOO System." The "Documentation" is the user documentation, 
+manuals, instructions or descriptions relating to the Software that DUETS, 
+Inc. generally makes available.
+
+4. SCOPE OF GRANT. DUETS, Inc. grants you a non-exclusive, non-assignable, 
+limited, worldwide, royalty-free license to use the Software and the 
+Documentation for non-commercial purposes only. This License does not grant 
+you the right to use the Software or the Documentation for any commercial 
+purposes. Use for commercial purposes includes but is not limited to use by 
+commercial organizations or in any commercial environment (including internal 
+use), integration of all or part of the Software or the Documentation into a 
+product for sale, services provided for compensation, license, or commercial 
+access by or on your behalf to third parties, or distribution of the Software 
+or the Documentation to third parties that use it to facilitate the use of a 
+product sold, service provided for compensation, or licensed by you or on your 
+behalf. (If you wish to use the Software for commercial purposes, you should 
+contact DUETS, Inc. to negotiate an appropriate license.) The Software 
+comprises a MOO Database and associated components only, and in order to 
+establish an operating MOO System YOU MUST ALSO OBTAIN A COMPATIBLE MOO SERVER 
+TO RUN THE MOO DATABASE. In addition, the Software contains elements derived 
+from the LambdaCore MOO database, which elements may be subject to their own 
+copyright and other licensing issues. This License only extends to elements of 
+the Software created or licensed for distribution by DUETS, Inc. DUETS, Inc. 
+makes no representations or warranties with respect to the LambdaCore MOO 
+database from which elements of the Software are derived, or related 
+intellectual property rights.
+
+(a) As a non-commercial licensed user, you may: (i) install all or part of the 
+Software in one or more MOO Systems; (ii) run the Software on a computer; 
+(iii) copy the Software and the Documentation for private archival purposes, 
+provided any copy must contain all of the original proprietary and 
+intellectual property rights notices; and (iv) modify the Software or create 
+derivative works of the Software ("Derivative Works"), subject to the 
+limitations and conditions described in this License, and provided any 
+Derivative Works must contain all of the original proprietary and intellectual 
+property rights notices.
+
+ (b) As a non-commercial licensed user, you may not: (i) copy the Software or 
+the Documentation other than as specified above; (ii) distribute the Software 
+or the Documentation; (iii) remove any proprietary or intellectual property 
+rights notices or labels on the Software or the Documentation; (iv) rent, 
+lease, grant a security interest in, or otherwise transfer rights to the 
+Software or the Documentation; or (v) distribute any Derivative Work which is 
+the result of the Software being modified (as opposed to being used to create 
+or facilitate an end result) without DUETS, Inc.'s prior written consent, 
+which DUETS, Inc. may not unreasonably withhold.
+
+(c) This License does not include or apply to any updates or support for the 
+Software, which may, however, be available under a separate license.
+
+5. TITLE. Title, ownership rights, and intellectual property rights in the 
+Software and the Documentation shall remain in DUETS, Inc. This License does 
+not include the right to sublicense the Software or the Documentation and may 
+not be assigned (by operation of law or otherwise) without the prior written 
+consent of DUETS, Inc. You are permitted to modify or create Derivative Works. 
+However all portions of the Software that were included in the original 
+version of the Software will continue to be owned by DUETS, Inc. and may not 
+be sublicensed or otherwise assigned without the prior written consent of 
+DUETS, Inc. In addition, if you have modified the Software in any way, any 
+notification that appears to users of the Software that they are using the 
+Software, or that appears elsewhere on your systems, literature, or marketing 
+materials, must also carry prominent notification that you have modified the 
+Software and that the Software that users are using is derived from or run on 
+a "modified Diversity University eDUcore" database. In no case will you remove 
+any proprietary or intellectual property rights notices from the Software or 
+the Documentation. You may use DUETS, Inc.'s name or trademarks only as 
+specifically allowed by this License or by DUETS, Inc.'s policies that it may 
+announce from time to time. "Diversity University," the "DU" logo, "du.org" 
+and "eDUcore" are all trademarks of DU Educational Technology Services, Inc.
+
+6. CONTENT. Title, ownership rights, and intellectual property rights in and 
+to any materials accessed through the Software is the property of the 
+applicable materials' owner and may be protected by applicable copyright or 
+other law. This License gives you no rights to such materials, nor does DUETS, 
+Inc. have any liability for your use of materials accessed using the Software.
+
+7. DISCLAIMER OF WARRANTY. THE SOFTWARE AND THE DOCUMENTATION ARE PROVIDED ON 
+AN "AS IS" BASIS, WITHOUT WARRANTY OF ANY KIND, INCLUDING WITHOUT LIMITATION 
+WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-
+INFRINGEMENT. THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE OF THE 
+SOFTWARE OR THE DOCUMENTATION IS BORNE BY YOU. SHOULD THE SOFTWARE PROVE 
+DEFECTIVE, YOU AND NOT DUETS, INC. ASSUME THE ENTIRE COST OF ANY SERVICE AND 
+REPAIR. IN ADDITION, THE SECURITY MECHANISMS IMPLEMENTED BY THE SOFTWARE HAVE 
+INHERENT LIMITATIONS, AND YOU MUST DETERMINE THAT THE SOFTWARE SUFFICIENTLY 
+MEETS YOUR REQUIREMENTS. THIS DISCLAIMER OF WARRANTY CONSTITUTES AN ESSENTIAL 
+PART OF THIS LICENSE. SOME STATES OR JURISDICTIONS DO NOT ALLOW THE EXCLUSION 
+OF IMPLIED WARRANTIES, SO THE ABOVE EXCLUSION MAY NOT APPLY TO YOU AND YOU MAY 
+HAVE OTHER LEGAL RIGHTS THAT VARY FROM STATE TO STATE OR BY JURISDICTION.
+
+8. LIMITATION OF LIABILITY. UNDER NO CIRCUMSTANCES AND UNDER NO LEGAL THEORY 
+(CONTRACT, TORT - INCLUDING NEGLIGENCE - OR OTHERWISE), SHALL DUETS, INC. OR 
+ITS TRUSTEES, EMPLOYEES, CONTRACTORS, SUPPLIERS, DISTRIBUTORS OR RESELLERS BE 
+LIABLE TO YOU OR ANY OTHER PERSON FOR ANY INDIRECT, SPECIAL, INCIDENTAL, OR 
+CONSEQUENTIAL DAMAGES OF ANY CHARACTER INCLUDING, WITHOUT LIMITATION, DAMAGES 
+FOR LOSS OF GOODWILL, WORK STOPPAGE, COMPUTER FAILURE OR MALFUNCTION, OR ANY 
+AND ALL OTHER COMMERCIAL DAMAGES OR LOSSES, OR FOR ANY DIRECT DAMAGES, EVEN IF 
+DUETS, INC. OR ITS TRUSTEES, EMPLOYEES, CONTRACTORS, SUPPLIERS, DISTRIBUTORS 
+OR RESELLERS SHALL HAVE BEEN INFORMED OF THE POSSIBILITY OF THOSE DAMAGES, OR 
+FOR ANY CLAIM BY ANY OTHER PARTY. THIS LIMITATION OF LIABILITY SHALL NOT APPLY 
+TO LIABILITY FOR DEATH OR PERSONAL INJURY TO THE EXTENT APPLICABLE LAW 
+PROHIBITS THIS LIMITATION. IN ADDITION, SOME STATES OR JURISDICTIONS DO NOT 
+ALLOW THE EXCLUSION OR LIMITATION OF INCIDENTAL OR CONSEQUENTIAL DAMAGES, SO, 
+TO THE EXTENT THAT THEY DO NOT, THESE EXCLUSIONS OR LIMITATIONS MAY NOT APPLY 
+TO YOU.
+
+9. INDEMNIFICATION. You agree that in using, copying, modifying or any other 
+activity involving the Software, you will not violate any other person's 
+rights, including that person's intellectual property rights. You further 
+agree that if a party makes a claim against DUETS, Inc. claiming any violation 
+of his/her rights that appears to be the result of your use, copying, 
+modification or any other activity involving the software, you agree to 
+indemnify, defend and hold DUETS, Inc. harmless against such claim and to be 
+responsible for any damages or other relief awarded as a result of the claim 
+and any attorneys fees incurred by DUETS in connection with such claim. You 
+further agree to give DUETS, Inc. immediate notice of any demands, claims or 
+other actions against you that involve alleged violations of another's rights 
+by the use, modification and reproduction of the Software.
+
+10. HIGH RISK ACTIVITIES. The Software is not designed, manufactured or 
+intended for use or resale as on-line control equipment in hazardous 
+environments requiring fail-safe performance, such as in the operation of 
+nuclear facilities, aircraft navigation or communication systems, air traffic 
+control, direct life support machines, or weapons systems, in which the 
+failure of the Software could lead directly to death, personal injury, or 
+severe physical or environmental damage ("High Risk Activities"). DUETS, Inc. 
+and its trustees, employees, contractors, suppliers, distributors and 
+resellers specifically disclaim any express or implied warranty of fitness for 
+High Risk Activities.
+
+11. TERMINATION. Either party may terminate this License if that party 
+believes that there has been a default by the other party. In addition, this 
+License will terminate automatically if you fail to comply with the 
+limitations described in this License. You may terminate this License at any 
+time by destroying the Software and the Documentation, and all copies, 
+including those installed in a MOO database system. Upon any termination of 
+this License, you shall immediately discontinue use of the Software and the 
+Documentation and destroy all your copies of the Software and the 
+Documentation, and certify in writing to DUETS, Inc. that this destruction has 
+occurred. All sections of this License, except for Section 4, survive 
+termination of this License.
+
+12. GOVERNING LAW AND DISPUTES. Since DUETS, Inc. is a nonprofit corporation 
+organized under the laws of the State of Ohio, USA, this License is to be 
+interpreted under Ohio law and under United States law for issues governed by 
+federal law (except for conflicts of law principles) and, unless DUETS, Inc. 
+agrees to another jurisdiction or tribunal, all disputes as to this License, 
+if they cannot be resolved by the parties between themselves, will be brought 
+in state or federal courts located in Ohio, and you agree that those courts 
+will have jurisdiction over those disputes.
+
+13. MISCELLANEOUS. This License represents the complete and exclusive 
+statement of the agreements concerning this License between the parties and 
+supersedes all prior and contemporaneous agreements and representations 
+between them. This License may only be amended as specifically set forth in 
+Section 2 above. If any provision of this License is held to be unenforceable 
+for any reason, that provision shall be reformed only to the extent necessary 
+to make it enforceable, and that decision shall not affect the enforceability 
+(i) of that provision under other circumstances or (ii) of the remaining 
+provisions of this License under all circumstances. If either party waives any 
+provision of this License, that waiver shall not be deemed to be a continuing 
+waiver of the same or any other provision. Headings shall not be considered in 
+interpreting this License. Any rights not expressly granted in this License 
+are reserved by DUETS, Inc.
+
+License version: 5/27/98

@@ -1,0 +1,276 @@
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <TITLE>Compiling the LambdaMOO Server for UNIX</TITLE>
+</HEAD>
+<BODY>
+
+<H1>
+<IMG SRC="/images/logo/DUlogo_banner1.gif" HEIGHT=77 WIDTH=609></H1>
+
+<HR SIZE=4 WIDTH="100%">
+<H1>
+Compiling the LambdaMOO Server for UNIX</H1>
+This document provides step-by-step instructions for compiling the LambdaMOO
+Server on a UNIX system. Note that the instructions for compiling the Server
+are also given in the "readme" file included with the LambdaMOO Server
+package. This text is provided particularly to describe how to apply patches
+to the server before compiling it, including those patches recommended
+by Diversity University.
+
+<P>In order to run a MOO, including one based on the eDUcore, you must
+obtain compiled version of the LambdaMOO Server. Note that Diversity University
+does not provide the LambdaMOO Server. However, it is available free to
+the public through the work of several people who have participated in
+developing it over the years. The LambdaMOO Server is currently maintained
+by Erik Eostrom.
+
+<P>For the examples described here, it is assumed you have followed the
+instructions in the separate text entitled "Setting Up the MOO's UNIX Directory
+Structure." Similarly, it is assumed for the sake of example that the base
+administrative account is named "ourmoo" although yours will probably be
+different. If you have not created a directory structure to support the
+MOO as described in that text, you will need to modify the instructions
+given here accordingly.
+
+<P>A minimal amount of UNIX experience is assumed for these instructions,
+assuming you are using one of the common UNIX versions, which are generally
+supported by the LambdaMOO Server's installation scripts.
+
+<P>Your UNIX system must have several common resources used to compile
+applications, and the Server installation system must be able to find them.
+Generally, the system will find these resources itself if they are in any
+standard location. These resources include bison or yacc. If you have the
+GNU C-compiler installed, you will probably have all the resources needed.
+Compiling the LambdaMOO Server under unusual configurations is not covered
+in this document.
+
+<P>The steps for compiling the LambdaMOO Server are:
+
+<P><B><U>1.</U></B> Obtain a copy of the latest package from:
+<UL>ftp://ftp.research.att.com/dist/eostrom/MOO/</UL>
+For this example, we'll assume you have "gzip" software already installed
+and will be downloading the "LambdaMOO-1_8_0p6_tar.gz" file version of
+the LambdaMOO Server package. Place the compressed package in the "~ourmoo/moo/server-source"
+directory.
+
+<P><B><U>2.</U></B> Expand the package fully with:
+<UL>gzip -dc LambdaMOO-1_8_0p6_tar.gz | tar -xf -</UL>
+This will create a "MOO-1.8.0p6" subdirectory containing all the source
+and other files associated with the package.
+
+<P><B><U>3.</U></B> Change to the "MOO-1.8.0p6" directory, display and
+read the "readme" file. This document will take you through the steps described
+in that file, in addition to those for applying server patches before compiling.
+
+<P><B><U>4.</U></B> Run the command "sh configure" to configure the package
+for your local environment. Note that it will recommend one or a set of
+possible networking settings that you will need later. Generally, either
+"NS_BSD" or "NS_SYSV" will be recommended (sometimes both).<B><U></U></B>
+
+<P><B><U>5.</U></B> Using your favorite UNIX text editor, modify the "options.h"
+file for your local environment. Generally, the items that you will need
+to change are:
+<UL>#define DEFAULT_PORT</UL>
+By default this is 7777, but many educational MOOs use 8888 instead. At
+organizations in which firewall restrictions by port are in effect, this
+can be important. Note that you can start the MOO listening on a different
+port when you run it, so the setting in this file isn't critical.
+<UL>#define NETWORK_STYLE</UL>
+By default this is NS_BSD, and if the "sh configure" command results recommended
+that as an option, you can keep this. If the MOO is unable to start, and
+reports some kind of networking problem, then change it to "NS_SYSV" (assuming
+that was also recommended as a legitimate setting by the "sh configure"
+system).
+<UL>/* #define OUTBOUND_NETWORK */</UL>
+You will need to un-comment this line (to "#define OUTBOUND_NETWORK") in
+order to enable functions like sending email from the MOO to people with
+characters, and many other MOO features. Note that because the MOO is able
+to establish outbound connections if this is un-commented, the MOO may
+have access to materials on a local network associated with the MOO's site.
+Generally, only MOO wizards will be able to use such functions, unless
+your staff creates an insecure MOO object. For this reason, secure installations
+should place the MOO on a "public" part of the network, on which public
+access is not compromising.
+
+<P><B><U>6.</U></B> Try compiling the LambdaMOO Server (this time without
+the patches) using the "make" command. This will determine if your system
+has all the resources needed to compile the Server, and if the "make" system
+can find them. The Server should compile after many informational, and
+possibly some warning, messages. If the process runs to completion, you
+can generally ignore the warnings. If the process does NOT run to completion,
+you're probably either missing some resources needed to compile the server,
+or they're located in unusual places. There are various ways to adjust
+the compilation to accommodate unusual system setups, but these are not
+covered in this document. If the Server successfully compiles, continue
+by installing the patches.
+
+<P><B><U>7.</U></B> Apply the server patches that you will be using. First
+make a link to the directory where the patches are located, with:
+<UL>ln -s ../patches patches</UL>
+Then edit each of the patches to configure them appropriately for your
+system. Read the header on each patch file for more instructions on how
+to do this. A description of each patch file, and the configuration changes
+needed for each, are in an appendix to this document. Finally, apply the
+recommended patches with:
+<UL>patch -l &lt; patches/moo-1.8.0-pAS9.patch
+<BR>patch -l &lt; patches/moo-1.8.0-pAS5.patch
+<BR>patch -l &lt; patches/moo-1.8.0-pAS5.c.patch
+<BR>patch -l &lt; patches/moo-1.8.0-FUP.patch
+<BR>patch -l &lt; patches/moo-1.8.0-files.c.patch</UL>
+Note that the switch after "patch" in each line is the letter "ell" and
+not the number one.
+
+<P><B><U>8.</U></B> Re-compile the Server using the "make" command again.
+The Server should once again run to completion. On some systems, it will
+abort with an error reading "`FUP_version' undeclared (first use this function)."
+If you get this error, then install the FUP.errfix patch with:
+<UL>patch -l &lt; patches/moo-1.8.0-FUP.errfix.patch</UL>
+If the Server does not compile to completion, then generally either you
+did not follow the instructions here, or your UNIX system has some kind
+of unusual configuration.
+
+<P><B><U>9.</U></B> At this point, you should have a executable file named
+"moo" in the ""MOO-1.8.0p6" " subdirectory (make sure to change its mode
+to u+x, g+x if it is not already, with "chmod u+x,g+x moo").
+
+<P><B><U>10.</U></B> Finally, create a soft link to the LambdaMOO Server
+executable file from the directory where the MOO database is located. You
+can do this with:
+<UL>cd ~ourmoo/moo
+<BR>ln -s server-source/MOO-1.8.0p6/moo moo</UL>
+If you have modified the "runmoo" script appropriately, and placed a MOO
+database in the "~ourmoo/moo/" directory, you should now be able to issue
+"~ourmoo/bin/runmoo" to start the MOO.
+<H2>
+Appendix A: Performing Automatic Nightly Database Backups</H2>
+Diversity University strongly recommends that you establish nightly MOO
+database backups, to save a copy of your database and its associated FUP
+files. On UNIX systems, this is generally performed using the "crontab"
+system. To use this system, you'll need to create a small file specifying
+when the backup should be made. Also, a script call "dobackup" is part
+of the scripts that Diversity University provides for UNIX system users,
+which we recommend using. A copy of "crontab.moo" was also included with
+the scripts to serve as an example. The "dobackup" script should be in
+the "~ourmoo/bin" directory, and "crontab.moo" should be moved to the "~ourmoo/moo"
+directory.
+
+<P>You will need to edit the "crontab.moo" file to schedule the nightly
+archiving of your MOO. In the example, you'll find a single line:
+<UL>2 * * * /usr/du/world/bin/dobackup du 7 >> /usr/du/world/moo/du_backup.log
+2>&amp;1</UL>
+This specifies that the backup should be done every night at 2 AM, running
+the "dobackup" script for the "du.db" database, and that only the last
+seven days of backups should be saved. Note that only the file name prefix
+("du") is specified in the "crontab.moo" file
+
+<P>You must change the values of "/usr/du/world/bin/dobackup" to specify
+where your "dobackup" script is. Note that on some UNIX system, you can't
+use a value such as "~ourmoo" but must give the complete path. Similarly,
+you should change the value of "/usr/du/world/moo/du_backup.log" to give
+the name of the backup log file you wish kept. You'd use "/usr/ourmoo/moo/ourmoo_backup.log"
+in our example.
+
+<P>The backup system will write to the "~ourmoo/moo/backup.dbs" directory
+a compressed archive of the MOO database and FUP files, deleting the oldest
+such archive if it's older than seven days. You can decrease this number
+if space on the hard disk is a problem, but we recommend you save at least
+the last three days of database archives.
+
+<P>You must also edit the "dobackup" script for your system. In it, you'll
+find the lines:
+<UL>set MOOhome = "/usr/du/world/moo"
+<BR>set gzhome = "/usr/du/world/bin"</UL>
+You'll need to change these to point to the directory where your MOO database
+is located ("MOOhome"), and where your gzip executable file is located
+("gzhome"). Note that if you don't have gzip, but have the regular "compress"
+utility, the "dobackup" script can be modified to use that. However, gzip,
+freely available from the GNU Project, is more effective and is recommended.
+
+<P>Finally, once you've edited the "dubackup" script and the "crontab.moo"
+file, submit the request for periodic backups by changing to the "~ourmoo/moo"
+directory and entering:
+<UL>crontab crontab.moo</UL>
+You should then be able to check the submission was successful with the
+"crontab -l" command, and see that the backup is running successfully by
+checking the next day in the "ourmoo_backup.log" file and in the "backup.dbs"
+directory.
+<H2>
+Appendix B: MOO Server Patches</H2>
+The recommended MOO Server patches are:
+<H3>
+pAS5</H3>
+<U>Description:</U> Written by Alex Stewart. Provides additional built-in
+functions that allow the MOO to access certain UNIX time zone functions.
+That is preferable to using the plain MOO server's rather weak support
+for time zones.
+
+<P><U>File names:</U> moo-1.8.0-pAS5.patch and moo-1.8.0-pAS5.c.patch
+
+<P><U>Installation:</U> No configuration changes generally need to be made
+to the "moo-1.8.0-pAS5.patch" file. Although it might not be absolutely
+needed on your machine, it's often a good idea to set the TZ variable in
+the moo-1.8.0-pAS5.c.patch file explicitly. Look for the line
+<UL>+ static char tzdefault[] = "TZ=localtime";</UL>
+And change "localtime" to the appropriate time zone specification for your
+site (e.g. "EST8EDT" for U.S. Eastern Time, or "PST8PDT" for U.S. Pacific
+Time).
+<H3>
+pAS9</H3>
+<U>Description:</U> Written by Alex Stewart. Provides backspace support
+for bad telnet clients. Some really poor telnet clients handle backspace/delete
+keys in a nonstandard way. This patch makes the MOO a bit more forgiving
+for those.
+
+<P><U>File name:</U> moo-1.8.0-pAS9.patch
+
+<P><U>Installation:</U> No configuration changes need to be made to this
+file.
+<H3>
+FUP</H3>
+<U>Description:</U> Written by Jaime Prilusky and Gustavo Glusman. This
+is the File Utilities Package system, written as patch files. FUP allows
+the MOO to store various sections of database information externally in
+files on the UNIX server. See the FUP documentation for more details on
+custom configuration of the FUP system. This patchfile is set to provide
+the most commonly desired configuration.
+
+<P><U>File names:</U> moo-1.8.0-FUP.patch and moo-1.8.0-files.c.patch
+
+<P><U>Installation:</U> The "moo-1.8.0-FUP.patch" file generally doesn't
+need any configuration changes. Some users will want to change the configuration
+specified in the "moo-1.8.0-FUP.c.patch" file
+
+<P>The line:
+<UL>+ /* #define EXTERN_FILES_DIR_READ_ONLY */</UL>
+specifies that the MOO will not be allowed to write to the "~ourmoo/moo/files/"
+directory, but only directories that you've created within it. We recommend
+you enable this function, however, by un-commenting the line (e.g. change
+it to "+ #define EXTERN_FILES_DIR_READ_ONLY").
+
+<P>The line:
+<UL>+ /* #define INCLUDE_FILERUN */</UL>
+specifies that the MOO's FUP system will not be allowed to run commands
+on the MOO computer. You can remove the comment marks (i.e. change the
+line to "+ #define INCLUDE_FILERUN") if you wish to enable this. Generally
+it is unnecessary and not recommended.
+<H3>
+FUP.errfix</H3>
+<U>Description:</U> This patch is to be used ONLY if there is a problem
+with version.c after you try using "make" to compile the system. If you
+get the error "`FUP_version' undeclared (first use this function)" and
+the compilation fails.
+
+<P><U>File name:</U> moo-1.8.0-FUP.errfix.patch
+
+<P><U>Installation:</U> Install this patch in the standard way, but ONLY
+if you get the stated error when compiling. After applying the patch, issue
+the "make" command again to recompile.
+<CENTER><A HREF="../index.html"><IMG SRC="../images/eDUcore_logo_50.gif" BORDER=0 HEIGHT=50 WIDTH=143></A><BR>
+<A HREF="../index.html">Diversity University eDUcore</A></CENTER>
+
+<HR SIZE=4 WIDTH="100%">
+<BR>Last modified 09Dec97
+<BR>Copyright &copy; 1997 <A HREF="http://www.du.org/">Diversity University</A>. All rights reserved.
+</BODY>
+</HTML>

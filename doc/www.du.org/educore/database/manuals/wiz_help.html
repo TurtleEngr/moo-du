@@ -1,0 +1,438 @@
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.03 [en] (Win95; I) [Netscape]">
+   <TITLE>Wizard Help</TITLE>
+</HEAD>
+<BODY>
+
+<H1>
+<HREF NAME="top">Wizard Help</H1>
+
+<H2>
+<A NAME="@add-owner"></A>@add-owner</H2>
+&nbsp;- - - - - - - - - - - - - - - - - - - - - - - - - -
+<BR>Wizards PLEASE NOTE: Due to security considerations, additional-owners
+for wizard-owned objects have additional restrictions. Specifically, reading
+and setting individual properties as though one was the owner on wiz-owned
+objects is not allowed. If you need to have others able to access properties
+in this way, you must make your object owned by a non-wizard.
+
+<P>Also see: <A HREF="manager_help.html#@add-owner">@add-owner</A> in Manager
+Help
+<H2>
+<A NAME="@check-for-core"></A>@check-for-core</H2>
+Checks a core object for possible problems in its property initialization
+or verb references which may exist if it is transferred to a new core DB.
+The initcore_data property should initialize all properties to the form
+they should be in a new core DB, and in particular remove any references
+to non-core object numbers. (see 'help #1:initcore_data for details.) This
+command checks to see if there are any syntax errors in the object's initcore_data,
+and if the properties still have object numbers which are not on the core.
+It also scans the verbs in the object for absolute object numbers and for
+$names which may not be on a new core DB.
+
+<P>Use: @check-for-core &lt;name>
+<BR>or: @check-for-core &lt;core id>
+
+<P>where &lt;core id> is the object's unique name in its unique_id[1] (see
+'help unique-id').
+
+<P>Additional comands for core object testing are available as feature
+verbs on $core_utils. See 'help $core_utils' and '@about $core_utils' or
+'@mailme $core_utils' for details.
+<H2>
+<A NAME="@classes"></A>@classes</H2>
+Wizard Notes
+<BR>------ -----
+
+<P>The "@add-class" and "@add-class-object" commands are available for
+adding a new class (catagory) or object to a class, to be displayed by
+@classes.
+
+<P>The @classes command uses the values in #0.class_registry ($class_registry).
+$class_registry is in the following format:
+<BR>&nbsp;&nbsp;&nbsp; { {name, description, members}, ... }
+<BR>where `name' is the name of a particular class of objects, `description'
+is a one-sentence description of the membership of the class, and `members'
+is a list of object numbers, the members of the class.
+
+<P><B>Related Topics:</B>
+<BR><A HREF="manager_help.html#@add-class">@add-class</A> -- add a new
+class of objects
+<BR><A HREF="manager_help.html#@rm-class">@rm-class</A> -- remove one
+<BR><A HREF="manager_help.html#@add-class-object">@add-class-object</A>
+-- add an object to a class
+<BR><A HREF="manager_help.html#@rm-class-object">@rm-class-object</A> --
+remove one
+
+<P>Also see: <A HREF="builder_help.html#@classes">@classes</A> in Builder
+Help
+<H2>
+<A NAME="@core-id"></A>@core-id</H2>
+@core-id &lt;object>
+
+<P>Gives information identifying a core object. This can be used either
+to check if a given object is part of the base core or a core option, or
+to get the object number for a given core id name. If given the object
+name, outputs the object's unique ID. If given a core id name, the object
+number and name is displayed. Also indicates whether this object can be
+referenced by $&lt;name>.
+<H2>
+<A NAME="@core-options"></A>@core-options</H2>
+See: <A HREF="core_help.html#core-options">core-options</A> in Core Utility
+Help
+<H2>
+<A NAME="@corify"></A>@corify</H2>
+@corify makes an object part of the base core database or a selected core
+option. Updates all databases which keep track of core objects or core
+option sets. Optionally adds it as a property of #0 so it can be referenced
+by $(name).
+
+<P>Use: @corify &lt;object> as [$]&lt;name> [&lt;core-option>]
+
+<P>where &lt;object> is the object number of a name found by my_match_object,
+&lt;name> is the unique ID of the object which must be different from any
+other core or core option object, the $ prefix is used if the object ID
+is also to be a property on #0, and &lt;core-option> is the core options
+set if this object is to be a part of an option rather than the base core.
+See also 'help unique-id'.
+
+<P>Note that once corified, the object can be referenced by &amp;&lt;name>.
+This is useful for referencing objects on linked sites using the DUcore
+because it is independent of the object number.
+
+<P>The @uncorify command is used to remove an object from the base core
+database or a core option, to remove it's unique ID, and remove all references
+to its name to the registered name data base. This should be done before
+any such object is recycled or replaced by another object which is to replace
+it in the core db.
+
+<P>Use: @uncorify &lt;object>
+
+<P>NOTE that the core extraction system at this MOO differs from that on
+the standard LambdaCore. In particular, an object number reference on #0
+is no longer sufficient for it to be part of the core. Also, if you omit
+the "$" ahead of the &lt;name> when using @corify, then the object will
+NOT be added as an object number reference on #0. See '@about $core_utils'
+or '@mailme $core_utils' for details.
+<H2>
+<A NAME="@create-core-option"></A>@create-core-option</H2>
+See: <A HREF="core_help.html#core-options">core-options</A> in Core Utility
+Help
+<H2>
+<A NAME="@del-owner"></A>@del-owner</H2>
+See: <A HREF="#@add-owner">@add-owner</A>
+<H2>
+<A NAME="@delete-core-option"></A>@delete-core-option</H2>
+See: <A HREF="core_help.html#core-options">core-options</A> in Core Utility
+Help
+<H2>
+<A NAME="@email-access"></A>@email-access</H2>
+
+<TABLE BORDER=0 >
+<TR>
+<TD VALIGN=TOP><B>Syntax:</B></TD>
+
+<TD VALIGN=TOP>@email-access &lt;who> is &lt;access></TD>
+</TR>
+</TABLE>
+This verb allows MOO administrators to set whether a MOO character or mail
+folder is allowed to send or receive email directly from the Internet,
+through the Internet Email Permeability System.
+<BR>The two allowable values for &lt;access> are: send, recieve
+<BR>This value can be prefixed with `!' to indicate access is restricted.
+<BR>To allow the MOO user "Jane" to receive direct Internet email, you
+would use:
+<BR>&nbsp; @email-access Jane is receive
+<BR>To restrict John from sending direct Internet email, use:
+<BR>&nbsp; @email-access John is !send
+<BR>Omitting the &lt;access> reports the current email permeability access
+for &lt;who>.
+
+<P><B>Related Topics:</B>
+<BR>email-permeability - overview of the system
+<H2>
+<A NAME="@manager"></A>@manager</H2>
+
+<TABLE BORDER=0 >
+<TR>
+<TD VALIGN=TOP><B>Syntax:</B></TD>
+
+<TD VALIGN=TOP>@manager &lt;person> for &lt;responsibility></TD>
+</TR>
+</TABLE>
+This command makes someone's character a child of the $manager class (or
+removes them from it), and also assigns and removes specific responsibiltiies
+from the set of those available for Managers. The responsibility can be
+specified just with enough of a prefix to be unambiguous.
+
+<P>If you don't specify a responsibility, you'll be told which responsibilities
+the person already has and which are available. Specifying "nothing" as
+the responsibility will remove the person from the Manager class entirely.
+Specifying a responsibility with "!" prefixed means to remove that responsibility
+from the person.
+
+<P>Note that some abilities apply to all Managers, and there is no setting
+for them. These include: @shout.
+
+<P>Assignable responsibilities are:
+
+<P>nothing - if the person isn't already a Manager, this makes them a Manager
+but with no areas of responsibility assigned. If the person is a Manager,
+then all areas of responsibility are removed. Note that the @unmanager
+command is used to remove someone's Manager status completely.
+
+<P>character applications - the Manager can access the *character-request-pool.
+*created, *reject, and *undecided mail folders and use @created and other
+commands to process character applications.
+
+<P>VSPO management - the Manager can create and destroy VSPO groups, as
+well as perform VSPO group management functions on any group.
+
+<P>builder management - the Manager can confer or remove builder permissions,
+and also can set people's building quota.
+
+<P>programmer management - the Manager can confer and remove programmer
+permissions (progbits).
+
+<P>rooms and exits - the Manager can add and remove exits from any MOO
+room, allowing them to manage MOO building activities.
+
+<P>ownership transfers - the Manager can transfer objects from one person's
+ownership to another. Note this gives @recycle ability indirectly.
+
+<P>access restrictions - the Manager can control user access functions
+including @unlock-account, @boot, and @newt.
+
+<P>server management - the Manager has permission to shutdown and force
+checkpoint backups of the MOO.
+
+<P>Administration and policy - the Manager has responsibility for DU MOO
+administration and policy development. Note this doesn't provide access
+to any new commands, and is strictly for informational purposes.
+
+<P>---------
+<TABLE BORDER=0 >
+<TR>
+<TD VALIGN=TOP><B>Syntax:</B></TD>
+
+<TD VALIGN=TOP>@unmanager &lt;person></TD>
+</TR>
+</TABLE>
+The @unmanager command removes the person's manager status, and changes
+their parent to the parent of $manager. All areas of responsibility are
+automatically revoked.
+<BR>---------
+
+<P><B>Related Topics:</B>
+<BR><A HREF="user_help.html#@managers">@managers</A> -- which Managers
+are connected (or list all)
+<BR><A HREF="manager_help.html#manager-summary">manager-summary</A> --
+list of commands available to Managers in each
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+area of responsibility
+<H2>
+<A NAME="@quota"></A>@quota</H2>
+Note to Wizards:
+<BR>Wizards are exempted from quota restrictions under byte-based quota.
+
+<P><B>Related Topics:</B>
+<BR><A HREF="core_help.html#$object_quota_utils">$object_quota_utils</A>
+-- the utility controlling quota under object-based quota
+<BR><A HREF="core_help.html#$byte_quota_utils">$byte_quota_utils</A> --
+the utility controlling quota under byte-based quota
+
+<P>Also see: <A HREF="manager_help.html#@quota">@quota</A> in Manager Help
+<H2>
+<A NAME="@register-name"></A>@register-name</H2>
+@register-name is used to assign a unique_id name to a non-core object.
+The name reference then goes on $id. (Using "ID" as the core-option in
+@corify has the same effect.) The object can then be referenced by '&amp;&lt;name>',
+and it can also be referenced on a linked site using the DUcore, provided
+that the @register-name command was also executed at that site. If the
+object was previously @corified, it is removed from the core or core option
+it was part of previously, if applicable.
+
+<P>Use: @register-name &lt;object> as [$]&lt;name>
+
+<P>where &lt;object> is the name or object number of an object, &lt;name>
+is the unique ID of the object which must be different from any other core
+or core option object, the $ prefix is used if the object ID is also to
+be a property on #0.
+<H2>
+<A NAME="@uncorify"></A>@uncorify</H2>
+See: <A HREF="#@corify">@corify</A>
+<H2>
+<A NAME="@unmanager"></A>@unmanager</H2>
+See: <A HREF="#@manager">@manager</A>
+<H2>
+<A NAME="documentation"></A>documentation</H2>
+<B>Notes for Wizards:</B>
+
+<P>&nbsp; Wizards have the additional requirement of adding a help text
+to the appropriate database for all command line verbs on generic user
+characters. See "@kids $generic_help" for the list of databases.
+
+<P>&nbsp; Such verbs should NOT have any header lines, but instead be solely
+documented through the help database system. This is because the Undocumented
+Help System ($undoc_help) will find help in both places and ask the user
+which they wish to see. Just put all the documentation (except internal
+verb comments) in a help database text.
+
+<P>&nbsp; It is VITAL that help texts have a format that allows them to
+be properly extracted for HTML format, which means that they should follow
+the format given below. Note that help texts for other than commands don't
+need to fit the format given, but *do* need to follow the rule that a double-hyphen
+may only be used to demarcate a reference to another help topic. The format
+for help database entries is as follows:
+<BR>__________
+<TABLE BORDER=0 >
+<TR>
+<TD VALIGN=TOP><B>Syntax:</B></TD>
+
+<TD VALIGN=TOP>&lt;command> &lt;arguments....>&nbsp;
+<BR>&lt;command variation> &lt;arguments....></TD>
+</TR>
+</TABLE>
+<B>Synonyms:</B> &lt;alt. command name1> [, &lt;alt. command name2>]
+
+<P>Explanation of what command is for, including its variations.
+
+<P>[Examples: &lt;example or examples here>]
+
+<P><B>Related Topics:</B>
+<BR>&lt;help topic> -- short description of topic or command
+<BR>__________
+<TABLE BORDER=0 >
+<TR>
+<TD VALIGN=TOP><B>Syntax:</B></TD>
+
+<TD VALIGN=TOP>The titles given (e.g. "" or "Related Topics") are not suggestions!
+These are keys scanned for by the system that extracts the eDUcore manual
+(all the help texts) and if you don't use them exactly, it creates errors
+in the extracted manual. An example of two types of Usage is "@eject" and
+"@eject!" where the varients have slightly different effects. The "Example"
+line is optional, and only needed when the "Usage" line is complex. Multiple
+"Usage" and "Example" lines may be used when appropriate.</TD>
+</TR>
+</TABLE>
+The blank lines after "Syntax" and "Synonyms" (and any other section) are
+significant to the HTML extraction system that prepares the eDUcore manual,
+so be sure to include those. In general, you should not `fill' the text
+to divide it into lines broken by return characters. Instead, make each
+paragraph a single long line, and separate them with an blank line. This
+leads to far better HTML versions of the help texts. If MOO users need
+line wrapping, they have other mechanisms to do that.
+
+<P>When creating a multi-part help text across several help databases,
+add a "Notes for &lt;class>" line followed by a blank line (see this text
+as an example). This indicates to the user that the following text applies
+specifically to a certain &lt;class> of character (e.g. Wizards, Managers,
+etc.). The &lt;class> should be derived from the class that the particular
+help text database is for.
+
+<P>&nbsp; IMPORTANT: Note the two hyphens after the &lt;help topic> in
+the "Related Topics" section. The automatic hypertext help system uses
+these to identify command names that can be used to point to addition help
+texts, and assumes that left of the double hyphen is a single word that
+is itself a valid help topic. Use a single &lt;help topic> per line. Never
+use a double hyphen in a help text *except* to demarcate a related help
+topic!!
+
+<P>Also see: <A HREF="prog_help.html#documentation">documentation</A> in
+Programmer Help
+<H2>
+<A NAME="mail-recipients"></A>mail-recipients</H2>
+Manager access:
+<BR>You can give all Managers for a particular area of responsibility
+<BR>readers, writers, or moderators access to a mail folder, or the
+<BR>ability to read sealed messages.
+<BR>The command is:
+
+<P>&nbsp;@manager-access *&lt;mail-folder> to &lt;access>:&lt;manager_area>
+
+<P>where &lt;access> is one of readers, writers, moderators, or
+<BR>unsealed_for, and &lt;manager_area> is one of the Manager areas of
+<BR>responsibility (property names on $manager ending in "_ok"). If you
+<BR>feed the command junk, it will tell you allowable settings.
+
+<P>Also see: <A HREF="builder_help.html#mail-recipients">mail-recipients</A>
+in Builder Help
+<H2>
+<A NAME="make-core-database"></A>make-core-database</H2>
+
+<TABLE BORDER=0 >
+<TR>
+<TD VALIGN=TOP><B>Syntax:</B></TD>
+
+<TD VALIGN=TOP>make-core-database</TD>
+</TR>
+</TABLE>
+...makes a core database (surprise). Film at 11...
+<H2>
+<A NAME="wiz-channel"></A>wiz-channel</H2>
+The "wiz-channel" is a special channel that only wizards have access to.
+
+<P>wiz-tuned - shows who's currently listening on the [wiz] channel
+<BR>wiz-tune - used with "in" or "out" to tune in or out of the wiz-channel
+<BR>wiz - speak using the [wiz] channel
+<BR>wiz: - emote using the [wiz] channel
+<BR>wiz! - speak with emphasis on [wiz} channel
+<H2>
+<A NAME="wiz-index"></A>wiz-index</H2>
+
+<TABLE BORDER=0 CELLSPACING=6 >
+<TR>
+<TD VALIGN=TOP><A HREF="#@add-owner">@add-owner</A></TD>
+
+<TD VALIGN=TOP><A HREF="#@corify">@corify</A></TD>
+
+<TD VALIGN=TOP><A HREF="#@manager">@manager</A></TD>
+
+<TD VALIGN=TOP><A HREF="#documentation">documentation</A></TD>
+</TR>
+
+<TR>
+<TD VALIGN=TOP><A HREF="#@check-for-core">@check-for-core</A></TD>
+
+<TD VALIGN=TOP><A HREF="#@create-core-option">@create-core-option</A></TD>
+
+<TD VALIGN=TOP><A HREF="#@quota">@quota</A></TD>
+
+<TD VALIGN=TOP><A HREF="#mail-recipients">mail-recipients</A></TD>
+</TR>
+
+<TR>
+<TD VALIGN=TOP><A HREF="#@classes">@classes</A></TD>
+
+<TD VALIGN=TOP><A HREF="#@del-owner">@del-owner</A></TD>
+
+<TD VALIGN=TOP><A HREF="#@register-name">@register-name</A></TD>
+
+<TD VALIGN=TOP><A HREF="#make-core-database">make-core-database</A></TD>
+</TR>
+
+<TR>
+<TD VALIGN=TOP><A HREF="#@core-id">@core-id</A></TD>
+
+<TD VALIGN=TOP><A HREF="#@delete-core-option">@delete-core-option</A></TD>
+
+<TD VALIGN=TOP><A HREF="#@uncorify">@uncorify</A></TD>
+
+<TD VALIGN=TOP><A HREF="#wiz-channel">wiz-channel</A></TD>
+</TR>
+
+<TR>
+<TD VALIGN=TOP><A HREF="#@core-options">@core-options</A></TD>
+
+<TD VALIGN=TOP><A HREF="#@email-access">@email-access</A></TD>
+
+<TD VALIGN=TOP><A HREF="#@unmanager">@unmanager</A></TD>
+
+<TD VALIGN=TOP><A HREF="#wiz-index">wiz-index</A></TD>
+</TR>
+</TABLE>
+&nbsp;
+</BODY>
+</HTML>

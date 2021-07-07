@@ -1,0 +1,251 @@
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="Author" CONTENT="Eric Mercer">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.04 [en] (Win95; I) [Netscape]">
+   <TITLE>MOO Technical Support Scripts</TITLE>
+</HEAD>
+<BODY>
+<IMG SRC="http://www.du.org/images/logo/DUlogo_banner1.gif" HEIGHT=77 WIDTH=609>
+<BR>
+<HR SIZE=0 WIDTH="100%">
+<H1>
+MOO Technical Support Scripts</H1>
+Here you'll find various UNIX scripts, DOS batch files, and other tools
+useful for maintaining a MOO. The UNIX material is derived from those that
+Diversity University uses in its own operations.
+
+<P>The complete set of UNIX support scripts is available as a <A HREF="server_scripts.tar.gz">compressed
+archive</A>. A set of <A HREF="winmoo_batch.zip">batch
+files</A> is available for those running a MOO on a Win95 or WinNT system.
+<H2>
+<A NAME="UNIX"></A><A HREF="server_scripts.tar.gz">UNIX
+Scripts</A></H2>
+Certain sub-directory structures are assumed, and if yours are different
+you may have to perform some customization of the scripts. We find our
+arrangement very convenient though, so you might want to emulate it. The
+basic structure is:
+<BR>&nbsp;
+<TABLE BORDER WIDTH="100%" >
+<TR>
+<TD>/usr/du/bin/</TD>
+
+<TD>binary files and MOO maintenance scripts</TD>
+</TR>
+
+<TR>
+<TD>/usr/du/home/</TD>
+
+<TD>home directories for MOO support personnel</TD>
+</TR>
+
+<TR>
+<TD>/usr/du/moo/</TD>
+
+<TD>the place where the MOO database file is</TD>
+</TR>
+
+<TR>
+<TD>/usr/du/moo/moo</TD>
+
+<TD>a soft link to server-source/MOO-1.8.0p6/moo</TD>
+</TR>
+
+<TR>
+<TD>/usr/du/moo/du.db</TD>
+
+<TD>our MOO database file</TD>
+</TR>
+
+<TR>
+<TD>/usr/du/moo/files/</TD>
+
+<TD>where the FUP-accessible files are</TD>
+</TR>
+
+<TR>
+<TD>/usr/du/moo/backup.dbs/</TD>
+
+<TD>where backup MOO databases are</TD>
+</TR>
+
+<TR>
+<TD>/usr/du/moo/backup.logs/</TD>
+
+<TD>where backup server logs are</TD>
+</TR>
+
+<TR>
+<TD>/usr/du/moo/server-source/</TD>
+
+<TD>where the server source directories are</TD>
+</TR>
+
+<TR>
+<TD>/usr/du/moo/server-source/MOO-1.8.0p6/</TD>
+
+<TD>the unpacked server source</TD>
+</TR>
+
+<TR>
+<TD>/usr/du/moo/server-source/patches/</TD>
+
+<TD>server patches</TD>
+</TR>
+</TABLE>
+Subdirectories in the above listing are indicated by a "/" at the end.
+
+<P>Scripts and other files are kept in the following places:
+<BR>&nbsp;
+<TABLE BORDER WIDTH="100%" >
+<TR>
+<TD><A HREF="chown">chown</A></TD>
+
+<TD>in /usr/du/bin</TD>
+</TR>
+
+<TR>
+<TD><A HREF="dobackup">dobackup</A></TD>
+
+<TD>in /usr/du/bin (a <A HREF="dobackup2">version
+that uses compress</A> instead of gzip is available)</TD>
+</TR>
+
+<TR>
+<TD><A HREF="runmoo">runmoo</A></TD>
+
+<TD>in /usr/du/bin</TD>
+</TR>
+
+<TR>
+<TD><A HREF="statmoo">statmoo</A></TD>
+
+<TD>in /usr/du/bin</TD>
+</TR>
+
+<TR>
+<TD><A HREF="watchmoo">watchmoo</A></TD>
+
+<TD>in /usr/du/bin</TD>
+</TR>
+
+<TR>
+<TD><A HREF="crontab.moo">crontab.moo</A></TD>
+
+<TD>in /usr/du/moo</TD>
+</TR>
+
+<TR>
+<TD><A HREF="statmoo.cgi">statmoo.cgi</A></TD>
+
+<TD>in our httpd cgi-directory (set by httpd srm.conf)</TD>
+</TR>
+</TABLE>
+&nbsp;
+
+<P>All DU server maintenance personnel have the du/bin directory added
+to their PATH list. They can issue "runmoo" to start the MOO. The MOO is
+halted from inside the MOO itself, using the @shutdown command. Our runmoo
+command is the equivalent to the "restart" script distributed with the
+LambdaMOO server.
+
+<P>The watchmoo script is a simple method of watching the MOO's log continuously,
+which is especially useful when starting or stopping the server.
+
+<P>The nightly archiving system, which stores a copy of the MOO database
+as well as a copy of all FUP-based external files, must be started separately.
+The backup process stores all these as a single tar.gz file. See the crontab.moo
+file, and change the values to point to your MOO database. Note that this
+is also where to set how many days of backups you want. For instance, you
+might want a running 7 day backup set, and once a week set aside (by hand)
+a copy for long-term storage. Once you've customized the dobackup and crontab.moo
+files appropriately, use "crontab crontab.moo" to schedule the backup process.
+
+<P>Note that you must have access to gzip and tar on your system for the
+nightly archiving to function.
+
+<P>Although one person can generally maintain the UNIX side of the MOO
+operation, it is common to have a group of people who do so. To allow a
+group to all have access to the required files, we suggest the following:
+<BR>&nbsp;
+<OL>
+<LI>
+&nbsp;Establish a UNIX group to own all MOO-related materials (add a line
+to the /etc/group file). It might be called "mookeepers" for example. Make
+sure all maintenance personnel are in the group, either by having their
+name in the /etc/group file entry, or through their /etc/passwd file entry.</LI>
+
+<LI>
+&nbsp;When you create the /usr/moo directory that will hold all MOO-related
+files, make sure it is, a) owned by the mookeepers group, b) the sticky-bit
+for the directory is set. This will insure that all files and sub-directories
+created under this directory are owned by the mookeepers group. If you
+already created /usr/moo directory (or whatever you called it), change
+the group ownership of that directory and all its contents (you may need
+your sysop to do this for you)</LI>
+
+<LI>
+&nbsp;If the UNIX accounts for your MOO maintenance staff are ONLY used
+for MOO maintenance, it is convenient to change their default "umask" setting
+such that all files they create will be writable by the other maintainers.
+To do this, add the line "umask 007" to the ".login" script in the home
+directories of your MOO maintenance staff. This will insure all the files
+they create are group-writable, and therefore can be edited by other MOO
+maintenance staff.</LI>
+</OL>
+Note that if they do other work using their account, those files will also
+be group-writable unless specifically altered. If your staff routinely
+do both MOO maintenance and personal work on the UNIX system, you might
+consider making special MOO maintenance accounts for them, which will be
+in the mookeepers group and have a default umask value making files created
+with that account group-writable. Their personal account would neither
+be in the mookeepers group, nor use the group-writable umask value.
+
+<P>The chown script is a convenient tool for allowing a group of maintainers
+to share files at a site where none of them has root access. When setuid
+root, it allows them to chown files back and forth, even if the server
+generally restricts such chown'ing, by limiting such actions to only people
+within the same group. For instance, all DU maintenance personnel for the
+DU Main Campus are in the "du" UNIX system group.
+
+<P>The statmoo and statmoo.cgi scripts give a snapshot summary of the MOO
+server operations. The statmoo.cgi is especially useful for determining
+if your MOO is using appropriate amounts of server resources. You can see
+the DU Main Campus MOO's summary generated by statmoo.cgi at:
+<UL>http://www.du.org/statmoo</UL>
+The statmoo script just provides a quick summary without analysis. At DU's
+site, the statmoo.cgi file is the one accessed, and has been renamed "statmoo"
+for convenience. Note that these scripts may not function correctly with
+operating systems other than Solaris, unless suitably modified.
+<BR>&nbsp;
+<H2>
+<A NAME="Win"></A><A HREF="winmoo_batch.zip">Win95/NT
+Batch Files</A></H2>
+&nbsp;
+<TABLE BORDER COLS=2 WIDTH="100%" >
+<TR>
+<TD><A HREF="dobackup.bat">dobackup.bat</A></TD>
+
+<TD>This batch file will create a compressed archive of the MOO database.&nbsp;
+This is run in conjunction with a scheduling program. Please see the documentation
+within the batch file for more details.</TD>
+</TR>
+
+<TR>
+<TD><A HREF="runmoo.bat">runmoo.bat</A></TD>
+
+<TD>This batch file will start the MOO, moving logs and performing other
+useful housekeeping tasks in the process.</TD>
+</TR>
+</TABLE>
+&nbsp;
+<CENTER><A HREF="../../index.html"><IMG SRC="../../images/eDUcore_logo_50.gif" BORDER=0 HEIGHT=50 WIDTH=153></A></CENTER>
+
+<CENTER><A HREF="../../index.html">Diversity University eDUcore</A></CENTER>
+
+<HR SIZE=4 WIDTH="100%">
+<BR>Last modified 09Dec97
+<BR>Copyright &copy; 1997 <A HREF="http://www.du.org/">Diversity University</A>.
+All rights reserved.
+</BODY>
+</HTML>

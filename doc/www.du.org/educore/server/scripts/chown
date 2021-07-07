@@ -1,0 +1,38 @@
+#!/bin/csh -b
+
+# Usage: chown newowner file1 [file2 file3 ...]
+# This script allows chown'ing only among people in a common group, and is 
+#   particularly useful when a group of people must maintain a MOO site, 
+#   but none of them has root access.
+# If setuid root, then it works even in an environment where chown is
+#   disallowed by {_POSIX_CHOWN_RESTRICTED}.
+# Chowns files only if both user and newowner are in the group owning 
+#   that file.
+# If file is a link, chowns the link, and not the linked to file.
+
+set touser=$argv[1]
+set tousergrp=(`/bin/groups $touser`)
+set usergrp=(`/bin/groups $user`)
+shift
+while ($#argv)
+  set ls=(`/bin/ls -ld $argv[1]`)
+  foreach grp ($usergrp)
+    if ($ls[4] == $grp) then
+      foreach togrp ($tousergrp)
+        if ($ls[4] == $togrp) then
+          /bin/chown -h $touser $argv[1]
+          break
+        endif
+      end
+      break
+    endif
+  end
+  if ($ls[4] != $grp) then
+    echo ${argv[1]}: user in wrong group
+  else
+    if ($ls[4] != $togrp) then
+      echo ${argv[1]}: newowner in wrong group
+    endif
+  endif
+  shift
+end

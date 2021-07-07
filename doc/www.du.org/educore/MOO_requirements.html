@@ -1,0 +1,523 @@
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="Author" CONTENT="Eric Mercer">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.04 [en] (Win95; I) [Netscape]">
+   <TITLE>MOO Hardware and Software Requirements</TITLE>
+</HEAD>
+<BODY>
+&nbsp;
+<TABLE BORDER=0 WIDTH="100%" >
+<TR>
+<TD><IMG SRC="../images/logo/DUlogo_90x95.gif" ALT="DU logo" NOSAVE HEIGHT=90 WIDTH=95></TD>
+
+<TD>
+<H1>
+<A NAME="top"></A>What Hardware and Software Do I Need to Run a MOO?</H1>
+</TD>
+</TR>
+</TABLE>
+
+<CENTER>
+<HR WIDTH="100%"></CENTER>
+
+<H2>
+<A NAME="contents"></A>Contents</H2>
+
+<UL>
+<LI>
+<A HREF="#introduction">Introduction</A></LI>
+
+<LI>
+<A HREF="#software">What software do I need to run a MOO?</A></LI>
+
+<LI>
+<A HREF="#operating_system">What operating system do I need to run a MOO?</A></LI>
+
+<LI>
+<A HREF="#hardware">What hardware do I need to run a MOO?</A></LI>
+
+<LI>
+<A HREF="#network">What kind of network connection do I need between my
+MOO and the Internet?</A></LI>
+
+<LI>
+<A HREF="#database">Do I need a specific MOO core Database for my operating
+system?</A></LI>
+
+<LI>
+<A HREF="#appendix">Appendix</A></LI>
+
+<UL>
+<LI>
+<A HREF="#db_conversion">How do I convert a MOO Database from one operating
+system to another?</A></LI>
+
+<LI>
+<A HREF="#find_out_more">How can I find out more about setting up and using
+a MOO for education?</A></LI>
+</UL>
+</UL>
+
+<H2>
+<A NAME="introduction"></A>Introduction</H2>
+This document describes the software and hardware that is required to operate
+a MOO. Because little detailed research has been done on this subject,
+the information provided is based on the experiences of people who have
+run MOOs on various platforms. This writing is intended to allow those
+who are interested in starting a MOO to figure out if their existing hardware
+is sufficient, if it will need to be upgraded, or if new hardware needs
+to be purchased. It also provides explanations for common hardware limitations,
+to better illuminate the decision-making process. It is assumed that the
+reader is already somewhat familiar with what a MOO is. This document is
+provided as a service of <A HREF="http://www.du.org/">Diversity University</A>,
+a nonprofit organization that promotes the use of online tools for education,
+particularly multi-user VR worlds.
+
+<P><A HREF="#contents">(to table of contents)</A>
+<H2>
+<A NAME="software"></A>What software do I need to run a MOO?</H2>
+There are two basic components to any MOO: 1) a Database, which contains
+a description of the virtual world, including all the objects and their
+behaviors, and 2) a Server which reads and interprets the Database, allowing
+interactions between MOO users and the Database. You will need to obtain
+both a Database and a Server to operate a MOO.
+
+<P>At this time, the only commonly used Server is the <A HREF="ftp://ftp.research.att.com/dist/eostrom/MOO/">LambdaMOO
+Server</A>. This software was originally developed by Stephen White, then
+developed for many years by Pavel Curtis, who has recently passed on the
+development of the Server to Erik Ostrom. In addition, many other people
+have contributed code to the primary developers, some of which has been
+subsequently incorporated into the Server. The Server has thus been developed
+as a community effort, led at any one time by a single person who ends
+up writing most of the improved Server code, and also decides which features
+and code donations will be incorporated in subsequent Server versions.
+
+<P>In addition to the MOO Server, you will need an existing Database, containing
+at least the core systems and object templates needed to start building.
+When starting a MOO, one almost always uses a MOO "core" Database, which
+is one that has not yet been customized by the creation of rooms, characters,
+or other objects, but only has their templates (i.e. the "generic" versions
+of such objects). A MOO core is essentially an empty place, typically with
+a single starting room, within which you will build your VR world. A MOO
+core is created by extracting out the essential parts (or destroying all
+the non-essential parts) of an existing MOO. For this reason, nearly all
+MOO cores are actually derived from an operating MOO world, and you can
+often visit the MOO world that the core was derived from to gain some idea
+of the type of place it is. Several MOO cores are available (these are
+<A HREF="http://nowhere.org/not_yet_written.html">described elsewhere</A>),
+each reflecting the philosophies and needs of the MOOs from which they
+were derived.
+
+<P>In addition to the software needed to run the MOO itself, you will greatly
+benefit from using a dedicated MUD/MOO client for connecting to the MOO.
+Many are available for every common operating system, and people each have
+their own preferences. Summaries and descriptions of some popular MUD/MOO
+clients are described in <A HREF="http://nowhere.org/not_yet_written.html">another
+text</A>.
+
+<P><A HREF="#contents">(to table of contents)</A>
+<H2>
+<A NAME="operating_system"></A>What operating system do I need to run a
+MOO?</H2>
+MOOs have been run successfully on UNIX, Win95, WinNT, and MacOS (PowerMac)
+platforms. As far as we know, there is no publicly available version of
+the LambdaMOO Server for the VMS or any of the IBM-specific operating systems
+(besides their version of UNIX), nor on any Win3.x system. There have been
+some experimental compilations for OS/2. Precompiled versions of the LambdaMOO
+Server are available for <A HREF="http://www-personal.engin.umich.edu/~cunkel/WinMOO/winmoo-faq.html">Win95/NT</A>
+(runs on both) and for the <A HREF="http://neon.ci.lexington.ma.us/SpamCentral/scaron/mgm.html">MacOS</A>.
+For these precompiled versions, you simply need to obtain a copy of the
+executable software and install it appropriately on your system, following
+the documentation given for each. Although precompiled versions may be
+available for certain UNIX flavors, most people prefer to compile a copy
+on their own system, to better insure it matches their system's enviroment.
+The LambdaMOO Server has been compiled for most common forms of UNIX. The
+"make" system support that comes with the LambdaMOO source package, together
+with a modern C compiler (e.g. GCC), is usually able to compile the Server
+successfully on UNIX computers without any modifications, requiring only
+a minimal familiarity with UNIX.
+
+<P>Note that many MOO administrators using UNIX systems apply one or more
+patches to the source code before compiling, to modify the capabilities
+of the Server. Several commonly used patches are publically available,
+and can provide very useful features such as access from the MOO to the
+computer's file system, or access to the UNIX timezone functions. Since
+the Win95/NT and MacOS versions of the LambdaMOO Server come precompiled,
+you generally don't have the option of including patches if you use one
+of these two versions. However, the MacOS version accepts "plug-ins" and
+if a patch is available in the form of a plug-in, you may be able to use
+the patch through that mechanism. In addition, versions of the Win95/NT
+Server may become available with popular patches compiled in. You should
+check the Web pages for the <A HREF="http://www-personal.engin.umich.edu/~cunkel/WinMOO/winmoo-faq.html">Win95/NT</A>
+and the <A HREF="http://neon.ci.lexington.ma.us/SpamCentral/scaron/mgm.html">MacOS</A>
+versions of the LambdaMOO Server for more information.
+
+<P>The following table presents the systems on which the current version
+of the UNIX LambdaMOO Server has been tested by the developer, and is taken
+from the README file that comes with the LambdaMOO 1.8.0 Server. Note that
+it is not a complete list of the UNIX varients for which the LambdaMOO
+Server can be compiled, but only those that were specifically tested by
+the developer. The MOO will compile fairly easily on most common UNIX systems,
+although adjustments to the compilation parameters are sometimes needed.
+
+<P><B>Machines On Which Version 1.8.0 of the LambdaMOO Server Was Tested</B>
+<TABLE BORDER COLS=3 WIDTH="100%" >
+<TR>
+<TD><B>Hardware</B></TD>
+
+<TD><B>Operating System(s)</B></TD>
+
+<TD><B>Compiler</B></TD>
+</TR>
+
+<TR>
+<TD>Sun 4/SPARC</TD>
+
+<TD>SunOS 4.1.3, 5.5</TD>
+
+<TD>GCC</TD>
+</TR>
+
+<TR>
+<TD>SGI Iris</TD>
+
+<TD>IRIX 5.3</TD>
+
+<TD>Vendor's</TD>
+</TR>
+
+<TR>
+<TD>DEC Alpha</TD>
+
+<TD>DEC OSF/1 V3.2</TD>
+
+<TD>Vendor's</TD>
+</TR>
+
+<TR>
+<TD>Intel x86</TD>
+
+<TD>Linux 1.3.30</TD>
+
+<TD>GCC</TD>
+</TR>
+</TABLE>
+<A HREF="#contents">(to table of contents)</A>
+<H2>
+<A NAME="hardware"></A>What hardware do I need to run a MOO?</H2>
+The hardware requirements for operating a MOO vary with the type of operating
+system, the number of rooms and other objects in the MOO Database (i.e.
+its size), the number of people who will be using the MOO concurrently,
+and the amount of additional activity the Server will be supporting (such
+as a Web-MOO interface). When the hardware supporting a MOO is unable to
+handle the amount of activity the MOO requires, this generally appears
+as "lag" in the MOO: a delay between when someone issues a command, and
+when the command is executed.
+
+<P>The primary determinant of a system's ability to support a MOO is the
+amount of RAM it has available for the MOO, after the amount needed for
+the operating system and other concurrently running processes is taken.
+Systems without sufficient memory to hold a significant portion of the
+MOO Database in RAM will experience a great deal of hard disk activity,
+as the operating system swaps portions of the Database between hard disk
+and RAM. Although CPU speed can be a cause of lag on very slow systems,
+or when there are many concurrent users, for most systems it is the lack
+of sufficient memory and consequent need for a great deal of disk swapping
+that causes lag. The best solution to this problem is to have sufficient
+free RAM on the computer to hold at least one third, and preferably one
+half of the running Database. In a system that doesn't have enough RAM
+to prevent significant disk swapping, using a fast hard disk access system
+(e.g. fast, wide SCSI) may help somewhat. Systems on which less than a
+third of the Database can be (or is normally) held in RAM will commonly
+show at least some lag when a dozen or more people use the MOO concurrently.
+It is important to note that the size of the MOO running in memory is typically
+about 175% of the size of the Database on the hard disk (or 220% for 64-bit
+systems such as the DEC Alpha or SGI n64) In addition, when the MOO writes
+a periodic backup copy of the Database to the disk (i.e. performs a "checkpoint"),
+it may nearly double in size. For this reason, systems that are barely
+sufficient to run the MOO effectively will commonly lag during checkpoints.
+
+<P>You can estimate the amount of RAM you'll need to operate the MOO at
+peak efficiency by multiplying the size of the Database on the hard disk
+by 1.75 (or 2.2 for 32-bit systems), and adding the amount of RAM taken
+up by the operating system and any other processes running on the same
+computer. MOO core Databases range in size from about 1.5 to 4.5 MB, and
+therefore require about 3 to 8 MB available to run effectively. Note that
+the MOO system will take twice as much memory during checkpoints.
+
+<P>It is very rare that a MOO Database will close to the size of the original
+core, unless you use drastic restrictions on the amount of building that
+MOO users may do. MOO Databases commonly grow to 10-20 MB within one to
+two years, which can require significantly more memory to support effectively.
+The largest MOO Databases are over 100 MB in size. In general, you should
+expect to need at least 32 MB of RAM on your system to effectively support
+an active MOO, with an upgrade to 64 or 128 MB installed one year from
+starting operation if the MOO is very successful and you encourage people
+to build.
+
+<P>Note that non-UNIX operating systems are typically not designed to handle
+numerous simultaneous network connections. For this reason, non-UNIX systems
+may be unable to handle more than 50-100 concurrent users without experiencing
+lag. Some WinNT systems may be able to handle as many concurrent connections
+as UNIX systems.
+
+<P>In general, any processor with performance at least as good as a Pentium/75
+MHz can run a MOO, although faster clocks may improve the ability to handle
+more concurrent connections. In nearly all cases, however, available RAM
+is the primary determinant of how effectively the MOO runs, with hard disk
+access speed a distant second. The equivalent to an Intel 486/66 may be
+sufficient for a MOO with no more than one or two dozen user connections
+and minimal use of a Web-MOO interface, if it is supplied with a generous
+amount of RAM.
+
+<P>If the MOO supports a Web-MOO interface, and most of the users will
+be operating that interface when they are in the MOO, this will put an
+additional burden on the computer as a certain amount of extra processing
+overhead is incurred by the Web-MOO interface. However, very little research
+has been done to determine the actual impact of this additional overhead.
+It is likely that even a moderately fast processor (i.e. equivalent to
+a Pentium/120) provided with adequate RAM can handle any reasonable amount
+of Web-MOO interface activity.
+
+<P>In general, a single MOO is limited to 100-300 concurrent users. It
+is likely that only UNIX systems are able to handle MOOs that have both
+large Databases and more than 100 concurrent users, although little exploration
+of this issue has been done thus far. In addition, at the time of this
+writing there is an effort being made to improve the efficiency of the
+LambdaMOO Server, which has been having a significant impact on performance.
+For this reason, it's not entirely clear what the real capacity of MOOs
+will be in the near future. Also, MOOs have been linked together into groups,
+providing a sense of unity for users across the system while supporting
+significantly larger number of concurrent connections. Very little research
+has been done into how many concurrent users can be supported using such
+a mechanism.
+
+<P><A HREF="#contents">(to table of contents)</A>
+<H2>
+<A NAME="network"></A>What kind of network connection do I need between
+my MOO and the Internet?</H2>
+Since the MOO accepts and generates only text, it puts very little burden
+on the network to which it is connected. Relative to the graphics and streaming
+video that are rapidly growing as a proportion of network traffic, the
+MOO's contribution is trivial. This is true even on a MOO with several
+hundred users. Some years back, it was a common misconception among ill-informed
+system operators that MOOs caused a great deal of traffic on school campus
+networks, and were a significant problem. The rise of the Web and its high-bandwidth
+graphics has rendered all such considerations irrelevent, and this misconception
+is now rarely held by any employed system operators.
+
+<P>In general, nearly any network connection can support a MOO. Even a
+28K modem link is sufficient for a MOO without too many concurrent users,
+if that link is also not used for a Web server providing graphics. MOOs
+providing a Web-MOO interface for more than a dozen concurrent users should
+probably have at least a 128K link, since the MOO will generate HTML text
+files in bursts that may hog a 28K line if several are being sent at once.
+
+<P>Note that MOOs providing a Web-MOO interface do not actually serve the
+graphics themselves, but only generate HTML text files that include Internet
+pointers (i.e. URLs), to the graphics or other multimedia material. The
+actual graphics may be anywhere on the Internet. If your MOO will incorporate
+graphics through a Web-MOO interface, there is no need to have the Web
+server that stores and provides those graphics on the same computer, or
+even the same network, as the one carrying the MOO.
+
+<P><A HREF="#contents">(to table of contents)</A>
+<H2>
+<A NAME="database"></A>Do I need a specific MOO core Database for my operating
+system?</H2>
+Of the two components of a MOO, the Server and the Database, only the Server
+must be specially compiled for a particular platform. The Database is generally
+platform-independent. For this reason, you can use any of the available
+MOO core Databases to establish your MOO.
+
+<P>Note that a special situation arises if you wish to use a MOO Database
+that has already been in use with one type of operating system, and will
+run it on another. In such a case, there will be MOO characters that have
+been created and assigned passwords. Because the password encryption system
+differs among different operating systems, the old passwords will usually
+not function under the new operating system. The usual solution is to load
+the MOO database in "emergency wizard mode" and set the archwizard password
+to zero, then to connect to that character and issue new passwords to every
+character in the MOO. Specific instructions for how to do this are <A HREF="#db_conversion">given
+in the appendix</A>. However, some MOO cores might use a platform-independent,
+in-DB encryption system, in which case the passwords will work no matter
+what operating system the MOO Database is transferred to. Unless the documentation
+for the MOO core you have used specifies that it uses a platform-independent,
+in-DB password encryption system, it probably does not.
+
+<P><A HREF="#contents">(to table of contents)</A>
+<H2>
+<A NAME="appendix"></A>Appendix</H2>
+
+<H3>
+<A NAME="db_conversion"></A>How do I convert a MOO Database from one operating
+system to another?</H3>
+If you are using a MOO Database other than a core to establish a MOO, there
+is typically a problem of incompatible password encryption systems if the
+new operating system that will be running the MOO is of a different general
+type that the one the Database was initially developed on. This is almost
+always the case when switching between UNIX, Win95, WinNT, and MacOS systems,
+and may also rarely be encountered when switching between different UNIX
+systems. The solution to the problem is to generate new passwords for all
+the characters in the MOO. It is assumed that you will have a regular charater
+on the MOO, so you can test to insure the passwords have been reinitialized
+properly. Note also that in order to send out the new passwords to each
+person, the MOO will need to be able to send email (i.e. been compiled
+with outbound connections allowed, have $network.active set to 1, and have
+a valid $network.maildrop address).
+
+<P>BE SURE TO SET ASIDE A COPY OF THE DATABASE AS A BACKUP BEFORE FOLLOWING
+THIS PROCEDURE!!!!
+
+<P>The passwords may be reinitialized, and mail sent to all users informing
+them of their new password as follows:
+
+<P>1. Modify the script or command that launches the MOO to start it in
+"emergency wizard mode." This generally means adding the switch "-e" after
+the "moo" command itself, in the script, batch file, or command line used
+to launch the MOO. After the MOO loads, it should inform you that it is
+entering emergency wizard mode, rather than present the regular welcome
+screen. Note that if you are using a Win95/NT or MacOS system, this appears
+in the "console" display. You do not need to connect to the MOO via Telnet
+to use emergency wizard mode, and in fact you can't.
+
+<P>2. Set the archiwizard's password to zero, to allow you to connect to
+it without a password. In nearly all MOOs, the archwizard is object #2,
+so set the password with:
+
+<P>;#2.password = 0
+
+<P>3. Determine the name of the archwizard character with:
+
+<P>;#2.name
+
+<P>4. Type "continue" to exit emergency wizard mode and allow the MOO to
+start listening for connections.
+
+<P>5. Connect to the MOO's regular text interface, using your favorite
+MUD/MOO client program. From there, connect to the archwizard character
+with:
+
+<P>connect &lt;name> ""
+
+<P>where &lt;name> is the name (not in quotes) that you obtained in step
+3, and the `""' is a pair of double quotes with nothing between them.
+
+<P>6. At this point, you should be connected to the archwizard character.
+Now add the command that will set new passwords for everyone, using:
+
+<P>@verb me:@initpasswords none none none rd
+
+<P>7. Now program the command by entering the following lines, including
+the last line, which is just a period on a line by itself:
+
+<P>@program me:@initpasswords
+<BR>if (caller!=this)
+<BR>return player:notify("Nope.");
+<BR>elseif (!this.wizard)
+<BR>return player:notify("Sorry, only a wizard character can do this, and
+you are not one.");
+<BR>endif
+<BR>for who in (setremove(setremove(players(),#2),$hacker))
+<BR>if (who.password &amp;&amp; !index(who.password," "))
+<BR>"skip guests and characters with passwords that are impossible to type";
+<BR>$wiz_utils:set_password(who, password=$wiz_utils:random_password(6),
+#2);
+<BR>if ($network.active &amp;&amp; who.email_address)
+<BR>"send the new password by email";
+<BR>$network:raw_sendmail(who.email_address, "Date: " + $time_utils:ctime_for_email(),
+tostr("From: ",$network.MOO_name," &lt;",$network.reply_address,">"), tostr("To:
+",who.name," &lt;",who.email_address,">"), "Subject: new password", "",
+tostr("The password for your MOO character ",who.name," at ",$network.MOO_name,"
+has been changed to: ",password),"Please use this new password the next
+time you connect to your MOO character.");
+<BR>endif
+<BR>endif
+<BR>$command_utils:suspend_if_needed(10);
+<BR>"use a long suspend, since the sendmail tasks tend to pile up badly";
+<BR>endfor
+<BR>player:notify("Done!");
+<BR>.
+
+<P>8. Type "@initpassword" to run the command. The MOO will generate new
+passwords for every registered character in the MOO who has ever connected,
+and send out email notifying them of their new password.
+
+<P>9. Finally, you should set the password for the archwizard character.
+If the archwizard is not actually used as an active character (recommended),
+then use:
+
+<P>@set me.password to "impossible password to type"
+
+<P>otherwise use:
+
+<P>@newpassword me is &lt;password>
+
+<P>to set a new password for yourself. On some MOOs, you may have to use
+"@password" instead of the "@newpassword" command.
+
+<P>10. Before using "@quit" to end your session, try connecting to your
+regular, non-wizard character on the MOO to make sure the new passwords
+have been set properly.
+
+<P>11. After you have successfully re-initialized the passwords for the
+MOO, you should remove the @initpasswords command with:
+
+<P>@rmverb #2:@initpasswords
+
+<P><A HREF="#contents">(to table of contents)</A>
+<H3>
+<A NAME="find_out_more"></A>How can I find out more about setting up and
+using a MOO for education?</H3>
+You can find out more about setting up and using a MOO through these recommended
+resources:
+<UL>
+<LI>
+<A HREF="http://www.du.org/duSvcs/MOOsetup_main.html">Establishing an Online
+Virtual World for Education</A></LI>
+
+<LI>
+<A HREF="http://www.cse.ogi.edu/~rday/moo-calves.html">MOO-Calves Resource
+Page</A></LI>
+
+<LI>
+<A HREF="http://www.moo.mud.org/moo-faq/">MOO-Cows FAQ</A></LI>
+
+<LI>
+<A HREF="gopher://moon.pepperdine.edu:70/00/gsep/technical/mud-moo/new-archwiz-faq.txt">Newbie
+Wizards FAQ</A> (also in <A HREF="http://www.the-b.org/moo/new-archwiz-faq.html">Web
+page form</A>)</LI>
+
+<LI>
+<A HREF="http://lucien.berkeley.edu/moo.html">Lost Library of MOO</A></LI>
+
+<LI>
+<A HREF="http://www.pitt.edu/~jrgst7/MOOcentral.html">MOO Central</A></LI>
+
+<LI>
+<A HREF="http://tecfa.unige.ch/edu-comp/WWW-VL/eduVR-page.html">WWW VL:
+Educational Technology - Educational VR Sub-page</A></LI>
+
+<LI>
+<A HREF="http://english.ttu.edu/kairos/1.3/2a.html">Kairos: Reflections
+Onna MOO</A></LI>
+
+<LI>
+<A HREF="http://www.assiniboinec.mb.ca/user/downes/mudpage.htm">MUD Resource
+Guide</A></LI>
+
+<LI>
+<A HREF="index.html">Diversity University's eDUcore (a
+MOO core database)</A></LI>
+</UL>
+<A HREF="#contents">(to table of contents)</A>
+
+<P>
+<HR WIDTH="100%">
+<BR>Please send any comments and suggestions to: DU Services &lt;<A HREF="mailto:dusvcs@du.org">dusvcs@du.org</A>>
+
+<P>Last modified: 08Dec97
+<BR>Copyright &copy; 1997 Diversity University All rights reserved.
+</BODY>
+</HTML>

@@ -1,0 +1,516 @@
+<HTML><HEAD><TITLE>Editor Help</TITLE></HEAD><BODY>
+
+<H1><HREF NAME="top">Editor Help</A></H1>
+
+<H2><A NAME="abort">abort</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  abort</TD></TR></TABLE>
+
+<P>Abandons this editing session and any changes.
+
+<H2><A NAME="also-to">also-to</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  also-to [&lt;recipients&gt;]</TD></TR></TABLE>
+
+<P>Synonym: cc
+
+<P>(MAIL ROOM)
+<BR>Adds additional recipients to the To: line of your message.
+<BR>Same rules apply as for the `to' command.
+
+<H2><A NAME="cc">cc</A></H2>
+
+<P>See: <A HREF="#also-to">also-to</A>
+
+<H2><A NAME="commands">commands</A></H2>
+
+<P>See: <A HREF="user_help.html#editor-commands">editor-commands</A> in General Help
+
+<H2><A NAME="comment">comment</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  comm*ent [&lt;range&gt;] </TD></TR></TABLE>
+
+<P>(VERB EDITOR)
+<BR>Converts the specified range of lines into MOOcode "comments" (string-literals).
+<BR>&lt;range&gt; defaults to the line *before* the current insertion point.
+
+<H2><A NAME="compile">compile</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  compile [as &lt;object&gt;:&lt;verb&gt;]</TD></TR></TABLE>
+
+<P>(VERB EDITOR)
+<BR>Installs the new program into the system if there are no syntax errors.
+<BR>If a new object:verb is specified and actually turns out to exist, that &lt;object&gt;:&lt;verb&gt; becomes the default for subsequent compilations.
+
+<H2><A NAME="copy">copy</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  c*opy [&lt;range&gt;] to &lt;ins&gt;</TD></TR></TABLE>
+
+<P>Copies the specified range of lines to place given by &lt;ins&gt;.
+<BR>If &lt;ins&gt; happens to be the current insertion point, the insertion 
+<BR>point moves to the end of the inserted lines.
+
+<P>See `help insert' for a list of possibilities for &lt;ins&gt;.
+
+<H2><A NAME="delete">delete</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  del*ete [&lt;range&gt;] </TD></TR></TABLE>
+
+<P>(EDITOR)
+<BR>Deletes the specified range of lines
+<BR>&lt;range&gt; defaults to the line *before* the current insertion point.
+
+<H2><A NAME="depublish">depublish</A></H2>
+
+<P>See: <A HREF="#unpublish">unpublish</A>
+
+<H2><A NAME="done">done</A></H2>
+
+<P>See: <A HREF="#quit">quit</A>
+
+<H2><A NAME="edit">edit</A></H2>
+
+(VERB EDITOR)
+<P><TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  edit &lt;object&gt;:&lt;verb&gt;</TD></TR></TABLE>
+
+<P>Changes what verb you are editing and loads the code for that verb
+<BR>into the editor. 
+<BR>Equivalent to @edit &lt;object&gt;:&lt;verb&gt;.
+
+<P>(NOTE EDITOR)
+<P><TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  edit &lt;note-object&gt;
+<BR>edit &lt;object&gt;.&lt;property&gt;</TD></TR></TABLE>
+
+<P>Changes to a different note or a different object text property and 
+<BR>loads its text into the editor.
+<BR>These are equivalent to @notedit &lt;note&gt; or @notedit &lt;object&gt;.&lt;property&gt;
+<BR>respectively.
+
+<P>For both the verb-editor and note-editor commands, &lt;object&gt; will match on the room you came from, though if the room you came from was another editor, then all bets are off...
+
+<H2><A NAME="edit-index">edit-index</A></H2>
+
+<TABLE BORDER=0 CELLSPACING=6>
+<TR><TD VALIGN="TOP"><A HREF="#abort">abort</A></TD><TD VALIGN="TOP"><A HREF="#enter">enter</A></TD><TD VALIGN="TOP"><A HREF="#perish">perish</A></TD><TD VALIGN="TOP"><A HREF="#subscribe">subscribe</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#also-to">also-to</A></TD><TD VALIGN="TOP"><A HREF="#fill">fill</A></TD><TD VALIGN="TOP"><A HREF="#prev">prev</A></TD><TD VALIGN="TOP"><A HREF="#subst">subst</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#cc">cc</A></TD><TD VALIGN="TOP"><A HREF="#find">find</A></TD><TD VALIGN="TOP"><A HREF="#print">print</A></TD><TD VALIGN="TOP"><A HREF="#summary">summary</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#commands">commands</A></TD><TD VALIGN="TOP"><A HREF="#here">here</A></TD><TD VALIGN="TOP"><A HREF="#publish">publish</A></TD><TD VALIGN="TOP"><A HREF="#to">to</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#comment">comment</A></TD><TD VALIGN="TOP"><A HREF="#indent">indent</A></TD><TD VALIGN="TOP"><A HREF="#quit">quit</A></TD><TD VALIGN="TOP"><A HREF="#uncomment">uncomment</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#compile">compile</A></TD><TD VALIGN="TOP"><A HREF="#insert">insert</A></TD><TD VALIGN="TOP"><A HREF="#ranges">ranges</A></TD><TD VALIGN="TOP"><A HREF="#unpublish">unpublish</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#copy">copy</A></TD><TD VALIGN="TOP"><A HREF="#join">join</A></TD><TD VALIGN="TOP"><A HREF="#reply-to">reply-to</A></TD><TD VALIGN="TOP"><A HREF="#unsubscribe">unsubscribe</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#delete">delete</A></TD><TD VALIGN="TOP"><A HREF="#list">list</A></TD><TD VALIGN="TOP"><A HREF="#rsubst">rsubst</A></TD><TD VALIGN="TOP"><A HREF="#view">view</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#depublish">depublish</A></TD><TD VALIGN="TOP"><A HREF="#mode">mode</A></TD><TD VALIGN="TOP"><A HREF="#save">save</A></TD><TD VALIGN="TOP"><A HREF="#what">what</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#done">done</A></TD><TD VALIGN="TOP"><A HREF="#moo">moo</A></TD><TD VALIGN="TOP"><A HREF="#say">say</A></TD><TD VALIGN="TOP"><A HREF="#who">who</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#edit">edit</A></TD><TD VALIGN="TOP"><A HREF="#move">move</A></TD><TD VALIGN="TOP"><A HREF="#send">send</A></TD><TD></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#edit-index">edit-index</A></TD><TD VALIGN="TOP"><A HREF="#next">next</A></TD><TD VALIGN="TOP"><A HREF="#showlists">showlists</A></TD><TD></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#emote">emote</A></TD><TD VALIGN="TOP"><A HREF="#pause">pause</A></TD><TD VALIGN="TOP"><A HREF="#subject">subject</A></TD><TD></TD></TR>
+</TABLE>
+
+<H2><A NAME="emote">emote</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> emote &lt;text&gt;
+<BR>:&lt;text&gt;</TD></TR></TABLE>
+
+<P>(EDITOR)
+<BR>Appends &lt;text&gt; to the end of the line before the insertion point.
+<BR>The second form is equivalent to the first except that it doesn't strip leading blanks off of &lt;text&gt; (just as with the normal `emote' and `:' commands).
+<BR>The insertion point is left unmoved.
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&gt;list .
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;_37_ Hello there
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;^38^ Oh, I'm fine.
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&gt;:, how are you
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;Appended to line 37.
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&gt;:?
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;Appended to line 37.
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&gt;list .
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;_37_ Hello there, how are you?
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;^38^ Oh, I'm fine.
+
+
+<H2><A NAME="enter">enter</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  enter</TD></TR></TABLE>
+
+<P>(EDITOR)
+<BR>Enters a sequence of lines at the insertion point (see `help insert').
+<BR>This is similar to .program in that every line you type after the `enter' command is inserted verbatim into the text until you type a line with a single period (`.') on it.  This command is essentially for if you don't like the idea of putting " at the beginning of each line you type.  The only exceptions, i.e., lines that are not entered verbatim (aside from the `.' line), are
+
+<P>&nbsp;- If you type a line whose sole text is `@abort', 
+<BR>&nbsp;&nbsp;&nbsp;that aborts this command without making any changes to the text.  
+<BR>&nbsp;- Any line whose first nonblank character is `.' and has additional text
+<BR>&nbsp;&nbsp;&nbsp;is entered but with its first `.' stripped off.  
+
+<P>Thus, to enter a line whose text is `@abort', you could enter it as `.@abort'.
+
+<H2><A NAME="fill">fill</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  fill [&lt;range&gt;] [@ c]</TD></TR></TABLE>
+
+<P>combines the specified lines as in join and then splits them so that no line is more than c characters (except in cases of pathological lines with very long words).  c defaults to 70.  &lt;range&gt; defaults to the single line preceding the insertion point.
+
+<H2><A NAME="find">find</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  f*ind  /&lt;str&gt;[/[c][&lt;ins&gt;]]
+<BR>/&lt;str&gt;[/[c][&lt;ins&gt;]]</TD></TR></TABLE>
+
+<P>Searches for the first line after &lt;ins&gt; containing &lt;str&gt;.  &lt;ins&gt; defaults to  the current insertion point (see `help insert' for how to specify other places).  With the first form, any character (not just `/') may be used as a delimiter.
+<BR>For the second form, you must use '/'.
+
+<P>The 'c' flag, if given, indicates that case is to be ignored while searching.
+
+<P>[Bug: With the second form, there are problems if the search string contains quotes, backslashes or a run of spaces.  The first whitespace will always be treated as a single space.  Likewise, quotes and backslashes occuring in the first word of the command (i.e., the "verb") need to be escaped with `\'.  Unfortunately it will not be possible to fix this until we get a new command parser.]
+
+<H2><A NAME="here">here</A></H2>
+
+<P>See: <A HREF="#summary">summary</A>
+
+<H2><A NAME="indent">indent</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> ind*ent [&lt;range&gt;] @&lt;columns&gt; [&lt;filler&gt;]</TD></TR></TABLE>
+
+<P>Indent the given &lt;range&gt;, prefixing &lt;columns&gt; characters.  If
+<BR>&lt;filler&gt; is given, use it as the prefixed text.  If no &lt;filler&gt; is
+<BR>specified, spaces are used.
+
+<P>Indenting zero trims off any white space fromt he left end of the
+<BR>line.
+
+<H2><A NAME="insert">insert</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  ins*ert [&lt;ins&gt;] ["&lt;text&gt;]
+<BR>.                    (`.' == `insert' without arguments)</TD></TR></TABLE>
+
+<P>(EDITOR)
+<BR>Many editor commands refer to an "insertion point" which is (usually) the place right below where the most recent line was inserted.  The insertion point should really be thought of as sitting *between* lines.  In listings, the line above the insertion point is marked with `_' while the one below is marked with `^'.
+
+<P>The `insert' command, when given an argument, sets the insertion point.
+<BR>If &lt;text&gt; is provided, a new line will be created and inserted as with `say'.
+<BR>&lt;ins&gt;, both here and in other commands that require specifying an insertion point (e.g., copy/move), can be one of
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;^n   above line n
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;n   above line n
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;_n   below line n
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$   at the end
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;^$   before the last line
+<BR>&nbsp;&nbsp;&nbsp;n^$   n lines before the end
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.   the current insertion point  (i.e., `insert .' is a no-op)
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;+n   n lines below the current insertion point.
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;-n   n lines above the current insertion point.
+
+<P>For the truly perverse, there are other combinations that also work due to artifacts of the parsing process, but these might go away...
+
+<H2><A NAME="join">join</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  join        [&lt;range&gt;]
+<BR>joinliteral [&lt;range&gt;]</TD></TR></TABLE>
+
+<P>combines the lines in the specified range.  Normally, spaces are inserted and double space appears after periods and colons, but 'joinliteral' (abbreviates to 'joinl') supresses this and joins the lines as is.  &lt;range&gt; defaults to the two lines surrounding the insertion point.
+
+<H2><A NAME="list">list</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  lis*t [&lt;range&gt;] [nonum]</TD></TR></TABLE>
+
+<P>Prints some subset of the current verb text.
+<BR>The default range is some reasonable collection of lines around the current insertion point:  currently this is 8_-8^, ie., 8 lines above the insertion point to 8 lines below it unless this runs up against the beginning or end of file, in which case we just take the first or last 16 lines, or just 1-$ if there aren't that many.  (See `help ranges' for how to specify line numbers and ranges.)
+
+<P>`nonum' prints without line numbers.
+
+<P>Yes, window heights will be customizable some day.
+
+<H2><A NAME="mode">mode</A></H2>
+
+(NOTE EDITOR)
+<P><TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  mode
+<BR>mode string
+<BR>mode list
+<BR>
+<BR>There are (currently) two modes the note editor can be in.
+<BR>One is string mode, in which if the text being edited is one line or less,
+<BR>it will be saved as a single string (or an empty string) rather than as a list.
+<BR>The other is list mode, in which text is always saved as a list of strings.
+<BR>The mode is set when the text is first loaded (string mode if the text is a string, list mode otherwise), but can be changed using this command.</TD></TR></TABLE>
+
+<P>The first form above (i.e., without any arguments) reports the current mode.
+
+<H2><A NAME="moo">moo</A></H2>
+
+<P>See: <A HREF="user_help.html#summary">summary</A> in General Help
+
+<H2><A NAME="move">move</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  m*ove [&lt;range&gt;] to &lt;ins&gt;</TD></TR></TABLE>
+
+<P>Moves the range of lines to place specified by &lt;ins&gt;.
+<BR>If &lt;ins&gt; happens to be the current insertion point, the insertion point is moved to the end of the freshly moved lines.  If the range of lines contains the insertion point, the insertion point is carried over to the range's new location.
+
+<P>See `help insert' for a list of possibilities for &lt;ins&gt;.
+
+<H2><A NAME="next">next</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  n*ext [n] ["&lt;text&gt;]</TD></TR></TABLE>
+
+<P>Moves the insertion point down n lines.  If &lt;text&gt; is provided, inserts a new line there just like `say'.
+<BR>Equivalent to `insert +n'.  As one might expect, n defaults to 1.
+
+<H2><A NAME="pause">pause</A></H2>
+
+<P>See: <A HREF="#quit">quit</A>
+
+<H2><A NAME="perish">perish</A></H2>
+
+<P>See: <A HREF="#unpublish">unpublish</A>
+
+<H2><A NAME="prev">prev</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  p*rev [n] ["&lt;text&gt;]</TD></TR></TABLE>
+
+<P>Moves the insertion point up n lines.  If &lt;text&gt; is provided, a new line is inserted as with `say'.
+<BR>Equivalent to `insert -n'.  As one might expect, n defaults to 1.
+
+<H2><A NAME="print">print</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  pri*nt</TD></TR></TABLE>
+
+<P>Display your text without line numbers.
+
+<P>(MAIL ROOM)
+<BR>Display your message including headers.
+
+<H2><A NAME="publish">publish</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  pub*lish</TD></TR></TABLE>
+
+<P>By default, only you (and wizards) can read the text you are editing.
+<BR>This command makes your text readable by the entire world (see `help view').
+<BR>This is useful if you need help from someone or if you just want to show off your programming acumen.
+<BR>Use `unpublish' to make your text private again.
+
+<H2><A NAME="quit">quit</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  q*uit
+<BR>done
+<BR>pause</TD></TR></TABLE>
+
+<P>(EDITOR)
+<BR>Leaves the editor.  If you have unsaved text it will be there when you return (and in fact you will not be able to do anything else with this editor until you 'abort' or save the text).
+
+
+<H2><A NAME="ranges">ranges</A></H2>
+
+Most editor commands act upon a particular range of lines.
+<BR>Essentially, one needs to specify a first line and a last line.
+<BR>Line numbers may be given in any of the following forms
+<BR>&nbsp;&nbsp;
+<BR>&nbsp;&nbsp;n      (i.e., the nth line of text)
+<BR>&nbsp;&nbsp;n^     n-th line after/below  the current insertion point
+<BR>&nbsp;&nbsp;n_     n-th line before/above the current insertion point
+<BR>&nbsp;&nbsp;n$     n-th line before the end.
+
+<P>In the latter three, n defaults to 1, so that `^' by itself refers to the line below the current (i.e., the line that gets `^' printed before it), and likewise for `_' while `$' refers to the last line.  Note that the usage depends on whether you are specifying a line or an insertion point (space between lines). `^5' is the space above/before line 5, while `5^' is the fifth line after/below the current insertion point.
+
+<P>Ranges of lines may be specified in any of the
+<BR>following ways:
+
+<P>&nbsp;&nbsp;&lt;line&gt;                  just that line
+<BR>&nbsp;&nbsp;from &lt;line&gt; to &lt;line&gt;   what it says; the following two forms are equivalent:
+<BR>&nbsp;&nbsp;&lt;line&gt;-&lt;line&gt;            
+<BR>&nbsp;&nbsp;&lt;line&gt; &lt;line&gt;
+
+<P>With the `from l to l' form, either the from or the to can be left off and it will default to whatever is usual for that command (usually a line above or below the insertion point).  Actually I was thinking of punting the `from'/`to' specifications entirely because they're so verbose.  Opinions?
+
+<H2><A NAME="reply-to">reply-to</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  reply-to [&lt;recipients&gt;]</TD></TR></TABLE>
+
+<P>(MAIL ROOM)
+<BR>Reports the current contents of the Reply-to: field of your message.
+<BR>With arguments, adds (or changes) the Reply-to: field.
+
+<P>When someone @answers a message, the Reply-to: field is checked first when determining to whom the reply should be sent --- see `help @answer'.
+
+<P>To clear the Reply-to: field, do
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;reply-to ""
+
+<H2><A NAME="rsubst">rsubst</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  rsubst/&lt;regexp&gt;/&lt;sub&gt;[/[g][c][&lt;range&gt;]]
+<BR>-or-    rs/&lt;regexp&gt;/&lt;sub&gt;[/[g][c][&lt;range&gt;]]</TD></TR></TABLE>
+
+<P>Works like the "subst" command, but will search and replace text matching the specified regular expression (for more information on regular expressions, see 'help regular-expressions').  Any character (not just `/') may be used to delimit the patterns.
+
+<P>&lt;sub&gt; consists of a substitution template to replace the matched text with.  Within a substitution template, the strings `%1' through `%9' will be replaced by the text matched by the first through ninth parenthesized sub-patterns (portions enclosed in `%(' and `%)') of the regular expression.  The sequence `%0' will be replaced by the text matched by the whole regular expression.  To include a `%' in the output, specify it as `%%' in the substitution template.
+
+<P>[Please see 'help subst' for information on the general options available, as well as a note about using spaces in substitution commands]
+
+<H2><A NAME="save">save</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  save [&lt;note-object&gt;]
+<BR>save [&lt;object&gt;.&lt;property&gt;]</TD></TR></TABLE>
+
+<P>(NOTE EDITOR)
+<BR>Installs the freshly edited text.  If &lt;note&gt; or &lt;object&gt;.&lt;property&gt; is specified, text is installed on that note or property instead of the original one.  In addition the new note or property becomes the default for future save commands.
+
+<H2><A NAME="say">say</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> say &lt;text&gt;
+<BR>"&lt;text&gt;</TD></TR></TABLE>
+
+<P>(EDITOR)
+<BR>Adds &lt;text&gt; to whatever you are editing.
+<BR>The second form is equivalent to the first except in that it doesn't strip leading blanks off of &lt;text&gt; (just as with the normal `say' and `"' commands).
+
+<P>The added text appears as a new line at the insertion point.  The insertion point, in turn, gets moved so as to be after the added text.  For example:
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&gt;"first line
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;Line 1 added.
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&gt;"  second line"
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;Line 2 added.
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&gt;list
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1: first line
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;__2_   second line"
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;^^^^
+
+<H2><A NAME="send">send</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  send</TD></TR></TABLE>
+
+<P>(MAIL ROOM)
+<BR>Send the message, then exit the mail room if all of the addresses on the To: line turn out to be valid and usable (you can use the `who' command to check these in advance, though the status of recipients may change without warning).
+<BR>If the To: line turns out to contain invalid recipients or recipients that are not usable by you, the message will not be sent and you will remain in the mail room.
+<BR>It may be, however, that valid addresses on your To: line will forward to other addresses that are bogus; you'll receive warnings about these, but in this case your message will still be delivered to those addresses that are valid.
+
+<P>Note that there may be particularly long delays when sending to recipients with large forwarding/notification lists or when sending on occasions when the MOO is heavily loaded in general.  In such a case, it is possible to continue editing the message while the send is in progress; any such edits affect only the text in the editor.  In particular, the text of the message currently being sent remains as it was when you first typed the send command.  However, any editing will mark the text as "changed" meaning that you will need to explicitly `abort' or `quit' in order to leave the mail room even if the send concludes successfully.
+
+<H2><A NAME="showlists">showlists</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  showlists</TD></TR></TABLE>
+
+<P>(MAIL ROOM)
+<BR>Print a list of the publically available mailing lists/archives and other non-character entities that can receive mail
+
+<H2><A NAME="subject">subject</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  subj*ect [&lt;text&gt;]</TD></TR></TABLE>
+
+<P>(MAIL ROOM)
+<BR>Specifies a Subject: line for your message.  If &lt;text&gt; is "", the Subject: line is removed.
+
+<H2><A NAME="subscribe">subscribe</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> subscribe to &lt;list-name&gt;
+<BR>subscribe [&lt;name&gt;...] to &lt;list-name&gt;</TD></TR></TABLE>
+
+<P>(MAILROOM)
+<BR>Add yourself to the given mailing list.  
+<BR>The second form adds arbitrary people to a mailing list.
+<BR>You can only do this if you own the list or if it is listed as [Public] and you own whatever is being added.
+
+<P>The first form of this command is probably obsolete since if &lt;list-name&gt; is public, you can already read it via `@mail on *&lt;list-name&gt;' and it's much better for the MOO if you do so.  `@mail-option +sticky' makes this even easier.
+
+<P>Use the `who' command to determine if you are on a given mailing list.
+
+<H2><A NAME="subst">subst</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  s*ubst/&lt;str1&gt;/&lt;str2&gt;[/[g][c][&lt;range&gt;]]</TD></TR></TABLE>
+
+<P>Substitutes &lt;str2&gt; for &lt;str1&gt;, in all of the lines of &lt;range&gt;.
+<BR>Any character (not just `/') may be used to delimit the strings. 
+<BR>If &lt;str1&gt; is blank, &lt;str2&gt; is inserted at the beginning of the line.  
+<BR>(For inserting a string at the end of a line use emote/:).
+
+<P>Normally, only one substitution is done per line in the specified range, but if the 'g' flag is given, *all* instances of &lt;str1&gt; are replaced.
+<BR>The 'c' flag indicates that case is not significant when searching for substitution instances.
+<BR>&lt;range&gt; defaults to the line *before* the insertion point.
+
+<P>You do *not* need a space between the verb and the delimeter before &lt;str1&gt;.
+<BR>NOTE, however:  Due to some glitches in the way the MOO parses commands, if you do not put a space between the "s*ubst" and the first "/", multiple spaces may be interpreted as a single space instead, and quote characters (") and backslashes (\) may be skipped or interpreted strangely.  If you are using multiple-spaces, quotes, or backslashes in your substitution strings, you should put a space before the first "/" (i.e. 's /f"oo/bar'), which will avoid these problems.  In all other cases it doesn't matter whether you use a space first or not.
+
+<H2><A NAME="summary">summary</A></H2>
+
+You are inside an editor.  Use
+
+<P><A HREF="user_help.html#look">look</A>          -- for list of commands
+<BR><A HREF="editor_help.html#what">what</A>          -- to find out what you're editing.
+<BR><A HREF="editor_help.html#list">list</A>          -- to list out some portion of the text
+<BR><A HREF="editor_help.html#say">say</A>           -- to add a new line of text to whatever you're editing
+<BR><A HREF="editor_help.html#emote">emote</A>         -- to append text to the line you're editing
+<BR><A HREF="editor_help.html#enter">enter</A>         -- to start a multiple line entry; end with a line
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;having just a period
+
+<P>In addition, you can 'help &lt;topic&gt;' on the following topics:
+
+<P><A HREF="editor_help.html#commands">commands</A>   -- for a more detailed summary of command than 'look' (long!)
+<BR><A HREF="editor_help.html#edit-index">edit-index</A> -- for a full list of editor help topics
+<BR><A HREF="prog_help.html#editors">editors</A>    -- for a general discussion about editors
+<BR><A HREF="editor_help.html#moo">moo</A>        -- for the general MOO help summary (i.e., what you get by 
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;typing `help' with no arguments from outside the editor).
+
+<H2><A NAME="to">to</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  to [&lt;recipients&gt;]</TD></TR></TABLE>
+
+<P>(MAIL ROOM)
+<BR>Specifies a new set of recipients (the To: line) for your message.
+<BR>Recipient names not beginning with * are matched against the list of character names.
+<BR>Recipient names beginning with * are interpreted as mailing-lists/archives/other types of non-person addresses and are matched against all such publically available objects (see `help showlists').  If the list you want to use isn't in the database (i.e., isn't located in the database ($mail_agent)) you need to refer to it by object id.
+
+<H2><A NAME="uncomment">uncomment</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  unc*omment [&lt;range&gt;] </TD></TR></TABLE>
+
+<P>(VERB EDITOR)
+<BR>Converts any "comment" lines (lines consisting entirely of a string literal) in the specified range of lines to verb code by unquoting them.
+<BR>&lt;range&gt; defaults to the line *before* the current insertion point.
+
+<H2><A NAME="unpublish">unpublish</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  unpub*lish
+<BR>depub*lish
+<BR>perish</TD></TR></TABLE>
+
+<P>This command reverses the effects of `publish', making your text readable only by you.
+
+<H2><A NAME="unsubscribe">unsubscribe</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> unsubscribe from &lt;list-name&gt;
+<BR>unsubscribe &lt;name&gt;... from &lt;list-name&gt;</TD></TR></TABLE>
+
+<P>(MAILROOM)
+<BR>Remove yourself from the given mailing list.
+<BR>The second form removes arbitrary people from a mailing list.
+<BR>You can only do this if you own whatever is being removed or you own the list.
+
+<P>Use the `who' command to determine if you are on a given mailing list.
+
+<H2><A NAME="view">view</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  view &lt;who&gt; [&lt;range&gt;] [nonum]
+<BR>view</TD></TR></TABLE>
+
+<P>Prints some subset of the specified person's text.
+<BR>Said person must have previously made their text readable with `publish'.
+<BR>&lt;ranges&gt; are specified as in other commands (see `help ranges').
+<BR>References to the insertion point refer to wherever the other person has set their insertion point; you have no control over it.
+<BR>The default range is as in list.
+
+<P>If no arguments are given, this lists all of the people that have published anything in this editor.
+
+<H2><A NAME="what">what</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  w*hat</TD></TR></TABLE>
+
+<P>Prints information about the editing session.
+
+<H2><A NAME="who">who</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  who 
+<BR>who &lt;rcpt&gt;...</TD></TR></TABLE>
+
+<P>(MAIL ROOM)
+<BR>Invokes $mail_agent's mail-forwarding tracer and determines who (or what) is actually going to receive your message.  The resulting list will not include destinations that will simply forward the message without :receive_message()'ing a copy for themselves.
+
+<P>The second form expands an arbitrary list of recipients, for if e.g., you're curious about the members of particular mailing list.
+
+</BODY></HTML>

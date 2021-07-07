@@ -1,0 +1,306 @@
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<TITLE>Setting Up the MOO's UNIX Directory Structure</TITLE>
+</HEAD>
+<BODY>
+
+<IMG SRC="/images/logo/DUlogo_banner1.gif" HEIGHT=77 WIDTH=609>
+<HR SIZE=4 WIDTH="100%">
+
+<H1>
+Setting Up the MOO's UNIX Directory Structure</H1>
+Generally, educational MOOs are maintained by a group of people. For this
+reason, it is convenient to have more than one person be able to maintain
+the MOO server site, including having the ability to edit and rearrange
+files on the site. This document details the arrangement of files and directories
+that Diversity University's experience has found to be effective, and describes
+the function of each file and directory.
+
+<P>This document does not give instructions for compiling the LambdaMOO
+Server, which is described elsewhere.
+
+<P>In this example, an admnistrative account is established called "ourmoo"
+and an administrative group named "mooadmin" is also created. You will
+typically want to customize this for your own site.
+
+<P>Although you don't have to have root access to the computer to set up
+most of the MOO's system, you will need someone with root access to create
+the base directory for the structure (given as "~ourmoo" in the example
+below), and to create a "ourmoo" account and a "mooadmin" group.
+
+<P>NOTE: The "~ourmoo" directory described below should be set to mode
+"g+s" before you create any subdirectories within it. In addition, you
+should use the "umask 007" command either in your ".cshrc" file or by hand
+before creating the files and subdirectories described here, to save the
+work of having to adjust their mode later.
+<H2>
+Basic Structure</H2>
+You should generally have an account for the MOO project itself, called
+"ourmoo" in the example below, although people will generally use their
+own UNIX account for performing maintenance. In addition, there should
+be a UNIX group for people who will be performing maintenance, called "mooadmin"
+in this example.
+
+<P>Diversity University recommends the following structure for a site:
+<UL>~ourmoo/
+<BR>~ourmoo/bin/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+(scripts and other maintenance tools for MOO support)
+<BR>~ourmoo/home/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (home
+directories of your maintenance staff)
+<BR>~ourmoo/moo/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+(all resources associated with the MOO itself)
+<BR>~ourmoo/moo/files/&nbsp;&nbsp;&nbsp; (files created and used by the
+MOO's FUP system)
+<BR>~ourmoo/moo/backup.dbs/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (backup copies
+of the MOO database)
+<BR>~ourmoo/moo/backup.logs/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (earlier logs
+created by the running MOO)
+<BR>~ourmoo/moo/server-source/&nbsp;&nbsp; (the files used to create a
+LambdaMOO Server executable)
+<BR>~ourmoo/moo/server-source/MOO-1.8.0p6&nbsp;&nbsp; (the source files
+for the LambdaMOO Server)
+<BR>~ourmoo/moo/server-source/patches&nbsp;&nbsp;&nbsp;&nbsp; (patches
+applied to the MOO Server before compiling)</UL>
+Every directory in this structure should have mode settings o+rwx, g+rwxs,
+and be owned by the user "ourmoo" and the "mooadmin" group.
+
+<P>Note that all the directories are mode g+s (group SUID). Under most
+UNIX systems, this insures that files and subdirectories created within
+these directories will have the same group ownership as the parent directory.
+This helps insure that these resources will all be manipulatable by your
+maintenance staff.
+
+<P>In addition, if the accounts for your maintenance staff will be used
+only for maintaining the MOO, then you should insure that all files and
+subdirectories they create are group-writable, by including the line:
+<UL>umask 007</UL>
+in the ".cshrc" file of their home directory. If you are not using a C-shell,
+you will need to adjust accordingly. Note that you might want to have such
+a ".cshrc" prepared in the "~ourmoo" directory, and then have the personal
+".cshrc" files of individual users contain:
+<UL>source ~ourmoo/.cshrc</UL>
+as their only line. If their work will not be group-writable by default,
+your staff will need to remember to appropriately "chmod" the files and
+directories that they create.
+<H2>
+Directory ~ourmoo/bin/</H2>
+This directory contains the scripts and other maintenance tools used for
+MOO support. If you have other software installed specifically for use
+by MOO maintenance staff, it should generally go here. The scripts that
+Diversity University has developed and recommends are:
+<UL>
+<LI>
+runmoo Starts the MOO running.</LI>
+
+<LI>
+killmoo Stops the running MOO.</LI>
+
+<LI>
+statmoo Provides assorted MOO server stats.</LI>
+
+<LI>
+watchmoo Shows a continuing display of the MOO log.</LI>
+
+<LI>
+dobackup Creates a backup copy of the MOO database.</LI>
+
+<LI>
+chown Changes the ownership of a file (useful for systems in which this
+is generally not allowed; must be SUID root).</LI>
+</UL>
+IMPORTANT: You will need to change some configuration lines in each of
+these scripts to enable them to run correctly! Generally, this involves
+specifying what the MOO system's base directory is (e.g. "/usr/ourmoo/")
+and in what directory the MOO database is located (e.g. "usr/ourmoo/moo").
+
+<P>The "statmoo" script can be used as a cgi-bin if you have a Web server
+that supports these. This allows you to check the status of the MOO through
+the Web. Generally, it can simply be copied to the appropriate directory
+where such applications belong, and usually renamed to "statmoo.cgi" (mostly
+for clarity, since this isn't generally required).
+
+<P>You'll probably want to add "~ourmoo/bin" to your PATH, to enable you
+to issue commands like "runmoo" and "watchmoo" without giving the full
+path for those scripts. You'll generally have to expand "~ourmoo" to its
+full specification (e.g. "/usr/ourmoo") for setting the PATH environment
+variable.
+<H2>
+Directory ~ourmoo/moo/</H2>
+Files and subdirectories in ~ourmoo/moo include the MOO database and server,
+logs, and other files directly associated with the MOO itself. This directory
+include:
+<TABLE WIDTH="100%" >
+<TR>
+<TD><B><U>modes</U></B></TD>
+
+<TD><B><U>group</U></B></TD>
+
+<TD><B><U>owner</U></B></TD>
+
+<TD><B><U>file or directory</U></B></TD>
+</TR>
+
+<TR>
+<TD>-rw-rw----&nbsp;</TD>
+
+<TD>ourmoo</TD>
+
+<TD>mooadmin</TD>
+
+<TD>ourmoo.db</TD>
+</TR>
+
+<TR>
+<TD>-rw-rw----</TD>
+
+<TD>ourmoo</TD>
+
+<TD>mooadmin</TD>
+
+<TD>crontab.ourmoo</TD>
+</TR>
+
+<TR>
+<TD>drwxrws---</TD>
+
+<TD>ourmoo</TD>
+
+<TD>mooadmin</TD>
+
+<TD>files</TD>
+</TR>
+
+<TR>
+<TD>drwxrws---</TD>
+
+<TD>ourmoo</TD>
+
+<TD>mooadmin</TD>
+
+<TD>backup.dbs</TD>
+</TR>
+
+<TR>
+<TD>drwxrws---</TD>
+
+<TD>ourmoo</TD>
+
+<TD>mooadmin</TD>
+
+<TD>backup.logs</TD>
+</TR>
+
+<TR>
+<TD>drwxrwx---</TD>
+
+<TD>ourmoo</TD>
+
+<TD>mooadmin</TD>
+
+<TD>server-source</TD>
+</TR>
+</TABLE>
+&nbsp;
+
+<P>This directory also must contain a link named "moo" to the "~ourmoo/moo/server-source/MOO-1.8.0p6/moo"
+executable file (the compiled LambdaMOO Server itself).
+<UL>lrwxrwxrwx moo -> server-source/MOO-1.8.0p6/moo</UL>
+The ourmoo.db file is the MOO database itself. If you are starting with
+an eDUcore, you will want to place a copy in this directory and rename
+the database appropriately (with a ".db" extension). Note that you don't
+have to name the MOO database according to the name of the administrative
+username ("ourmoo" in this example), although it must have the ".db" extension.
+The name given to the MOO database, however, will be used as the base for
+some of the other supporting files (e.g. the log files), and you may need
+to adjust the configuration of the supporting scripts appropriately.
+
+<P>The crontab.ourmoo file gives the schedule for the nightly full backups
+of the MOO database (and associated FUP file system). An example is provided
+in the eDUcore server setup package. Note that you'll need to modify it
+to fit your own directory names and structure.
+
+<P>Note that other files will be automatically created when you run the
+MOO, including:
+<UL>-rw-rw---- ourmoo mooadmin du.log
+<BR>-rw-rw---- ourmoo mooadmin moo.pid
+<BR>-rw-rw---- ourmoo mooadmin du.restart.log
+<BR>-rw-rw---- ourmoo mooadmin du_backup.log
+<BR>-rw-rw---- ourmoo mooadmin du_backup.pid</UL>
+The "du.log" file is the log for the running MOO, which is transferred
+to the "backup.logs" directory each time the MOO is restarted.
+
+<P>The "moo.pid" file is the current PID for the MOO process, written by
+the "runmoo" script, and which is used by the "killmoo" and "statmoo" scripts.
+
+<P>The "du.restart.log" notes each time the MOO is restarted, and is written
+to by the "runmoo" script.
+
+<P>The "du_backup.log" and "du_backup.pid" files are the log and current
+PID for the nightly full MOO backup process. The "dobackup" script writes
+to them.
+<H2>
+Directory ~ourmoo/moo/backup.logs</H2>
+When the MOO is restarted, the "runmoo" script appends the existing "~ourmoo/moo/ourmoo.log"
+file to a file in this directory. Note that the logs continue to get appended,
+so this file can grow rather large. We recommend renaming and compressing
+it quarterly. The compressed log archives can be stored in this directory.
+<H2>
+Directory ~ourmoo/moo/backup.dbs</H2>
+The nightly full backup of the MOO database and associated FUP files is
+stored here by the "dobackup" script. Depending upon the settings in the
+"~ourmoo/moo/crontab.ourmoo" file, several days of nightly backups are
+retained (usually three to seven). In addition, you should rename one of
+the nightly backup archive files monthly, quarterly, and annually for longer-term
+retention, depending on your needs and amount of available disk space.
+<H2>
+Direcotry ~ourmoo/moo/files</H2>
+This directory is used by the MOO's FUP system, if it has been installed.
+We strongly recommend you use FUP, since it allows the MOO to store mail
+system texts, and other texts, outside the database itself. Mail system
+texts are usually one of the largest resources in the MOO, in terms of
+amount of memory it takes up. In order to minimize the size of the database,
+we recommend using the FUP system to "externalize" the mail system. The
+MOO itself will create all the files and subdirectories needed in the "~ourmoo/moo/files"
+directory. How to modify the MOO to use externalized mail is described
+in the MOO's internal help system under the "disk-mail" topic.
+
+<P>The MOO also uses the FUP system to retrieve it's Web Gateway page,
+from "~ourmoo/moo/files/web/gateway.html" if that file exists. This enables
+a simple mechanism to provide the same gateway page through both the MOO
+and an external Web server.
+<H2>
+Directory ~ourmoo/moo/server-source</H2>
+This directory contains the source files and compiled version of the LambdaMOO
+server, server patches, and any previous versions of the LambdaMOO server
+you may choose to retain. A typical structure for this directory is:
+<UL>-rw-rw---- ourmoo mooadmin LambdaMOO-1_8_0p6_tar.gz
+<BR>drwxrws--- ourmoo mooadmin MOO-1.8.0p6
+<BR>drwxrws--- ourmoo mooadmin patches</UL>
+We assume here that you have only the 1.8.0p6 version of the MOO server
+installed. Note that for this example the link at "~ourmoo/moo/moo" points
+to the executable file "moo" in the "~ourmoo/moo/server-source/MOO-1.8.0p6/"
+directory. That directory is generally created automatically when you fully
+expand the "LambdaMOO-1_8_0p6_tar.gz" file.
+
+<P>The "~ourmoo/moo/server-source/patches/" directory should contain the
+MOO server patches that you will be applying to the MOO server before compiling
+it. Diversity University recommends several patches, which are available
+at:
+<UL>http://www.du.org/educore/patches/</UL>
+These patches should be placed in this directory. Generally, you can do
+this just by downloading the archive file containing all the patches into
+this directory, and expanding it. Application of the patches, and how to
+compile the LambdaMOO Server, is described in a separate document.
+<CENTER>
+<H3>
+<A HREF="../index.html"><IMG SRC="../images/eDUcore_logo_50.gif" BORDER=0 HEIGHT=50 WIDTH=143 ALIGN=ABSCENTER></A></H3></CENTER>
+<CENTER>
+<H3>
+<A HREF="../index.html">Diversity University eDUcore</A></H3></CENTER>
+
+<HR SIZE=4 WIDTH="100%">
+<BR>Last modified 09Dec97
+<BR>Copyright 1997 &copy; <A HREF="http://www.du.org/">Diversity University</A>. All rights reserved.
+</BODY>
+</HTML>

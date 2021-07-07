@@ -1,0 +1,7 @@
+# $Header: /repo/public.cvs/app/moo.du/archive/.htaccess,v 1.2 2001/09/21 01:44:18 bruce Exp $
+
+AuthName "restricted stuff"
+AuthType Basic
+AuthUserFile /etc/httpd/conf/passwd
+AuthGroupFile /etc/httpd/conf/group
+require user bruce

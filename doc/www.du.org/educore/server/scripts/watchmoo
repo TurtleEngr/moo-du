@@ -1,0 +1,4 @@
+#!/bin/sh
+
+echo 'Monitoring DU MOO log.  Hit ctrl-C to end.'
+tail -f $DUHOME/moo/du.log

@@ -1,0 +1,368 @@
+<HTML><HEAD><TITLE>File Utilties Package Help</TITLE></HEAD><BODY>
+
+<H1><HREF NAME="top">File Utilties Package Help</A></H1>
+
+<H2><A NAME="fileappend()">fileappend()</A></H2>
+
+num fileappend(str PATH, str NAME, list TEXT)
+<BR>Appends TEXT to files/PATH/NAME.
+<BR>Creates the file if it didn't exist previously.
+<BR><B>Examples:</B>
+<BR>&nbsp;&nbsp;fileappend("notes","foox.test",{"hehe","hoho"})  =&gt; 1 if successful.
+
+
+<H2><A NAME="filechmod()">filechmod()</A></H2>
+
+str filechmod(str PATH, str NAME, str MODE)
+<BR>Sets the mode of the relevant file/directory.
+<BR><B>Examples:</B>
+<BR>&nbsp;&nbsp;filechmod("notes","foo.text","bleh") 
+<BR>&nbsp;&nbsp;&nbsp;=&gt; "644"  (This just returns the existing value.)
+<BR>&nbsp;&nbsp;filechmod("notes","foo.text","640") 
+<BR>&nbsp;&nbsp;&nbsp;=&gt; "640"  (It returns the new value.)
+
+
+<H2><A NAME="filedelete()">filedelete()</A></H2>
+
+num filedelete(str PATH, str NAME)
+<BR>Irretrievably deletes files/PATH/NAME.
+<BR><B>Example:</B>
+<BR>&nbsp;&nbsp;filedelete("notes","foo.text")  =&gt; 1 if successful.
+
+
+<H2><A NAME="fileerror()">fileerror()</A></H2>
+
+str fileerror()
+<BR>Returns a string describing the UNIX error message, which reports the last
+<BR>error encountered during a call to a system or library function.
+<BR><B>Examples:</B>
+<BR>&nbsp;&nbsp;fileerror()  =&gt; "Error 0"   (No error)
+<BR>&nbsp;&nbsp;fileerror()  =&gt; "Interrupted system call"
+<BR>&nbsp;&nbsp;fileerror()  =&gt; "No such file or directory"
+
+
+<H2><A NAME="fileexists()">fileexists()</A></H2>
+
+num fileexists(str PATH, str NAME)
+<BR>Returns 1 iff files/PATH/NAME exists, 0 otherwise.
+<BR><B>Examples:</B>
+<BR>&nbsp;&nbsp;fileexists("notes","foo.text")  =&gt; 1
+<BR>&nbsp;&nbsp;fileexists("misc","foox.test")  =&gt; 0
+
+
+<H2><A NAME="fileextract()">fileextract()</A></H2>
+
+list fileextract(str PATH, str NAME, str REGEXP1, str REGEXP2 [, str REGEXP3])
+<BR>Returns a list of starts and ends of sections of files/PATH/NAME, that fulfill
+<BR>the following requirements:
+<BR>-the first line of the section matches REGEXP1,
+<BR>-the last line of the section matches REGEXP2, and
+<BR>-at least one line of the section matches REGEXP3, if provided.
+<BR>If a line matches REGEXP1 and REGEXP2 (and REGEXP3 if provided), it can
+<BR>constitute a section by itself.
+<BR><B>Examples:</B>
+<BR>&nbsp;&nbsp;fileextract("notes","foo.text","a","x")          =&gt; {{}, {}}
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;(there isn't a line with an "x")
+<BR>&nbsp;&nbsp;fileextract("notes","foo.text","Copy","email")   =&gt; {{1}, {4}}
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;(the section from line 1 to line 4 fits)
+<BR>&nbsp;&nbsp;fileextract("notes","foo.text","a","b")          =&gt; {{1, 3}, {2, 6}}
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;(the sections from line 1 to line 2 and from line 3 to line 6 fit)
+<BR>&nbsp;&nbsp;fileextract("notes","foo.text","a","b","est")    =&gt; {{3}, {6}}
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;(of these, only the section from 3 to 6 has a line that matches "est")
+
+
+<H2><A NAME="filegrep()">filegrep()</A></H2>
+
+list filegrep(str PATH, str NAME, str REGEXP [, str SWITCHES])
+<BR>Returns a list of strings and line numbers, which represent lines read from
+<BR>files/PATH/NAME, and that match REGEXP.
+<BR>SWITCHES defaults to "s".
+<BR>-If SWITCHES includes "s", the matching lines will be returned.
+<BR>-If SWITCHES includes "n", the numbers of the matching lines will be returned.
+<BR>-If SWITCHES includes "v", the condition is reversed, and lines not matching
+<BR>&nbsp;will be returned.
+<BR><B>Examples:</B>
+<BR>&nbsp;&nbsp;filegrep("notes","foo.text","Weizmann") 
+<BR>    =&gt; {{"  Copyright (c) 1994 Weizmann Institute. All rights reserved.",
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"  Jaime Prilusky and Gustavo Glusman, Weizmann Institute of
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Science, Israel.", "  lsprilus@weizmann.weizmann.ac.il (Jaime
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Prilusky)", "  Gustavo@bioinformatics.weizmann.ac.il (Gustavo
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Glusman)"}, {}}
+<BR>&nbsp;&nbsp;filegrep("notes","foo.text","Weizmann","n") 
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;=&gt; {{}, {1, 3, 5, 6}}  
+<BR>&nbsp;&nbsp;filegrep("notes","foo.text","Weizmann","ns") 
+<BR>    =&gt; {{"  Copyright (c) 1994 Weizmann Institute. All rights reserved.",
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"  Jaime Prilusky and Gustavo Glusman, Weizmann Institute of
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Science, Israel.", "  lsprilus@weizmann.weizmann.ac.il (Jaime
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Prilusky)", "  Gustavo@bioinformatics.weizmann.ac.il (Gustavo
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Glusman)"}, {1, 3, 5, 6}}
+<BR>&nbsp;&nbsp;filegrep("notes","foo.text","Weizmann","vn") 
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;=&gt; {{}, {2, 4, 7, 8}} 
+<BR>&nbsp;&nbsp;
+
+<H2><A NAME="fileinfo()">fileinfo()</A></H2>
+
+list fileinfo(str PATH, str NAME)
+<BR>Returns a list with assorted system information about the relevant file/directory.
+<BR><B>Examples:</B>
+<BR>&nbsp;&nbsp;fileinfo("notes","") 
+<BR>&nbsp;&nbsp;&nbsp;=&gt; {512, "dir", "755", "lsprilus", "staff", 788541296, 788346820, 788346820}
+<BR>&nbsp;&nbsp;fileinfo("notes","foo.text") 
+<BR>&nbsp;&nbsp;&nbsp;=&gt; {376, "reg", "644", "lsprilus", "staff", 788541674, 788541674, 788541674}
+<BR>The information provided is: size, type, mode, owner, group, file last access time,
+<BR>file last modify time, and file last change time. Check 'man stat' for more info.
+
+
+<H2><A NAME="filelength()">filelength()</A></H2>
+
+num filelength(str PATH, str NAME)
+<BR>Returns the number of lines of files/PATH/NAME.
+<BR><B>Example:</B>
+<BR>&nbsp;&nbsp;filelength("notes","foo.text")  =&gt; 6
+
+
+<H2><A NAME="filelist()">filelist()</A></H2>
+
+list filelist(str PATH [, str NAME])
+<BR>Returns the list of files and subdirectories in files/PATH, not recursively.
+<BR>If NAME is provided, only files matching NAME as regexp will be returned.
+<BR>All existing subdirectories will be returned in any case.
+<BR><B>Examples:</B>
+<BR>&nbsp;&nbsp;filelist("")                =&gt; {{},{"notes","misc"}}
+<BR>&nbsp;&nbsp;filelist("notes")           =&gt; {{"foo.text","foox.test"},{"bar"}}
+<BR>&nbsp;&nbsp;filelist("notes/bar")       =&gt; {{},{}}
+<BR>&nbsp;&nbsp;filelist("notes","oo.%.")   =&gt; {{"foox.test"},{"bar"}}
+<BR>&nbsp;&nbsp;filelist("misc")            =&gt; {{},{}}
+
+
+<H2><A NAME="filemkdir()">filemkdir()</A></H2>
+
+num filemkdir(str PATH, str NAME)
+<BR>Creates a new directory: files/PATH/NAME.
+<BR><B>Example:</B>
+<BR>&nbsp;&nbsp;filemkdir("notes","mydir")  =&gt; 1 if successful.
+
+
+<H2><A NAME="fileread()">fileread()</A></H2>
+
+list fileread(str PATH, str NAME [, num START [, num END]])
+<BR>Returns a list of strings which represent lines read from files/PATH/NAME,
+<BR>from START to END, which default to the beginning and the end of the file
+<BR>respectively.
+<BR><B>Examples:</B>
+<BR>&nbsp;&nbsp;fileread("notes","foox.test")      =&gt; {"line 1","line 2","end"}
+<BR>&nbsp;&nbsp;fileread("notes","foox.test",2)    =&gt; {"line 2","end"}
+<BR>&nbsp;&nbsp;fileread("notes","foox.test",2,2)  =&gt; {"line 2"}
+<BR>&nbsp;&nbsp;fileread("notes","foox.test",3,2)  =&gt; {}
+<BR>&nbsp;&nbsp;fileread("notes","foox.test",5,6)  =&gt; {}
+
+
+<H2><A NAME="filerename()">filerename()</A></H2>
+
+num filerename(str PATH, str OLDNAME, str NEWNAME)
+<BR>Renames files/PATH/OLDNAME to NEWNAME.
+<BR><B>Example:</B>
+<BR>&nbsp;&nbsp;filerename("notes","foo.text","blah.blah")  =&gt; 1 if successful.
+
+
+<H2><A NAME="filermdir()">filermdir()</A></H2>
+
+num filermdir(str PATH, str NAME)
+<BR>Removes the directory: files/PATH/NAME, if it's empty.
+<BR><B>Example:</B>
+<BR>&nbsp;&nbsp;filermdir("notes","mydir")  =&gt; 1 if successful.
+<BR>&nbsp;&nbsp;filermdir("notes","mydir")  =&gt; E_PERM if unsuccessful.
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;Hint: use fileerror() to find the reason for failure.
+
+<H2><A NAME="filerun()">filerun()</A></H2>
+
+num filerun(str EXECUTABLE [, list {str PATH1, str INFILE}
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[, list {str PATH2, str OUTFILE}
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[, str/list PARAMETER]*]])
+<BR>Checks a whole set of security issues, including the requirement that
+<BR>'EXECUTABLE' be found in the 'bin' directory. If all is ok, it issues a
+<BR>system call equivalent to the Unix command:
+<BR>&nbsp;&nbsp;cat PATH1/INFILE | EXECUTABLE PARAMETER(s) &gt; PATH2/OUTFILE
+<BR><B>Examples:</B>
+<BR>&nbsp;&nbsp;filerun("cal")
+<BR>&nbsp;&nbsp;filerun("grep",{},{"temp","output"},"wizard",{"notes","*"})
+<BR>&nbsp;&nbsp;filerun("lpr",{"notes","info"},{},"-Plaser")
+
+<P>*** WARNING: filerun() ISN'T fully secure at this stage, and it is provided
+<BR>*** as an option only for managers of trusted systems.
+
+<H2><A NAME="filesize()">filesize()</A></H2>
+
+num filesize(str PATH, str NAME)
+<BR>Returns the number of characters of files/PATH/NAME.
+<BR><B>Example:</B>
+<BR>&nbsp;&nbsp;filesize("notes","foo.text")  =&gt; 388
+
+
+<H2><A NAME="fileversion()">fileversion()</A></H2>
+
+str fileversion()
+<BR>Returns a string representing the version of the currently installed FUP.
+<BR>The format is x.y, where x is the major release number and y is the minor
+<BR>release number.
+<BR><B>Example:</B>
+<BR>&nbsp;&nbsp;fileversion()  =&gt; "1.2"
+
+
+<H2><A NAME="filewrite()">filewrite()</A></H2>
+
+num filewrite(str PATH, str NAME, list TEXT [, num START [, num END]])
+<BR>Writes TEXT on files/PATH/NAME.
+<BR>Creates the file if it didn't exist previously.
+<BR>Assuming LENGTH is the number of lines in TEXT:
+<BR>-If neither START nor END are provided, the file is overwritten with TEXT.
+<BR>-If START is provided, but END isn't, LENGTH lines of the file starting from
+<BR>&nbsp;START are overwritten with TEXT. This may extend the file length.
+<BR>-If both START and END are provided, the lines from START to END are replaced
+<BR>&nbsp;with TEXT. This may extend the file length or reduce it.
+<BR>If the operation succeeds, it returns 1.
+<BR><B>Examples:</B>
+<BR>(the operations are not sequential.
+<BR>&nbsp;The file starts as: {"line 1","line 2","end"})
+<BR>&nbsp;&nbsp;Operation                                          File contents after
+<BR>&nbsp;&nbsp;filewrite("notes","foox.test",{"test"})           {"test"}
+<BR>&nbsp;&nbsp;filewrite("notes","foox.test",{"te","st"},2)      {"line 1","te","st"}
+<BR>&nbsp;&nbsp;filewrite("notes","foox.test",{"te","st"},2,2)    {"line 1","te","st","end"}
+<BR>&nbsp;&nbsp;filewrite("notes","foox.test",{"test"},2,3)       {"line 1","test"}
+<BR>&nbsp;&nbsp;filewrite("notes","foox.test",{},2,2)             {"line 1","end"}
+
+
+<H2><A NAME="FUP-changelog">FUP-changelog</A></H2>
+
+Version 1.1: (Aug 1994)
+<BR>- First released version.
+
+<P>Version 1.2: (Sep 4th, 1994)
+<BR>- Added fileversion()
+<BR>- Changed filedelete(), filewrite() and fileappend() to return 1 if successful
+<BR>- Added the EXTERN_FILES_DIR_READ_ONLY compiling variable
+<BR>- Fixed a bug in filegrep() that caused a match in the last line to return
+<BR>&nbsp;&nbsp;a 'zombie' additional line.
+
+<P>Version 1.3: (Sep 8th, 1994)
+<BR>- Added filerename()
+<BR>- Fixed some serious memory leaks
+<BR>(Sep 13th, 1994) - Fixed a bug whereby fileexists always returned 1
+
+<P>Version 1.4 (Jan 5th, 1995)
+<BR>- Added the following built-in functions:
+<BR>    filechmod()
+<BR>    fileerror()
+<BR>    fileinfo()
+<BR>    filemkdir()
+<BR>    filermdir()
+<BR>- Added the following compiling variable:
+<BR>    CREATE_NEW_DIR_MODE
+<BR>- Improved efficiency and file access security management
+<BR>- Removed the hard-coded requirement for wizard permissions
+
+<P>Version 1.5 (Jan 9th, 1995)
+<BR>- Modified an internal data handling method that was incompatible with Pavel's
+<BR>&nbsp;&nbsp;code, and was potentially database-corrupting
+<BR>- Added the following compiling variable:
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EXTERN_BIN_DIR
+<BR>- Added the following built-in function:
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;filerun()
+
+<P>Version 1.6 (Feb 21th, 1995)
+<BR>- Fixed some serious bugs in string length handling
+<BR>- Added some missing code to filerun() and filechmod()
+<BR>- Added the following compiling variable:
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;INCLUDE_FILERUN
+
+<H2><A NAME="FUP-index">FUP-index</A></H2>
+
+<TABLE BORDER=0 CELLSPACING=6>
+<TR><TD VALIGN="TOP"><A HREF="#fileappend()">fileappend()</A></TD><TD VALIGN="TOP"><A HREF="#filegrep()">filegrep()</A></TD><TD VALIGN="TOP"><A HREF="#filerename()">filerename()</A></TD><TD VALIGN="TOP"><A HREF="#FUP-changelog">FUP-changelog</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#filechmod()">filechmod()</A></TD><TD VALIGN="TOP"><A HREF="#fileinfo()">fileinfo()</A></TD><TD VALIGN="TOP"><A HREF="#filermdir()">filermdir()</A></TD><TD VALIGN="TOP"><A HREF="#FUP-index">FUP-index</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#filedelete()">filedelete()</A></TD><TD VALIGN="TOP"><A HREF="#filelength()">filelength()</A></TD><TD VALIGN="TOP"><A HREF="#filerun()">filerun()</A></TD><TD VALIGN="TOP"><A HREF="#FUP-overview">FUP-overview</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#fileerror()">fileerror()</A></TD><TD VALIGN="TOP"><A HREF="#filelist()">filelist()</A></TD><TD VALIGN="TOP"><A HREF="#filesize()">filesize()</A></TD><TD></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#fileexists()">fileexists()</A></TD><TD VALIGN="TOP"><A HREF="#filemkdir()">filemkdir()</A></TD><TD VALIGN="TOP"><A HREF="#fileversion()">fileversion()</A></TD><TD></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#fileextract()">fileextract()</A></TD><TD VALIGN="TOP"><A HREF="#fileread()">fileread()</A></TD><TD VALIGN="TOP"><A HREF="#filewrite()">filewrite()</A></TD><TD></TD></TR>
+</TABLE>
+
+<H2><A NAME="FUP-overview">FUP-overview</A></H2>
+
+File Utilities Package 1.6 - February '95
+
+
+<P>INTRODUCTION:
+
+<P>The "File Utilities Package" is a set of routines for direct file
+<BR>management and access from inside the MOO,  developed and written by
+<BR>Jaime Prilusky and Gustavo Glusman, Weizmann Institute of Science,
+<BR>Israel.
+
+<P>This software is intended to work with the MOO server written by Pavel
+<BR>Curtis, Xerox PARC (Pavel@Xerox.Com), depending on routines and code
+<BR>from the MOO server itself. It has been tested with MOO version 1.7.8p4.
+
+
+<P>SECURITY:
+
+<P>All the built-in functions provided in the File Utilities Package used to 
+<BR>require wizardly permissions, but since version 1.4 this is left to the 
+<BR>database. Take a look to the file_handler file for an example of the 
+<BR>implementation of permissions at the database level.
+
+<P>A simple $file_handler wrapper is provided. A more complex version,
+<BR>including a disk-quota system, is available too.
+<BR>Additionally, file read/write operations are allowed only over the directory
+<BR>subtree rooted at the 'base directory', called 'files' by default, and
+<BR>execute operations are allowed only from the directory called 'bin' by default.
+<BR>To achieve this, all paths are stripped of spaces, and then rejected if:
+<BR>&nbsp;&nbsp;a) the first character is a '/' or a '.'  OR
+<BR>&nbsp;&nbsp;b) the path includes the substring '/.'.
+
+
+<P>DESCRIPTION:
+
+<P>1) List of primitives provided:
+<BR>&nbsp;&nbsp;Modify files:       filewrite, fileappend, filedelete, filerename,
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;filechmod, filemkdir, filermdir
+<BR>&nbsp;&nbsp;Gather information: fileversion, fileread, fileexists, filelength,
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;filesize, filelist, filegrep, fileextract, fileinfo,
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fileerror
+<BR>&nbsp;&nbsp;Execute commands:   filerun
+
+<P>2) Standard return errors:
+<BR>&nbsp;&nbsp;a) Any primitive called with incorrect number of arguments returns E_ARGS.
+<BR>&nbsp;&nbsp;b) Any primitive called with arguments of the wrong type returns E_INVARG.
+<BR>&nbsp;&nbsp;c) Any primitive called by a programmer that isn't a wizard returns E_PERM.
+<BR>&nbsp;&nbsp;d) Any attempt to access a file outside the hierarchy returns E_PERM.
+<BR>&nbsp;&nbsp;e) Any attempt to access a file that doesn't exist returns E_INVARG.
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Except for fileexists, see below.)
+<BR>&nbsp;&nbsp;f) Any attempt to remove a directory that doesn't exist returns E_INVIND.
+
+<P>3) Description of the primitives:
+
+<P>To make the description easier, we'll assume we have the following files:
+
+<P>&nbsp;files/notes
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/foo.text   &lt;- this is a text file
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/foox.test  &lt;- this is a text file
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/bar        &lt;- this is an empty subdirectory
+<BR>&nbsp;files/misc
+
+<P>We'll also assume that foo.text reads:
+<BR>+-
+<BR>|  Copyright (c) 1994 Weizmann Institute. All rights reserved.
+<BR>|  This file documents the File Utilities Package developed and written by
+<BR>|  Jaime Prilusky and Gustavo Glusman, Weizmann Institute of Science, Israel.
+<BR>|  For questions, suggestions and comments, please  send email to
+<BR>|  lsprilus@weizmann.weizmann.ac.il (Jaime Prilusky)
+<BR>|  Gustavo@bioinformatics.weizmann.ac.il (Gustavo Glusman)
+<BR>+-
+<BR>and foox.test reads:
+<BR>+-
+<BR>| line 1
+<BR>| line 2
+<BR>| end
+<BR>+-
+
+</BODY></HTML>

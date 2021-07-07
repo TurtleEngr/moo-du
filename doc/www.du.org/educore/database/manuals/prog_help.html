@@ -1,0 +1,1862 @@
+<HTML><HEAD><TITLE>Programmer Help</TITLE></HEAD><BODY>
+
+<H1><HREF NAME="top">Programmer Help</A></H1>
+
+<H2><A NAME="#">#</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> #&lt;string&gt;[.&lt;property&gt;|.parent] [exit|player|inventory] [for &lt;code&gt;]</TD></TR></TABLE>
+
+<P>Returns information about the object (we'll call it &lt;thing&gt;) named by string.  String is matched in the current room unless one of exit|player|inventory is given.
+
+<P>If neither .&lt;property&gt;|.parent nor &lt;code&gt; is specified, just return &lt;thing&gt;.
+<BR>If .&lt;property&gt; is named, return &lt;thing&gt;.&lt;property&gt;.  .parent returns parent(&lt;thing&gt;).
+<BR>If &lt;code&gt; is given, it is evaluated, with the value returned by the first part being substituted for %# in &lt;code&gt;.
+
+<P>For example, the command
+
+<P>&nbsp;&nbsp;#JoeFeedback.parent player for tonum(%#)
+
+<P>will return 26026 (unless Joe has chparented since writing this).
+
+<H2><A NAME="&-pointers">&-pointers</A></H2>
+
+Programmer Notes
+<BR>---------- -----
+
+<P>The &amp;-pointer system was implemented primarily to separate the core-object extraction system from the server-supported $-pointer system.  Since the latter is directly supported by the server, its major function is to establish literals that may be used MOO lanaguage programming.
+
+<P>However, there may be times when it is useful to refer to an object by &amp;-pointer within MOO language code, even though the server doesn't support that directly.  In these cases, programmers may use the construct "$id.&lt;pointer_name&gt;" as a reference.  For instance, the object &amp;improved_room may be referenced as "$id.improved_room" in code.
+
+
+<P>The basic reasons why the &amp;-pointer system was created were to:
+<BR>&nbsp;&nbsp;1. dissociate the server-supported $-pointer system, from the in-DB core extraction system
+<BR>&nbsp;&nbsp;2. cut down on properties added to #0, for efficiency reasons
+<BR>&nbsp;&nbsp;3. share the &amp;-pointer convention used at other MOOs to mean "the local version of an object named &lt;pointer&gt;"
+
+<P>Also see: <A HREF="user_help.html#&-pointers">&-pointers</A> in General Help
+
+<H2><A NAME=".program">.program</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  .program &lt;object&gt;:&lt;verb-name&gt;
+<BR>:
+<BR>:
+<BR>&lt;lines of MOO code&gt;
+<BR>:
+<BR>:
+<BR>.</TD></TR></TABLE>
+
+<P>Provides or changes the MOO program associated with the named verb on the named object.
+
+<P>This command is mostly obsolete.  Use @program instead.  The only reason this command still exists is that it is a server builtin command that will continue to work in the (unlikely) event that @program gets trashed ...
+
+<P>This command works differently from most other MOO commands, in that it actually changes how the server will interpret later lines that you type to it.  After typing the '.program' line, you are in 'programming mode'.  All lines that you type in this mode are simply saved away in the server until you type a line containing only a single period ('.').  At that point, those lines are interpreted as a MOO program and are checked for syntax errors.  If none are found, a message to that effect is printed and the code you typed is installed as the program for the verb in question.  In any case, after typing the '.' line, you are returned to the normal input-handling mode.
+
+<H2><A NAME=";">;</A></H2>
+
+<P>See: <A HREF="#eval">eval</A>
+
+<H2><A NAME="@add-feature">@add-feature</A></H2>
+
+Note to programmers: @add-feature and @remove-feature are front-ends for player:add_feature and :remove_feature.
+
+<P>:add_feature returns
+
+<P>&nbsp;* E_PERM unless caller == this || $perm_utils:controls(caller_perms())
+
+<P>&nbsp;* E_INVARG if feature is not an object or is invalid
+
+<P>&nbsp;* E_PERM if the object is not feature_ok
+
+<P>&nbsp;* a true value otherwise
+
+<P>and calls feature:feature_add, if the verb exists.
+
+<P>:remove_feature returns
+
+<P>&nbsp;* E_PERM unless caller == this || $perm_utils:controls(caller_perms()) || caller_perms() == feature.owner
+
+<P>&nbsp;* a true value otherwise
+
+<P>and calls feature:feature_remove, if the verb exists.
+
+<P>Also see: <A HREF="user_help.html#@add-feature">@add-feature</A> in General Help
+
+<H2><A NAME="@args">@args</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @args &lt;object&gt;:&lt;verb-name&gt; &lt;dobj&gt;
+<BR>@args &lt;object&gt;:&lt;verb-name&gt; &lt;dobj&gt; &lt;prep&gt;
+<BR>@args &lt;object&gt;:&lt;verb-name&gt; &lt;dobj&gt; &lt;prep&gt; &lt;iobj&gt;</TD></TR></TABLE>
+
+<P>Changes the direct object, preposition, and/or indirect object specifiers for the named verb on the named object.  Any specifiers not provided on the command line are not changed.  The direct and indirect object specifiers (&lt;dobj&gt; and &lt;iobj&gt;) must be either 'none', 'this', or 'any'.  The preposition specifier (&lt;prep&gt;) must be either 'none', 'any', or one of the prepositional phrases listed in `help prepositions'.
+
+<H2><A NAME="@chatmode">@chatmode</A></H2>
+
+Programmers note:
+<BR>Verbs with perms that control a person's MOO character can call their
+<BR>@chatmode verb to invoke it.  When invoked as an executable verb, the
+<BR>value of arg[1] has meaning as follows:
+<BR>&nbsp;&nbsp;0 = warnings and user can escape (default)
+<BR>&nbsp;&nbsp;1 = warnings and user can NOT escape 
+<BR>&nbsp;&nbsp;2 = no warnings and user can escape
+<BR>&nbsp;&nbsp;3 = no warnings and user can NOT escape
+<BR>Note that the only way a user can escape from chat mode when invoked
+<BR>with option 1 or 3 is to disconnect and reconnect.
+
+<P>Also see: <A HREF="user_help.html#@chatmode">@chatmode</A> in General Help
+
+<H2><A NAME="@check-chparent">@check-chparent</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @check-property &lt;object&gt;.&lt;propname&gt;
+<BR>@check-chparent &lt;object&gt; to &lt;newparent&gt;
+<BR>
+<BR>You cannot add a new property to an object if an ancestor or a descendant already defines a property with the same name.  @check-property will give you the list of all descendants of &lt;object&gt; that that define .&lt;propname&gt;.</TD></TR></TABLE>
+
+<P>Likewise you cannot chparent an object to a new parent if the new parent has a property that is also defined on the object or some descendant.  Use @check-chparent to find out all instances of conflicting properties that would interfere with @chparent in this manner.
+
+<P>Note that @check-property requires either that you own the object or that it be writeable, the same conditions that need to hold if you are to create new properties on the object.  Similarly, @check-chparent requires that you own the object and that the new parent is either fertile or likewise owned by you.
+
+<P>For objects with large numbers of descendants, these commands can be time-consuming.
+
+<H2><A NAME="@check-property">@check-property</A></H2>
+
+<P>See: <A HREF="#@check-chparent">@check-chparent</A>
+
+<H2><A NAME="@chmod">@chmod</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @chmod &lt;object&gt; &lt;object-permissions&gt;
+<BR>@chmod &lt;object&gt;.&lt;prop-name&gt; &lt;property-permissions&gt;
+<BR>@chmod &lt;object&gt;:&lt;verb-name&gt; &lt;verb-permissions&gt;</TD></TR></TABLE>
+
+<P>Changes the permissions of an object, property or verb, to those given.  The following table shows what permission bits are allowed for each form of the command:
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;object-permissions&gt;        r, w, f
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;property-permissions&gt;      r, w, c
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;verb-permissions&gt;          r, w, x, d
+
+<P>See the LambdaMOO Programmer's Manual for their meanings.
+
+<P>To clear all of the permissions for an object, verb, or property, use "" as the second argument.
+
+<P>@chmod also accepts +, !, and - as modifiers for a single permission to add or subtract that permission from the current set.  (! and - are the same.)
+
+<P><B>Examples:</B>
+
+<P>Set a verb to be Readable and Callable:
+<BR>&nbsp;&nbsp;@chmod chair:sit rx
+
+<P>Set a verb to be not Callable, without changing its other permissions:
+<BR>&nbsp;&nbsp;@chmod cookies:eat !x
+
+<P>Set an object to be Writeable in addition to any current bits:
+<BR>&nbsp;&nbsp;@chmod table +w
+
+<H2><A NAME="@clearproperty">@clearproperty</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">   @clearproperty &lt;object&gt;.&lt;prop-name&gt;</TD></TR></TABLE>
+
+<P>This clears &lt;object&gt;'s &lt;prop-name&gt; property.  That is the property value becomes `clear' and all further references to this property will use the value of the same property on the parent object.  Note that you can only clear inherited properties.  Nor is this the same as removing a property; the property continues to exist.
+
+<P>`@clearproperty' can be abbreviated as `@clearp'.
+
+<P><B>Example:</B>
+
+<P>&nbsp;&nbsp;@create #1 named foo
+<BR>&nbsp;&nbsp;You now have foo with object number #42 and parent Root Class (#1).
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;[foo, as a child of #1 has a .description property which starts out clear]
+<BR>&nbsp;&nbsp;;#1.description
+<BR>&nbsp;&nbsp;=&gt; ""
+<BR>&nbsp;&nbsp;;#1.description = "You see nothing special"
+<BR>&nbsp;&nbsp;=&gt; "You see nothing special"
+<BR>&nbsp;&nbsp;;#42.description  
+<BR>&nbsp;&nbsp;=&gt; "You see nothing special"
+<BR>&nbsp;&nbsp;;#42.description = "Something special"
+<BR>&nbsp;&nbsp;=&gt; "Something special"
+<BR>&nbsp;&nbsp;&nbsp;[foo.description is now no longer clear; it has a value of its own]
+<BR>&nbsp;&nbsp;;#1.description = "Boring"
+<BR>&nbsp;&nbsp;=&gt; "Boring"
+<BR>&nbsp;&nbsp;;#42.description  
+<BR>&nbsp;&nbsp;=&gt; "Something special"
+<BR>&nbsp;&nbsp;&nbsp;
+<BR>&nbsp;&nbsp;@clearp foo.description
+<BR>&nbsp;&nbsp;Property #42.description cleared; value is now "Boring".
+<BR>&nbsp;&nbsp;&nbsp;[foo.description is now clear again]
+<BR>&nbsp;&nbsp;;#1.description = ""
+<BR>&nbsp;&nbsp;=&gt; ""
+<BR>&nbsp;&nbsp;;#42.description
+<BR>&nbsp;&nbsp;=&gt; ""
+
+<H2><A NAME="@compare">@compare</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> @compare &lt;objectA&gt;:&lt;verbA&gt; to &lt;objectB&gt;:&lt;verbB&gt;
+<BR>@compare &lt;objectA&gt;:&lt;verbA&gt; to &lt;objectB&gt;
+<BR>@compare &lt;objectA&gt;:&lt;verbA&gt; to</TD></TR></TABLE>
+
+<P>This command compares two verbs, and gives a list of instructions for changing the first verb to be identical to the second.  If no second verb is specified (the second usage), then a verb of the same name as the first is assumed.  
+
+<P>If you omit the object to compare to, you'll be prompted to enter the lines of code you want compared to &lt;objectA&gt;:&lt;verbA&gt;.
+
+<P>The time stamp line (a last line beginning with "Last modified") is ignored.
+
+<P><B>Related Topics:</B>
+<BR><A HREF="prog_help.html#@list">@list</A> -- list a verb
+
+<H2><A NAME="@copy">@copy</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @copy &lt;object&gt;:&lt;verb&gt; to [&lt;newobject&gt;][:&lt;newverb&gt;]
+<BR>@copy &lt;object&gt;.&lt;prop&gt; to [&lt;newobject&gt;][.&lt;newprop&gt;]</TD></TR></TABLE>
+
+<P>Copies the code of the named verb to the new object and verbname.  Permissions, and arguments of the new verb are set to match those of the old verb in the event that the new verb does not already exist.  One of &lt;newobject&gt; or :&lt;newverb&gt; must be supplied.  If no new verbname is given, the old name is retained.  Likewise, &lt;newobject&gt; defaults to &lt;object&gt; if not given.
+
+<P><B>Examples:</B>
+<BR>&nbsp;&nbsp;@copy me:verbname to myobject
+<BR>&nbsp;&nbsp;@copy me:test_verb to myobject:real_verb
+<BR>&nbsp;&nbsp;@copy me.test_prop to .newtest_prop
+
+<P>In general, @copy'ing verbs is a bad idea.  In the vast majority of cases, the desired effect can be accomplished with parenting (i.e., having &lt;object&gt; be an ancestor of &lt;newobject&gt;), which has the advantage that if a verb is updated or fixed, this immediately becomes available to child objects that inherit this verb.  In such a case, copies that were made using @copy have to be tracked down and fixed by hand.
+
+<P>This facility is provided for those rare occasions where one has no choice but to actually copy the verb.
+
+<P>Similarly, you can use this command to copy properties, hopefully followed by deleting the original.
+
+<H2><A NAME="@display">@display</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> @display &lt;object&gt;.[property]
+<BR>,[inherited_property]
+<BR>:[verb]
+<BR>;[inherited_verb]</TD></TR></TABLE>
+
+<P>@display is a fancy version of @show.  As @show, it can select individual verbs or properties to display.  In addition, it can display all the verbs or properties defined on an object, or all the verbs or properties defined on any of the object's ancestors.  Don't specify a property or verbname after the punctuation mark to get the "all" feature.  Its display is more compact than that of @show (it uses a one-line format, and truncates values that don't fit in the value field).
+
+<P>You may mix properties and verbs on the command line, but the parser may become confused.  (E.g. @display object,: displays all properties including inherited ones plus all locally defined verbs on the object.)
+
+<P><B>Examples:</B>
+<BR>Individual property:
+<BR>&nbsp;&nbsp;@display poolsweep.count
+<BR>&nbsp;&nbsp;.count                   yduJ (#68)            r c    8
+
+<P>Individual verb:
+<BR>&nbsp;&nbsp;@display poolsweep:tell
+<BR>&nbsp;&nbsp;#3560:tell                     yduJ (#68)           rxd    this none this
+
+<P>All properties, including one truncated value:
+<BR>&nbsp;&nbsp;@display poolsweep.
+<BR>&nbsp;&nbsp;poolsweep (#3560) [ readable ]
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;Owned by yduJ (#68).
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;Child of generic thing (#5).
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;Location The Pool (#1428).
+<BR>&nbsp;&nbsp;.gagged                  yduJ (#68)            r c    0
+<BR>&nbsp;&nbsp;.count                   yduJ (#68)            r c    8
+<BR>&nbsp;&nbsp;.messages                yduJ (#68)            r c    {"The poolsweep stir..
+<BR>&nbsp;&nbsp;.index                   yduJ (#68)            r c    2
+<BR>&nbsp;&nbsp;.quantum                 yduJ (#68)            r c    20
+
+<P>Inherited verbs, edited for brevity, showing verbs from various parents, with owners, permissions, and argument lists.
+<BR>&nbsp;&nbsp;@d poolsweep;
+<BR>&nbsp;&nbsp;poolsweep (#3560) [ readable ]
+<BR>&nbsp;&nbsp;&nbsp;#3560:tell                     yduJ (#68)           rxd    this none this
+<BR>&nbsp;&nbsp;&nbsp;#3560:description              yduJ (#68)           rxd    this none this
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#5:"g*et t*ake"             Haakon (#2)          rxd    this none none
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#5:"d*rop th*row"           Haakon (#2)          rxd    this none none
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#5:moveto                   Haakon (#2)          rxd    this none this
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#1:description              Haakon (#2)          rxd    this none this
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#1:look_self                Haakon (#2)          rxd    this none this
+
+<P>Some aspects of @display can be customized (see `help @display-options').
+
+<H2><A NAME="@display-options">@display-options</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @display-option
+<BR>@display-option &lt;option&gt;</TD></TR></TABLE>
+
+<P>Synonym:  @displayoption
+
+<P>The display options customize the behavior of the @display command to your particular taste.  The first form of this command displays all of your display options.  The second form displays just that one option, one of the flags listed below.
+
+<P>The remaining forms of this command are for setting your display options:
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@display-option +&lt;flag&gt;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@display-option -&lt;flag&gt;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@display-option !&lt;flag&gt;           (equivalent to -&lt;flag&gt;)
+
+<P>These respectively set and reset the specified flag
+
+<P>-blank_tnt     Show the verb args on all verbs.
+<BR>+blank_tnt     Don't show the verb args on `this none this' verbs.
+<BR>-shortprep     Use full prepositions  (e.g., "on top of/on/onto/upon")
+<BR>+shortprep     Use short prepositions (e.g., "on")
+<BR>-thisonly      Specifying . (:) to retrieve all properties (verbs) will go
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;up the ancestor chain until it finds a readable object with
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;properties (verbs) defined on it.
+<BR>+thisonly      Specifying . (:) to retrieve all properties (verbs) will only
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;display properties (verbs) defined on the object itself.
+
+<H2><A NAME="@displayoptions">@displayoptions</A></H2>
+
+<P>See: <A HREF="#@display-options">@display-options</A>
+
+<H2><A NAME="@document">@document</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @document &lt;object&gt;:&lt;verb&gt;</TD></TR></TABLE>
+
+<P>This is a quick-and-dirty command to add documentation lines to a verb (these lines are displayed when someone asks for help on the verb).  It will prompt you for the lines to add as documentation.  If the verb already has documentation, it will query before overwriting it.
+
+<P>This command is only available to programmers.
+
+<H2><A NAME="@drawing">@drawing</A></H2>
+
+A note to Programmers:
+<BR>If you have hacked a specialized :look_self() that does not pass() to
+<BR>the parent verb you need to add the following lines wherever you
+<BR>want the drawing to appear (for instance):
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;if (player:drawings_ok())
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;player:tell_lines(this.drawing);
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;else
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;player:tell_lines(this.nodrawing_txt);
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;endif
+
+<P>Also see: <A HREF="user_help.html#@drawing">@drawing</A> in General Help
+
+<H2><A NAME="@dump">@dump</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @dump &lt;object&gt; [with [id=#&lt;id&gt;] [noprops] [noverbs] [create] [recreate] [port]]</TD></TR></TABLE>
+
+<P>This spills out all the properties and verbs on an object, calling suspend at appropriate intervals.
+<BR>&nbsp;&nbsp;&nbsp;id=#&lt;id&gt; - specifies an idnumber to use in place of the object's actual id (for porting to another MOO)
+<BR>&nbsp;&nbsp;&nbsp;noprops  - don't show properties.
+<BR>&nbsp;&nbsp;&nbsp;noverbs  - don't show verbs.
+<BR>&nbsp;&nbsp;&nbsp;create   - indicates that a @create command should be generated and all of the verbs be introduced with @verb rather than @args; the default assumption is that the object already exists and you're just doing this to have a look at it.
+
+<H2><A NAME="@edit">@edit</A></H2>
+
+Additional Usage for Programmers
+<P><TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @edit &lt;object&gt;:&lt;verb-name&gt; [&lt;dobj&gt; [&lt;prep&gt; [&lt;iobj&gt;]]]</TD></TR></TABLE>
+
+<P>&nbsp;&nbsp;This format moves you into the verb editor.
+
+<P><B>Related Topics:</B>
+<BR><A HREF="core_help.html#$generic_editor">$generic_editor</A> -- the base upon which MOO editors are built
+
+<P>Also see: <A HREF="user_help.html#@edit">@edit</A> in General Help
+
+<H2><A NAME="@egrep">@egrep</A></H2>
+
+<P>See: <A HREF="#@grep">@grep</A>
+
+<H2><A NAME="@eval-env">@eval-env</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @eval-env</TD></TR></TABLE>
+
+<P>Displays your eval environment.  The Eval environment is a string of MOO program code which is executed before any of the code in your eval is executed, and by default is set to the string "me=player;here=player.location", to set the variable "me" to the value of the user's object number, and the variable "here" to the object number of the location.  You can add other variable definitions to it, using the commands below.
+
+
+<P><TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @eval-env &lt;name&gt; is &lt;object or MOO code&gt;
+<BR>@eval-env-string &lt;name&gt; is &lt;MOO code&gt;
+<BR>@rmeval-env &lt;name&gt;</TD></TR></TABLE>
+
+<P>Adds or removes codes to your programmer's eval environment.  &lt;Name&gt; is any string which can be a valid MOO program variable, and &lt;object or MOO code&gt; can be either an object or a string which is a valid expression for a MOO code assignment expression.  If @eval-env is used, and if &lt;object or MOO code&gt; is recognized as an object or player name, the variable &lt;name&gt; is assigned that object number.  If it isn't recognized as an object, the user is asked if it is all right to add it as a string.  If @eval-env-string is used, it is always added as a string of MOO code.  @eval-env or @eval-env-string adds or changes the assignment for variable &lt;name&gt;, and @rmeval-eval deletes it.
+
+<P>For example, '@eval-env su is $string_utils' gives the variable "su" the value of the object number of $string_utils, so you can use "su" in your evals, instead of $string_utils.
+
+<P>The eval environment code is executed every time you do an eval, regardless of whether the variable is actually needed.  Therefore, it is inefficient to have superfluous code in your eval_env, though in practice the overhead is trivial.  The number of ticks this takes is the "eval overhead", which is also displayed by the @eval-env output.  This is subtracted from the actual number of ticks when the total number of ticks of an eval is output (if you set eval_time to true).
+
+<P>Related help topics:
+<BR><A HREF="prog_help.html#eval">eval</A> -- about the eval command in general and its options
+<BR><A HREF="prog_help.html#@setenv">@setenv</A> -- about an alternate method to set the eval environment
+
+<H2><A NAME="@eval-env-string">@eval-env-string</A></H2>
+
+<P>See: <A HREF="#@eval-env">@eval-env</A>
+
+<H2><A NAME="@examine">@examine</A></H2>
+
+Note for programmers:
+<BR>&nbsp;&nbsp;The 'obvious' verbs are those that are readable and that can be
+<BR>invoked as commands.  To keep a verb off this list, either make it
+<BR>unreadable (see 'help @chmod') or, if it shouldn't be used as a
+<BR>command, give it 'args' of 'this none this' (see 'help @args').
+
+<P>Also see: <A HREF="user_help.html#@examine">@examine</A> in General Help
+
+<H2><A NAME="@forked">@forked</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @forked</TD></TR></TABLE>
+
+<P>Gives a list of all of the forked tasks you own, along with detailed information about each one.  The information includes the following:
+
+<P>Queue ID:
+<BR>&nbsp;&nbsp;&nbsp;A numeric identifier for the task, for use in killing it (see 'help @kill').
+
+<P>Start Time:
+<BR>&nbsp;&nbsp;&nbsp;The time after which the task will begin execution.
+
+<P>Owner:
+<BR>&nbsp;&nbsp;&nbsp;The character whose permissions under which the task is running.
+<BR>&nbsp;&nbsp;&nbsp;Unless you are a wizard, @forked will show only your tasks.
+
+<P>Verb:
+<BR>&nbsp;&nbsp;&nbsp;The object and verb-name of the code that forked the task.
+
+<P>Line:
+<BR>&nbsp;&nbsp;&nbsp;The line number of the first statement that the task will execute when it starts.  Note that the code for the verb in question may have changed since the task was forked; the forked task will use the version that was being executed when it was forked.
+
+<P>This:
+<BR>&nbsp;&nbsp;&nbsp;The value of `this' for the forked task, in the case that it is different from (i.e., is a descendant of) the object on which the verb code lives.
+
+<P><B>Related Topics:</B>
+<BR><A HREF="manager_help.html#@tasks">@tasks</A> -- a less spammy version essential when the @forked list is huge
+<BR><A HREF="prog_help.html#@kill">@kill</A>      -- kill a particular forked task
+<BR><A HREF="manager_help.html#@killtasks">@killtasks</A> -- a quick task killer for a specified person or object:verb
+<BR><A HREF="prog_help.html#forked-interpretation">forked-interpretation</A> -- a primer on understanding @forked list management
+
+<H2><A NAME="@gethelp">@gethelp</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> @gethelp [&lt;topic&gt;] [from &lt;db or dblist&gt;]</TD></TR></TABLE>
+
+<P>Prints the raw text of &lt;topic&gt; from the appropriate help db.  With no
+<BR>argument, gets the blank ("") topic from wherever it lives.  Text is
+<BR>printed as a script for changing this help topic or porting it to a
+<BR>new MOO (somewhat like @dump...).
+
+<H2><A NAME="@grep">@grep</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @grep &lt;string&gt; in &lt;object&gt;
+<BR>@grep &lt;string&gt; in {&lt;objectlist&gt;}</TD></TR></TABLE>
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@egrep &lt;regexp&gt; in &lt;object&gt;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@egrep &lt;regexp&gt; in {&lt;objectlist&gt;}
+
+<P>These are named for the corresponding unix utilities.
+<BR>@grep searches the given object(s) for verbs whose verbcode contains the given string as a substring of one of its lines.  
+<BR>@egrep searches the given object(s) for verbs whose verbcode contains a substring matching the given regular expression (see `help regular-expressions').
+
+<P><B>Related Topics:</B>
+<BR><A HREF="prog_help.html#@killgrep">@killgrep</A> -- kill a running @grep or @egrep search
+
+<H2><A NAME="@kill">@kill</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @kill task_id
+<BR>@kill [object]:[verb]
+<BR>@kill soon [number-of-seconds]
+<BR>@kill all [who]
+<BR>@kill %trailing_id</TD></TR></TABLE>
+
+
+<P>Immediately kills one or more forked tasks.  The '@forked' command is useful for finding out what tasks you have pending; see 'help @forked' for details.  Only the owner of a task may kill it.
+
+<P>@kill task_id kills only the task with that id.
+
+<P>@kill object:verb kills all tasks which were scheduled by the object running the verb named.  Both object and verb are optional:  @kill object: kills all tasks scheduled by that object, and @kill :verb kills all tasks which were scheduled by any object running that verb.  This can be useful if you have several similar objects which are running tasks from similarly named verbs.  (Perversely, @kill : kills all tasks...  Any object running any task.)
+
+<P>@kill soon kills all tasks scheduled within the next minute.  @kill soon number kills all tasks scheduled within that number of seconds, e.g. @kill soon 300 would kill all tasks scheduled within the next five minutes.  This can be useful if you have a runaway task you want to quickly remove, but don't want to kill you later tasks.
+
+<P>@kill all kills all tasks.  Like @kill soon, but more dramatic.  @kill all &lt;who&gt; kills all the tasks owned by &lt;who&gt;.
+
+<P>@kill %trailing_id expects you to specify the last few digits of a task id.  It then kills all tasks that end with those digits.
+
+<P><B>Example:</B>
+<BR>&nbsp;&nbsp;@forked
+<BR>&nbsp;&nbsp;1359083655  Sep 16 21:45:00 1991  yduJ          #5803:heartbeat (10) [#68]
+<BR>&nbsp;&nbsp;@kill %655
+<BR>&nbsp;&nbsp;Killed:   task 1359083655, verb #5803:heartbeat, line 10, this==#68
+
+<H2><A NAME="@killgrep">@killgrep</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> @killgrep</TD></TR></TABLE>
+
+<P>Synonym: @ungrep
+
+<P>Used to kill a running @grep or @egrep search.  It will prompt you with info about each @grep running and ask if you want to kill that one.
+
+<P><B>Related Topics:</B>
+<BR><A HREF="manager_help.html#@grep">@grep</A>  -- search for a text string in verbs
+<BR><A HREF="manager_help.html#@egrep">@egrep</A> -- search for a regular expression in verbs
+
+<H2><A NAME="@lastedit">@lastedit</A></H2>
+
+<P>See: <A HREF="#@lastmodified">@lastmodified</A>
+
+<H2><A NAME="@lastmodified">@lastmodified</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> @lastmodified &lt;object name or number&gt;
+<BR>@lastedit &lt;object name or number&gt; [obsolete name]</TD></TR></TABLE>
+
+<P>Will take a look at an object you own and display the date and time of
+<BR>its last modification. If there are verbs defined on the object and they
+<BR>are tagged with a Last modified line, that information will be given.
+
+<H2><A NAME="@list">@list</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @list &lt;object&gt;:&lt;verb&gt;
+<BR>@list &lt;object&gt;:&lt;verb&gt; [with|without parentheses|numbers]
+<BR>@list &lt;object&gt;:&lt;verb&gt; &lt;dobj&gt; &lt;prep&gt; &lt;iobj&gt;
+<BR>@list &lt;object&gt;:&lt;verb&gt; &lt;start&gt;..&lt;end&gt;</TD></TR></TABLE>
+
+<P>Prints out the code for the MOO program associated with the named verb on the named object.  
+
+<P>Normally, the code is shown with each line numbered and with only those parentheses that are necessary to show the meaning of the program.  You can e.g., specify `without numbers' to have the numbers omitted or `with parentheses' to include all parentheses or even `with parentheses without numbers' to do both.
+
+<P>The 3rd form of the verb lists the verb matching the given dobj/prep/iobj specification if such exists.  
+<BR>The 4th form prints only those lines in the specified range.
+
+<P><B>Example:</B>
+<BR>&nbsp;&nbsp;Type `@list $room:@move' to see the code for the `@move' command, or even `@list $prog:@list' to see the code implementing @list itself...
+
+<P>The 2nd-4th forms may be combined, e.g.,
+
+<P>&nbsp;&nbsp;@list frobule:burfle this in front of any without numbers 1..10
+
+<P>which would be useful if `frobule' had more than one `burfle' verb and we wanted to see the first 10 lines of the one having `this' `in front of' `any' as its respective dobj/prep/iobj specifiers.
+
+<H2><A NAME="@prog-options">@prog-options</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @prog-option           .. to show all options
+<BR>@prog-option &lt;option&gt;  .. to show a selected option
+<BR>@prog-option +&lt;option&gt; .. to select an option
+<BR>@prog-option -&lt;option&gt; .. to un-select an option
+<BR>@prog-option !&lt;option&gt; .. (same as above)</TD></TR></TABLE>
+
+<P>The programmer options customize how various programmer verbs and utilities
+<BR>work.  The default in each case is for the option to be un-selected.
+
+<P>Currently implemented options are as follows:
+
+<P>-grep-full        Verb @grep's show the first occurrance of the search
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pattern (default)
+<BR>+grep-full        Verb @grep's show all occurrances of the search pattern.
+
+<P>-duplicate-verbs  @verb will not allow you to add a verb with the same name
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;and args as an existing one on the same object (default).
+<BR>+duplicate-verbs  @verbs will allow you to add a verb with the same name and
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;args as an existing one on the same object.
+
+<P>-default-args     @verb and @verbprog require that the verb arguments be
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;specified.
+<BR>+default-args     @verb and @verbprog use 'none none none ' If no verb
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;arguments are given.
+
+<H2><A NAME="@program">@program</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @program &lt;object&gt;:&lt;verb-name&gt;
+<BR>@program &lt;object&gt;:&lt;verb-name&gt; &lt;dobj&gt; &lt;preposition&gt; &lt;iobj&gt;</TD></TR></TABLE>
+
+<P>Changes the MOO program associated with the named verb on the named object.
+<BR>If you provide &lt;dobj&gt; &lt;preposition&gt; and &lt;iobj&gt; as in the second form of this command, then it is the first verb with matching direct object, preposition and indirect object specifiers that is the one getting the new program.  This is useful if you have several verbs matching the same name.
+
+<P>Typing the @program command always puts the server into a line-reading mode, in which each line you type is saved away without any action unless said line is one of the following:
+
+<P>&nbsp;&nbsp;.
+<BR>&nbsp;&nbsp;@abort
+<BR>&nbsp;&nbsp;.&lt;text&gt;
+
+<P>A period on a line by itself ends the line-reading mode and continues with the command, in this case, the saved lines are considered as a program, checked for syntax errors and, if no errors are found, installed as the new program for the specified verb.  
+
+<P>@abort causes the command to terminate immediately with no change to any verb's program.  .&lt;text&gt; enters &lt;text&gt; literally as one of the lines to be saved, which is used for when, e.g., you want to enter the line `.' or the line `@abort'.
+
+<P>Note that this command *always* enters the line-reading mode, even if the indicated verb is not found.  In this case, lines of text are still read but they are ignored.  After any @program command, you always need to type a period or `@abort' to get back into the normal command-reading mode.
+
+<H2><A NAME="@property">@property</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @property &lt;object&gt;.&lt;prop-name&gt;
+<BR>@property &lt;object&gt;.&lt;prop-name&gt; &lt;initial-value&gt;</TD></TR></TABLE>
+
+<P>Adds a new property named &lt;prop-name&gt; to the named object.  The initial value is given by the second argument, if present; it defaults to 0.  
+
+<P>Normally, a property is created with permissions 'rc' and owned by whoever types the command.  However, you may also specify these explicitly
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@property &lt;object&gt;.&lt;prop-name&gt; &lt;initial-value&gt; &lt;permissions&gt;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@property &lt;object&gt;.&lt;prop-name&gt; &lt;initial-value&gt; &lt;permissions&gt; &lt;owner&gt;
+
+<P>Only wizards can create properties with owners other than themselves.
+
+<P>'@property' can be abbreviated as '@prop'.
+
+<H2><A NAME="@propset">@propset</A></H2>
+
+@propset &lt;object&gt;.&lt;property&gt; &lt;value&gt;|&lt;keyword&gt; [perms owner]
+
+<P>Adds a property to an object and sets its value, perms, and owner.  If the property already exists, changes the value, perms, or owner, if given.
+<BR>Note:  This always updates the object's .last_modified property.  Does not work for additional owners.
+
+<P>&lt;Value&gt; can be string decodable as a legal MOO value.  As an alternative, one of the following keywords can be used to get a prompt for input of the property value on subsequent lines.
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'value'       ... reads value in single line.
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'string'       ... reads string in single line for string property.
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'text'        ... read in lines of for list of strings.  Terminated by
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;line with only ".".
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'wrap-text'     ... read in lines for list of strings in wrap-for-dump
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;format.  New lines must start with "'", continuation
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lines start with "&amp;".
+<BR>&nbsp;&nbsp;'multi-line-value' ... reads value on multiple lines.  Lines appended to
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;make a single string, which is then evaluated.
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'.'         ... same as above.
+
+<P>Updates the object's .last_modified property.  Therefore, should only be used for 'significant' property value changes.  Use @set to change a property value without modifying the .last_modified property.
+
+<P>This is primarily designed for restoring from backups.  Normally @prop is used to create a property and set its initial value, and @set is used to change the value of an existing property.
+
+<H2><A NAME="@prospectus">@prospectus</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @prospectus &lt;person&gt; [from number] [to number]
+<BR>@prospectusDB &lt;person&gt; [from &lt;start&gt;] [to &lt;end&gt;]</TD></TR></TABLE>
+
+<P>Like @audit, but displays more information.  The optional from and to arguments are for restricting the display to specific object numbers, if you happen to know the person only owns objects in the included range.
+
+<P><B>Example:</B>
+<BR>&nbsp;&nbsp;&nbsp;Objects owned by Frand (from #0 to #54949):
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;P[ 23]    #47 Frand                          [Hyperspace Hovel]
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;T        #152 Frand's trio of shoes          [Frand]
+<BR>&nbsp;&nbsp;&nbsp;KfT[ 10]   #391 Frand's notifier class         [Nowhere]
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;T[  8]   #393 Frand's chessboard             [The Dining Room]
+<BR>&nbsp;&nbsp;&nbsp;KfT[ 11]   #775 Frand's generic game board     [Nowhere]
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;T[  6]   #893 Ghost game                     [The Dining Room]
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;T[ 16]   #894 Frand's mind bender            [The Dining Room]
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;C        #997 polka-dot hole                 [Hyperspace Hovel]
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;R[  1]  #1002 Hyperspace Hovel              
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;E      #11958 out                            Monster Cage-&gt;*Dr. Empirico's Lab
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...
+
+<P>The K in the first column indicates that the object has children owned by other people.  A lowercase k indicates the object has children but owned only by the person.  The second column indicates whether the object is publicly readable or publicly parentable.  An r indicates readability.  A lowercase f indicates the object is both readable and allows children (is fertile).  An uppercase F indicates the object is not readable, yet allows children to be created.  (This is usually an error.)  If the object is readable by the issuer of the @prospectus command (that is, publicly readable or owned by the issuer), then the number in brackets indicates the number of verbs which have been defined on this object (not including any verbs from any parents).
+
+<P>The third column indicates what type of object this is.
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;T       Thing
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;E       Exit
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;R       Room
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;C       Container
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;N       Note
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;P       Person
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;p       Parent object appropriate for characters ("Person class")
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;blank   Other
+
+<P>The @prospectusDB form presents the same information, but is less efficient since it scans the entire DB for objects the person owns, instead of using their character's .owned_objects property.
+
+<H2><A NAME="@prospectusDB">@prospectusDB</A></H2>
+
+<P>See: <A HREF="#@prospectus">@prospectus</A>
+
+<H2><A NAME="@remove-feature">@remove-feature</A></H2>
+
+<P>See: <A HREF="#@add-feature">@add-feature</A>
+
+<H2><A NAME="@rename">@rename</A></H2>
+
+Additional Varients for Programmers
+
+<P><TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> @rename &lt;object&gt;:&lt;verb&gt; to &lt;new-verb-name&gt;
+<BR>@rename &lt;object&gt;.&lt;prop&gt; to &lt;new-prop-name&gt;</TD></TR></TABLE>
+
+<P>These forms of the @rename command is for use by programmers, to
+<BR>change the name of a verb or property they own.  If the
+<BR>&lt;new-verb-name&gt; contains spaces, the verb will have multiple names,
+<BR>one for each space-separated word.  Embedding spaces in property
+<BR>names is not generally recommended.
+
+<P>Also see: <A HREF="user_help.html#@rename">@rename</A> in General Help
+
+<H2><A NAME="@residents">@residents</A></H2>
+
+Hints for programmers: The verb $room:accept_for_abode is called by
+<BR>@sethome.  By overriding this verb you can give different criteria
+<BR>to @sethome.  It should return 1 for allowed and 0 for denied.
+
+<P>Also see: <A HREF="builder_help.html#@resident">@resident</A> in Builder Help
+
+<H2><A NAME="@rmeval-env">@rmeval-env</A></H2>
+
+<P>See: <A HREF="#@eval-env">@eval-env</A>
+
+<H2><A NAME="@rmproperty">@rmproperty</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @rmproperty &lt;object&gt;.&lt;prop-name&gt;</TD></TR></TABLE>
+
+<P>Removes the named property from the named object.  '@rmproperty' may be abbreviated as '@rmprop'.
+
+<H2><A NAME="@rmverb">@rmverb</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @rmverb &lt;object&gt;:&lt;verb-name&gt;
+<BR>@rmverb &lt;object&gt;:&lt;verb-name&gt;  &lt;dobj&gt; &lt;prep&gt; &lt;iobj&gt;</TD></TR></TABLE>
+
+<P>Removes the named verb from the named object.
+<BR>If there is more than one verb matching the given verb-name, this removes the most recently defined one.
+
+<P>With the 2nd form of the command the verb removed is the most recent one matching both the given verb-name *and* the given dobj/prep/iobj specifiers.
+
+<H2><A NAME="@setenv">@setenv</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @setenv &lt;environment string&gt;</TD></TR></TABLE>
+
+<P>Defines the environment for eval (property player.eval_env).  See "help eval"
+<BR>for more information.  This is mostly useful when one's .eval_env is broken
+<BR>and prevents one from using eval to reset it.
+
+<H2><A NAME="@show">@show</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @show &lt;object&gt;
+<BR>@show &lt;object&gt;.&lt;prop-name&gt;
+<BR>@show &lt;object&gt;:&lt;verb-name&gt;</TD></TR></TABLE>
+
+<P>Displays quite detailed information about an object, property or verb, including its name, owner, permission bits, etc.  The information displayed for an object can be quite long.
+
+<P>See also @display, which displays different information and is controlled differently.
+
+<H2><A NAME="@tasks">@tasks</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @tasks</TD></TR></TABLE>
+
+<P>Displays a summary of the number of tasks running under your perms;
+<BR>as well as a summary of total running tasks.
+
+<P><B>Related Topics:</B>
+<BR><A HREF="prog_help.html#@forked">@forked</A> -- listing forked tasks
+<BR><A HREF="prog_help.html#@kill">@kill</A>   -- killing a particular forked task
+
+<H2><A NAME="@taskstack">@taskstack</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> @taskstack task_id</TD></TR></TABLE>
+
+<P>This reports the task stack for a suspended task.  Note that forked tasks that have not yet run don't have a task stack to report.
+
+<P><B>Related Topics:</B>
+<BR><A HREF="prog_help.html#@forked">@forked</A> -- list forked and suspended tasks
+<BR><A HREF="manager_help.html#@tasks">@tasks</A> -- quick version of @forked
+<BR><A HREF="prog_help.html#@kill">@kill</A> -- kill a forked or suspended task
+
+<H2><A NAME="@verb">@verb</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  @verb &lt;object&gt;:&lt;verb-name(s)&gt;
+<BR>@verb &lt;object&gt;:&lt;verb-name(s)&gt; &lt;dobj&gt; [&lt;prep&gt; [&lt;iobj&gt;]]</TD></TR></TABLE>
+
+<P>Adds a new verb with the given name(s) to the named object.  If there are multiple names, they should be separated by spaces and all enclosed in quotes:
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@verb foo:"bar baz mum*ble"
+
+<P>The direct and indirect object specifiers (&lt;dobj&gt; and &lt;iobj&gt;) must be either 'none', 'this', or 'any'; their meaning is discussed in the LambdaMOO Programmer's Manual.  The preposition specifier (&lt;prep&gt;) must be either 'none', 'any', or one of the prepositional phrases listed in `help prepositions' (a prepositional phrase with more than one word must be enclosed in quotes ("")).  All three specifiers default to 'none'.
+
+<P>It is also possible to specify the new verb's permissions and owner as part of the same command (rather than having to issue separate @chmod/@chown commands)
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@verb &lt;object&gt;:&lt;verb-name(s)&gt; &lt;dobj&gt; &lt;prep&gt; &lt;iobj&gt; &lt;permissions&gt;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@verb &lt;object&gt;:&lt;verb-name(s)&gt; &lt;dobj&gt; &lt;prep&gt; &lt;iobj&gt; &lt;permissions&gt; &lt;owner&gt;
+
+<P>&lt;permissions&gt; are as with @chmod, i.e., must be some subset of "rwxd".  They default to "rd" (specifying "w" for a verb is highly inadvisable).  The owner defaults to the person typing the command; only wizards can create verbs with owners other than themselves.
+
+<P>You may also use "tnt" in place of "this none this" for the dobj prep iobj arguments.  "this none this" is used to indicate non-command verbs, since the parser can't possibly interpret a command as "this none this".  For these verbs, the permissions default to "rxd"; the "x" bit is set so that they can be called from other programs.  (If they couldn't be used as commands, and they couldn't be called from programs, they wouldn't be good for anything!)
+
+<H2><A NAME="@verbprog">@verbprog</A></H2>
+
+&nbsp;@verbprog &lt;object&gt;:&lt;verb-name(s)&gt; &lt;dobj&gt; &lt;prep&gt; &lt;iobj&gt; [&lt;perms&gt; &lt;owner&gt;]
+<BR>&nbsp;&lt;verb code&gt;
+<BR>&nbsp;.
+
+<P>@verbprog conbines the functions of both @verb and @prog.  It creates a new verb if no verb with the same name (or alias of the specified name) and args exists, or over-writes an existing one if such a verb already exists. If different alias names, permissions, or owner are specified, then these are changed.  (Note that only wizards can specify verb onwers other than themselves.)  Then it takes input of the verb code, like @prog.  If the first character of the first line of verb code is a "'", then long lines can be wrapped, with the "'" characer being used to indicate the start of a new none, and a "&amp;" character being used to indicate the start of a continuation of a wrapped line.  (The latter feature is useful for restoring from backups.)
+
+<P>The verb arguments must be given unless the player has 'default-args' in his/her .prog_options, in which case the default of 'none none none' are used.
+
+<H2><A NAME="binary-strings">binary-strings</A></H2>
+
+"Binary strings" are special strings that can be used to represent
+<BR>arbitrary bytes in MOO code, including non-printing characters.  The
+<BR>only non-printing characters usually permitted in MOO strings are
+<BR>spaces and tabs.  Binary strings are generally used for binary input
+<BR>and output through appropriately set network connections.
+
+<P>In a binary string, any byte that isn't an ASCII printing character
+<BR>or the space character is represented as the three-character
+<BR>substring "~XX" where XX is the hexidecimal representation of the
+<BR>byte.  The input character "~" is represented by the three-character
+<BR>substring "~7E" in this notation.
+
+<P>This special notation is used by the functions encode_binary() and
+<BR>decode_binary() and by the functions notify() and read() with network
+<BR>connections that are in binary mode.
+
+<P><B>Related Topics:</B>
+<BR>set_connection_option() - setting a network connection as binary
+<BR><A HREF="function_help.html#encode_binary()">encode_binary()</A> -- converts a list of values to binary string format
+<BR><A HREF="function_help.html#decode_binary()">decode_binary()</A> -- returns a list of values represented by a binary
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;string
+
+<H2><A NAME="documentation">documentation</A></H2>
+
+&nbsp;&nbsp;It is critical that programmers document their work.  Even if noone else will ever use your code, YOU will probably want to look back at it some time in the future and having to spend time figuring out your own code is a waste.
+<BR>&nbsp;&nbsp;There are four important ways to document your code, and all four should be used.
+
+<P>SELF-DOCUMENTING CODE
+<BR>&nbsp;&nbsp;This refers to using variable and verb names that are highly descriptive.  Well-written self-documenting code should make sense when read out loud as a set of instructions.  Avoid using single letter variables.  Avoid abbreviating variables down to the point their function is no longer obvious.  Lastly, make sure your verb names describe their function well.  There's no shame in naming a verb "strip_off_spaces" instead of just "strip" and it will make your code far simpler to understand.
+<BR>&nbsp;&nbsp;Making code "read well" includes chosing verb names that make sense when read as a series of instructions.  Sometimes that means they should describe the process (eg. "this:open_window") but other times they should be named after the result of the process (eg. "this:window_opened") depending on which makes more sense in the context used.  If in doubt, read your code out load and use the version that makes more sense, also considering it may be called elsewhere in different contexts.
+<BR>&nbsp;&nbsp;One useful method for documenting code involving tables is to use a name as an index instead of a number.  For instance, if each element in the list is a list, and the first item of each element is the user name, try something like this:  
+<BR>&nbsp;&nbsp;user_name=1;
+<BR>&nbsp;&nbsp;for record in (this.user_info)
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;if (record[user_name]=="noone")
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...
+<BR>The text "record[user_name]" is much more understandable than "record[1]" which would require looking up a key to the index meanings somewhere.  
+
+<P>HEADER LINES
+<BR>&nbsp;&nbsp;These are lines of text at the beginning of the verb.  The header is all the string literal lines ("this is a comment line";) until the first line that is not one.
+<BR>Command line verbs should have header lines in the format:
+<BR>&nbsp;&nbsp;"Usage: &lt;command name&gt; &lt;arguments....&gt;";
+<BR>&nbsp;&nbsp;"Short description of comand's function.";
+<BR>while non-command line verb headers (eg. ones with args "this none this") should have the format:
+<BR>&nbsp;&nbsp;"verb_name( arg1 {type1, type2...}[, arg2 {type1,...}, ...]) -&gt; result {type1, ...}";
+<BR>&nbsp;&nbsp;"Short explanation of verb's function";
+<BR>where the components are as follows:
+<BR>&nbsp;&nbsp;verb_name - If the verb is corified, precede it with $ to indicate that.
+<BR>&nbsp;&nbsp;arg1 - Use the same name here as you will be assigning arg1 to (make it DESCRIPTIVE!).
+<BR>&nbsp;&nbsp;{type1, type2,...} - This is the list of acceptable variable types for this argument.  If there is only one type, the curly braces may be omitted.
+<BR>&nbsp;&nbsp;[, arg2 ...] - These are additional optional arguments.
+<BR>&nbsp;&nbsp;Note that arg1, arg2, result etc. should subsequently appear within the verb, and that type1, etc., should be selected from the available variable types (NUM, STR, ...), or BOOL (meaning an undefined type, to be used only in true/false testing).  Don't use "arg1" or "result" as variable names; substitute in some descriptive name.  
+<BR>&nbsp;&nbsp;An example:  "sample_verb(who OBJ, display {LIST, STR}) -&gt; reply STR";
+<BR>&nbsp;&nbsp;This header syntax does not completely specify the acceptable arguments if any are of type LIST, since it doesn't specify what type the elements of that LIST must be.  This will be implemented in future refinements of the header documentation system.  
+
+<P>INTERNAL COMMENTS
+<BR>&nbsp;&nbsp;Use internal comment lines to 1. identify separate functional units of code, 2. make clear an operation that is not made obvious from the self-documenting aspect.  Internal comment lines are string literals like header lines, with the format:  
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;"this is an internal comment line";
+
+<P>USER HELP TEXTS
+<BR>&nbsp;&nbsp;There are two places where user help text may be added to objects.  An "about_text" property should describe for the owner of child objects how to set up the object, and may also contain information for programmers.  A "help_msg" property should describe how the object is used.  
+<BR>&nbsp;&nbsp;For instance, the "about_text" would include a list and explanation of the message texts that can be set on an object, since this is important for the owner but not for other users.  The "help_msg" property would have a list of user commands and what they do, since anyone using the object would need these.  
+
+<P>ADVANCED HELP ASPECTS
+<BR>&nbsp;&nbsp;If you wish to add context-sensitive help texts, you can add "help_msg" and/or "about_text" verbs to your objects.  By default, these simply return the value of the equivalently named properties.
+<BR>&nbsp;&nbsp;Another nice addition is to use a "hidden_verbs" verb on your object to make the "examine" command's obvious verbs list context sensitive.  See $thing:hidden_verbs for an example.
+
+<P>ADDITIONAL NOTES
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;1. Don't use the term "player" in your documentation unless you mean the MOO variable of that name and are writing specifically for programmers.
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;2. Don't use the term "verb" unless you are referring to a verb that can't be called as a command, or are writing specifically for programmers.  Non-programmers will understand the term "command" much better.
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;3.  Don't make specific references using the MOO's name if you expect your work to be ported to other MOOs.
+
+<H2><A NAME="domain-system">domain-system</A></H2>
+
+Programmers may wish to note:
+
+<P>$room:in_domain() and $room:in_domains() (same verbs on $domain)
+<BR>$room:get_ascii_map() and $domain:get_ascii_map()
+<BR>$building_utils:trace_domain_via_out()
+
+<P>Also see: <A HREF="builder_help.html#domain-system">domain-system</A> in Builder Help
+
+<H2><A NAME="editors">editors</A></H2>
+
+<B>Notes for Programmers</B>
+
+<P><TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">
+<BR>@edit     &lt;object&gt;:&lt;verb&gt;    invokes the Verb Editor (edits verb code)</TD></TR></TABLE>
+
+<P>Advanced Features:
+<BR>A person may have her or his own .edit_options property which is a list containing one or more (string) flags from the following list 
+
+<P>&nbsp;&nbsp;quiet_insert
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;suppresses those annoying "Line n added." or "Appended..." messages
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;that one gets in response to 'say' or 'emote'.  This is useful if you're
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;entering a long list of lines, perhaps via some macro on your client,
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;and you don't want to see an equally long list of "Line n added..."
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;messages.  What you do want, however is some indication that this all
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;got through, which is why the "." command is an abbreviation for insert.
+
+<P>&nbsp;&nbsp;eval_subs
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Enables the verb editor to process your eval_subs property when
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;compiling your verb.  See `help eval' for more information about
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the eval_subs property.
+
+<P>Also see: <A HREF="user_help.html#editors">editors</A> in General Help
+
+<H2><A NAME="errors">errors</A></H2>
+
+The complete list of error codes:
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;E_NONE         No error
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;E_TYPE         Type mismatch
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;E_DIV          Division by zero
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;E_PERM         Permission denied
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;E_PROPNF       Property not found
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;E_VERBNF       Verb not found
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;E_VARNF        Variable not found
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;E_INVIND       Invalid indirection
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;E_RECMOVE      Recursive move
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;E_MAXREC       Too many verb calls
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;E_RANGE        Range error
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;E_ARGS         Incorrect number of arguments
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;E_NACC         Move refused by destination
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;E_INVARG       Invalid argument
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;E_QUOTA        Resource limit exceeded
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;E_FLOAT        Floating-point arithmetic error
+
+<H2><A NAME="eval">eval</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP">  eval &lt;MOO-code&gt;
+<BR>; &lt;MOO-code&gt;
+<BR>eval-d &lt;MOO-code&gt;</TD></TR></TABLE>
+
+<P>Evaluates the given piece of MOO code and prints the resulting value.  If the MOO code begins with one of the MOO language keywords ('if', 'for', 'while', 'fork', or 'return') or with the character ';', then the entire piece of code is treated as the program for a verb, with ';' appended to the end.  Otherwise, 'return' is appended to the front and ';' is appended to the end and that string is treated as the code for a verb.  In either case, the resulting verb is invoked and whatever value it returns is printed.
+
+<P>For programmers, this is such a mind-bogglingly useful thing to do that there is a simple abbreviation for this command; any command beginning with a semicolon (';') is treated as a use of 'eval'.
+
+<P>Eval treats specially a duplicated semicolon at the beginning.  It enables you to make multi-statement programs within eval (but does not by default print the return value).
+
+<P>Eval-d (no ";" abbreviation for this) evaluates the following text exactly as eval, except that the "d" debug flag (see programmer's manual for explanation) is turned off.  Thus errors will cause an error return value rather than a traceback.
+
+<P>If you set the character property .eval_time to 1, then eval will print out how many ticks and seconds the program required.
+
+<P><B>Examples:</B>
+<BR>&nbsp;&nbsp;&nbsp;eval 3 + 4
+<BR>&nbsp;&nbsp;&nbsp;=&gt;  7
+<BR>&nbsp;&nbsp;&nbsp;;3+4
+<BR>&nbsp;&nbsp;&nbsp;=&gt;  7
+<BR>&nbsp;&nbsp;&nbsp;;for x in (player.aliases) player:tell(x); endfor
+<BR>&nbsp;&nbsp;&nbsp;Haakon
+<BR>&nbsp;&nbsp;&nbsp;Wizard
+<BR>&nbsp;&nbsp;&nbsp;ArchWizard
+<BR>&nbsp;&nbsp;&nbsp;=&gt;  0
+<BR>&nbsp;&nbsp;&nbsp;;;l = {}; for i in [1..10] l = {@l, i}; endfor return l
+<BR>&nbsp;&nbsp;&nbsp;=&gt;  {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
+<BR>&nbsp;&nbsp;&nbsp;eval-d 8 + "foo"
+<BR>&nbsp;&nbsp;&nbsp;=&gt; E_TYPE  (Type mismatch)
+
+<P>You may customize your evaluation environment.  The $prog property .eval_env may contain statements to be executed prior to any evaluated program.  Two caveats:  This will throw off the tick count.  You can account for additional ticks inserted by your environment with the .eval_ticks property; just set it to the number of ticks you'd like subtracted from the total.  Additionally, if you make a syntax error in your program, the line reported will be wrong (it will count those initial statements), and if you make an error in the eval_env itself, you can be in deep trouble.  Despite these drawbacks, the eval_env property can be quite useful.  The following is a sample:
+
+<P>Eval_env:    "me=player;here=player.location;"
+<BR>eval_ticks:  3
+
+<P>See also @setenv.
+
+<P>You can also define textual substitutions in a separate property, called eval_subs.  These are discouraged, however, for anything that can be done with variable assignments, because the overhead of replacing the strings in the evaluated program is significant.  However, some things, such as substituting characters which can't be typed easily on one keyboard (e.g. "[]" is difficult to type on some IBM keyboards), can only be done by textual substitutions.  Note that the eval substitutions are also interpreted by the verb editor when "eval_subs" is selected in your .edit_options property (see `help editors').  This adds to their overhead, but again, makes it possible for people to program who otherwise can't type the full character set.  Remember:  Don't use eval_subs unless you really have to!
+
+<P>The $no_one:eval verb is available as a safe way to test possibly dangerous code.  It is particularly useful for calling from verbs with wizardly permissions, but finds other uses where security issues are important.
+
+<H2><A NAME="eval-d">eval-d</A></H2>
+
+<P>See: <A HREF="#eval">eval</A>
+
+<H2><A NAME="examine">examine</A></H2>
+
+[Note to programmers: the 'obvious' verbs are those that can be invoked as commands and are not specified by the :hidden_verbs verb.  The default definition of "hidden" is "not readable".  You can override this definition with a :hidden_verbs verb that gets the default list with pass(@args) and then alters that list.]
+
+<P>Also see: <A HREF="user_help.html#examine">examine</A> in General Help
+
+<H2><A NAME="expressions">expressions</A></H2>
+
+The following kinds of expressions exist in the MOO programming language:
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;number
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# number
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# - number
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"character string"
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;error-name
+<BR>Literal expressions return the obvious values: numbers, object numbers, strings, and errors.
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ expression , expression , ... , expression }
+<BR>The list-construction expression evaluates the each of the expressions in turn and returns a list whose elements are the results of those expressions.  Any of the expressions may be prefixed with an at-sign ('@'); in this case, that expression must return a list and, rather than that list becoming an element of the final list, its elements are spliced into the final list.
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name
+<BR>Variable expressions return the current value of the named variable.  Variable names must start with a letter or underscore ('_') and contain only letters, digits, and underscores.  The following variables are predefined:
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OBJ, STR, LIST, ERR, NUM
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;player, caller, this, verb, args
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;argstr, dobj, dobjstr, prepstr, iobj, iobjstr
+<BR>Their initial values are described in detail in the LambdaMOO Programmer's Manual.
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;expression . name
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;expression . ( expression )
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$ name
+<BR>Property-reading expressions return the current value of a named property on the object that is the value of the first subexpression.  In the second form, the second subexpression must return a string, the name of the property to be read.  The third form is an abbreviation for '#0.name'.
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;expression : name ( arguments )
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;expression : ( expression ) ( arguments )
+<BR>Verb-call expressions invoke a named verb on the object that is the value of the first subexpression, passing the given arguments.  In the second form, the second subexpression must return a string, the name of the verb to invoke.  The syntax and semantics of arguments is exactly as in the list-construction expression but no initial or final curly-braces ('{' or '}') are used.
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;function ( arguments )
+<BR>The function-call expression invokes one of the MOO primitive functions, as listed in 'help functions', passing the given arguments.
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;expression [ expression ]
+<BR>The indexing expression first evaluates the two subexpressions; call their values S and N, respectively.  S must be a string or a list and N must be a number between 1 and the length of S, inclusive.  The Nth element of S is returned.  The elements of a string are themselves one-character strings.
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;expression [ expression .. expression ]
+<BR>The subsequence expression first evaluates the three subexpressions; call their values S, N1, and N2, respecitively.  S must be a string or a list and N1 and N2 must be numbers.  If N1 &lt;= N2, then both must be between 1 and the length of S, inclusive; the subsequence of S beginning at index N1 and continuing through index N2 is returned.  If N1 &gt; N2, the empty sequence of the same type as S is returned, either "" or {}.
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name = expression
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;expression . name = expression
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;expression . ( expression ) = expression
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$ name = expression
+<BR>Assignment expressions give new values to variables and object properties.  For the second and third forms, the expressions on the left-hand side of the '=' are evaluated first.  Then the right-hand side expression is evaluated and result is stored in the indicated variable or object property.
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;expression + expression
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;expression - expression
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;expression * expression
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;expression / expression
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;expression % expression
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- expression
+<BR>The arithmetic expressions evaluate the subexpressions, all of which must return numbers, and then perform addition, subtraction, multiplication, division, remaindering, or negation, respectively.  For addition, the subexpressions may both return strings as well; in this case, the result is the concatenation of the two strings.
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;expression == expression
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;expression != expression
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;expression &lt; expression
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;expression &lt;= expression
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;expression &gt; expression
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;expression &gt;= expression
+<BR>The comparison expressions evaluate the subexpressions and then test whether or not the first result is equal to, unequal to, less than, less than or equal to, greater than, or greater than or equal to the second result, respectively.  If the indicated relation holds then they return 1 and otherwise they return 0.  Comparisons of strings are performed case-insensitively, those of lists are performed on an element-by-element basis, objects are compared by their object numbers, and errors by an ordering given in the LambdaMOO Programmer's Manual.
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;expression ? expression | expression
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;expression &amp;&amp; expression
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;expression || expression
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;! expression
+<BR>The logical expressions each return results based upon the truth value of their first subexpression; call the value of this expression X.  The first of these returns the value of the second subexpression if X is a true value and that of the third expression if X is a false value; the unused subexpression is not evaluated.  The definitions of 'true value' and 'false value' are given in 'help truth'.  The expression 'E1 &amp;&amp; E2' is an abbreviation for 'E1 ? E2 | E1' except that E1 is only evaluated once.  The expression 'E1 || E2' is an abbreviation for 'E1 ? E1 | E2' except that E1 is only evaluated once.  The expression '! E' is an abbreviation for 'E ? 0 | 1'.
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;expression IN expression
+<BR>The list-membership expression first evaluates both subexpressions; call their values E and L, respectively.  L must be a list.  If E is an element of L, then the index of the first occurence of E in L is returned.  If E is not an element of L, then 0 is returned.
+
+<P>The method for disambiguating the meaning of a complex MOO expression in the absence of sufficient parentheses is described in 'help precedence'.
+
+<H2><A NAME="features">features</A></H2>
+
+<B>Notes for Programmers</B>
+
+<P>This text describes how to program a feature object, so that you can make new MOO commands available to yourself and others. It assumes you are already familiar with the @create command and with using feature objects.  
+
+<P>1. Create a feature object: @create $feature named "my features",features
+<BR>2. Add the FO to your list of features:  @add-feature features
+<BR>3. Add your command to the FO:  @verb features:yawn none none none
+<BR>4. Program the new verb:  @edit features:yawn
+<BR>5. Set the verb +x so it can be called by the FO system:  @chmod features:yawn +x
+<BR>6. Test your new command:  yawn
+<BR>7. Document the command (described in more detail below).
+
+<P>Once you have created a working FO, anyone can use the commmands on it by adding that feature with the @add-feature command.  Note that you do not need to make the FO "fertile."  If, in fact, you DON'T want people to be able to add the FO to their list, use `@set features.feature_ok to 0' after you have added it to your own FO list.  
+
+<P>There are two ways you can document the commands on your FO.  The simplest is to edit the FO's `help_msg' property.  When someone uses `help &lt;feature number&gt;' they are presented with that text.  In addition, FO's with no `help_msg' set have an automatic system for returning the header lines from each "registered" command.  If each of your command verbs has header lines describing its function, this can serve as the FO's documentaion.  Use the @add_feature_verb command on the FO to register a verb.  
+
+<P>In order to be available for general use as a feature, an object must have a verb or property named "feature_ok" which returns a true value.  The $feature is useful since it has these and also some other convenient verbs and properties.
+
+<P>When a feature is added to a person's features list, feature:feature_add is called, if it exists, with the person in question as its argument.  Likewise, when a feature is removed, feature:feature_remove is called.  
+
+<P>A useful way for FO's to store information specific to a given character is the $player.feature_info property.  Any FO in a user's FO list can store data that way, using &lt;user&gt;:set_feature_info or &lt;user&gt;:get_feature_info to set or get the data, respectively.  
+
+<P><B>Related Topics:</B>
+<BR>$feature:@add_feature_verb - register an FO verb as a command
+<BR>$player:set_feature_info - store data to &lt;user&gt;.feature_info
+<BR>$player:get_feature_info - get data from &lt;user&gt;.feature_info
+
+<P><B>Related Topics:</B>
+<BR><A HREF="core_help.html#$feature">$feature</A> -- other notes for programmers
+
+<P>Also see: <A HREF="user_help.html#features">features</A> in General Help
+
+<H2><A NAME="forked-interpretation">forked-interpretation</A></H2>
+
+&nbsp;&nbsp;The @forked command generates a list of all currently forked or
+<BR>suspended tasks.  This text describes how to understand the @forked
+<BR>list, and also how it can be used by MOO administrators to help
+<BR>maintain good MOO operations.  It is widely believed that having
+<BR>large numbers of forked or suspended tasks can cause MOO server lag,
+<BR>which is good motivation to understand what's on the MOO's @forked
+<BR>list, and keep it minimal.
+<BR>&nbsp;&nbsp;The @forked list displays the task-id, scheduled start time, owner,
+<BR>verb and object, and line in the verb, for each task.  If a task was
+<BR>scheduled for a time in the past but has not yet run, then a time in
+<BR>the format "... X seconds ago" is displayed instead of the usual
+<BR>ctime() format.  If you see many tasks scheduled that should have
+<BR>already run, especially if they should have run more than a second or
+<BR>two ago, the MOO is experiencing server lag.  That can be caused by
+<BR>some other non-MOO process hogging CPU resources, in which case there
+<BR>is little you can do from within the MOO.  However, it can also be
+<BR>caused by CPU-intensive MOO usage, especially by verbs not programmed
+<BR>in a polite fashion.  Examples are forkbombs (scheduling hundreds of
+<BR>forked tasks continually), or extensive processing tasks that
+<BR>suspend(0), instead of for a longer suspend time. The latter can also
+<BR>use up a lot of CPU time, and cause other scheduled MOO tasks to run
+<BR>late.
+<BR>&nbsp;&nbsp;Note:  If a huge number of tasks pile up, they can so overload the
+<BR>system that the @forked command itself will run out of ticks, or
+<BR>display so much spam that you can't continue analysis.  The best
+<BR>defense is to use the @tasks command first before @forked if ever you
+<BR>suspect the MOO is lagging due to forked tasks.  In the post-server
+<BR>1.8.0 age, such immense forked task lists shouldn't happen unless
+<BR>someone has set .queued_task_limit values foolishly.
+<BR>&nbsp;&nbsp;One easily recognizable problem is when a verb is always sitting
+<BR>near the top of the @forked list (to be run within a second), and
+<BR>never leaves.  Genernally, endlessly running tasks should suspend for
+<BR>longer than zero seconds to be polite.  Any task that sits near the
+<BR>top of the list and stays should be investigated for appropriate
+<BR>behavior.  If the MOO is lagging, and there is a new task stuck near
+<BR>the top of the list, that can be a strong indication that the problem
+<BR>lies there.
+<BR>&nbsp;&nbsp;The most valuable method for administrators to insure they can
+<BR>quickly recognize when some MOO task is using an inappropriate amount
+<BR>of CPU time, is to become familiar with that's routinely on the
+<BR>@forked list.  If you then know that something is lagging the MOO,
+<BR>and see a new unrecognized task, that task can be specifically
+<BR>investigated.  MOOs that have so many scheduled tasks that it's not
+<BR>possible to really track them all should probably be considering
+<BR>using some sort of scheduler, an object that runs scheduled tasks and
+<BR>subsumes tasks it has been assigned under a single forked or
+<BR>suspended task run on the scheduler itself.
+<BR>&nbsp;&nbsp;The most useful tools for investigating specific @forked list
+<BR>tasks, is the @taskstack and @list commands.  Typically, you can just
+<BR>use @list to read the code for the stated verb on the @forked list,
+<BR>look for  the current line in the code (given in parentheses after
+<BR>the verb name in the @forked list).  If the code contains some
+<BR>obvious problem, like an endlessly repeating loop with a suspend(0)
+<BR>in it, the task should just be killed (@killtask &lt;task-id&gt;).  Other
+<BR>more subtle problems will be recognized by experienced programmers.
+<BR>&nbsp;&nbsp;Sometimes, the verbs listed for a task in the @forked list aren't
+<BR>the ones causing the problem, since in some cases the earlier verbs
+<BR>in the task aren't listed.  In those cases, using "@taskstack
+<BR>&lt;task-id" will usually display the full list of reposnsible verbs,
+<BR>and you can start tracking back in the list to find the source of the
+<BR>problems.
+
+<H2><A NAME="functions">functions</A></H2>
+
+There are many, many built-in functions available to MOO programmers.  The following list gives a brief summary of the arguments and purpose of each function; for more information, see the LambdaMOO Programmer's Manual.  
+
+<P>pass(arg, ...)            - calling a verb defined on this object's parent
+<BR>eval(string)              - parsing and executing strings as MOO code
+<BR>notify(who,string)        - sending text to a person's terminal
+<BR>read()                    - reading a line of input from the user (*)
+<BR>output_delimiters(who) - return {prefix,suffix} set by PREFIX/SUFFIX cmds
+<BR>call_function(x,@args) - call built-in fuction x with args
+<BR>function_info(x)       - description of built-in function x
+
+<P>&nbsp;typeof(value)      - determining the data type of a value
+<BR>&nbsp;&nbsp;tostr(value, ...) - converting any set of values into a string
+<BR>&nbsp;&nbsp;tonum(value)      - converting any non-list value into a integer (depricated)
+<BR>&nbsp;&nbsp;&nbsp;toint(value)     - convert any non-list value into an integer
+<BR>&nbsp;tofloat(value)     - convert a proper string value into a float
+<BR>floatstr(n,x)       - float n into a string with x precision
+<BR>toliteral(value)    - return a string that evaluated would be equal to value
+<BR>&nbsp;&nbsp;toobj(value)      - converting any non-list value into an object
+<BR>&nbsp;length(value)      - return the length of a string or list
+<BR>value_bytes         - the number of bytes to store value in the DB
+<BR>equals(x,y)         - true if x is identical to y; case-matters
+
+<P>listappend(list, value [, index]) - adding an element at the end of a list
+<BR>listinsert(list, value [, index]) - adding an element at the head of a list
+<BR>&nbsp;&nbsp;&nbsp;listset(list, value, index)    - updating a list at some index
+<BR>listdelete(list, index)           - removing an element from a list
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;setadd(list, element) - adding an element to a set represented as a list
+<BR>&nbsp;setremove(list, element) - removing an element from such a set
+<BR>is_member(element, list)  - returns true is element is in list (ignores case)
+
+<P>min(n1, n2, ...) - minimum of n1,n2,...
+<BR>max(n1, n2, ...) - maximum of n1,n2,...
+<BR>ceil(n)          - the smallest integer not less than X (float)
+<BR>trunc(n)         - trucate a float at the decimal point (float)
+<BR>floor(n)         - the largest integer not greater than X (float)
+<BR>abs(n)           - absolute value of n
+<BR>sqrt(n)          - square root of n (float)
+<BR>random(n)        - random integer between 1 and n inclusive
+<BR>log(n)           - natural log of n (float)
+<BR>log10(n)         - base 10 log of n (float)
+<BR>exp(n)           - e raised to the power of n (float)
+<BR>acos(n)          - arc-cosine of n (float)
+<BR>asin(n)          - arc-sine of n (float)
+<BR>atan(n)          - arc-tangent of n (float)
+<BR>cos(n)           - cosine of n (float)
+<BR>sin(n)           - sine of n (float)
+<BR>tan(n)           - tangent of n (float)
+<BR>cosh(n)          - hyperbolic cosine of n (float)
+<BR>sinh(n)          - hyperbolic sine of n (float)
+<BR>tanh(n)          - hyperbolic tangent of n (float)
+
+<P>&nbsp;time()          - current time in seconds since midnight GMT, 1 Jan 70
+<BR>ctime([time])    - time (or current time) converted to a human-readable string
+
+<P>&nbsp;index(str1, str2 [, case-matters]) - index of first str2 in str1
+<BR>rindex(str1, str2 [, case-matters]) - index of last  str2 in str1
+
+<P>strcmp(str1, str2) - case-sensitive string comparison
+<BR>strsub(subject, what, with [, case-matters]) - substitution in a string
+<BR>crypt(string [, salt]) - one-way string encryption
+<BR>&nbsp;match(str1, str2 [, case-matters]) - match first regular expr str2 in str1
+<BR>rmatch(str1, str2 [, case-matters]) - match last regular expr str2 in str1
+<BR>substitute(template, subs) - perform substitutions on template
+<BR>string_hash(string)  - returns 32-character hex string encoding the string
+<BR>value_hash(value)    - same string as string_hash(toliteral(value))
+<BR>binary_hash(string)  - same as string_hash but expects a binary string
+<BR>encode_binary(value) - binary string from a list of string and int values
+<BR>decode_binary(value) - list of string and int values from a binary string
+
+<P>&nbsp;&nbsp;&nbsp;valid(object)             - testing whether an object exists
+<BR>&nbsp;&nbsp;create(parent [, owner(*)]) - creating a new MOO object
+<BR>&nbsp;recycle(object)             - destroying a MOO object
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;move(object, where)      - altering the object-containment hierarchy
+<BR>chparent(object, new-parent) - altering the object-inheritance hierarchy
+<BR>&nbsp;&nbsp;parent(object)             - object's parent   in the inheritance hierarchy
+<BR>children(object)             - object's children in the inheritance hierarchy
+<BR>object_bytes(object)          - size in bytes of object in database
+<BR>max_object()       - the highest-numbered object in the MOO
+<BR>renumber(obj)      - changes an object's number to lowest available one (*)
+<BR>reset_max_object() - resets max_object() to the largest valid object (*)
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;properties(object) - a list of the properties defined on an object
+<BR>&nbsp;&nbsp;&nbsp;add_property(object, prop-name, value, info) - add a new property
+<BR>delete_property(object, prop-name)              - remove a property
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;property_info(object, prop-name)       - {owner, perms} info on a property
+<BR>set_property_info(object, prop-name, info) - setting same
+<BR>is_clear_property(object, prop-name) - find out if a property is "clear"
+<BR>&nbsp;&nbsp;&nbsp;clear_property(object, prop-name) - make a property "clear"
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;verbs(object) - a list of the verbs defined on an object
+<BR>&nbsp;&nbsp;&nbsp;add_verb(object, info, args)  - add a verb to an object
+<BR>delete_verb(object, verb-name)   - remove a verb from an object
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;verb_info(object, verb-name) - {owner, perms, names} info for a verb defn.
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;verb_args(object, verb-name) - {dobj, prep, iobj} argument info for a verb
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;verb_code(object, verb-name [, fully-paren [, indent]]) - program listing
+<BR>set_verb_info(object, verb-name, {owner, perms, names})
+<BR>set_verb_args(object, verb-name, {dobj, prep, iobj})   
+<BR>set_verb_code(object, verb-name, {line, line, ...})
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;is_player(object) - testing whether or not object is a user character
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;players()       - a list of all user characters, connected or not
+<BR>connected_players()       - a list of all currently-connected people
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;idle_seconds(who) - seconds since given person typed anything
+<BR>connected_seconds(who) - seconds given person has been logged in
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;boot_player(who)        - disconnect person from the MOO immediately(*)
+<BR>set_player_flag(who, value) - set/clear player bit; boot person if clear(*)
+<BR>connection_name(who)   - a server-assigned name for character's connection (*)
+<BR>connection_options(who) - returns the current options settings (*)
+<BR>connection_option(who,x) - returns the setting for option x (*)
+<BR>set_connection_option(who,x,value) - sets option x to value (*)
+<BR>open_network_connection(@args) - open a connection to another network site (*)
+<BR>buffered_output_length(who) - number of bytes currently buffered for output (*)
+<BR>listen(x,port)  - start listening on port with x as listening object (*)
+<BR>unlisten(port) - stop listening on port
+<BR>listeners() - what objects are listening on what ports (*)
+<BR>flush_input(who) - remove pending input lines from queue (*)
+<BR>force_input(who,str) - insert str into input stream of who (*)
+
+<P>caller_perms()         - the character whose permissions your caller was using
+<BR>set_task_perms(who) - changing permissions of the running task (*)
+<BR>callers()      - list of {obj, verb, owner, vloc, player}: this task's stack
+<BR>task_stack(id) - like callers() but for any task id
+<BR>suspend(secs)  - suspending the current task for a number of seconds
+<BR>seconds_left() - number of seconds left in the current task
+<BR>ticks_left()   - number of ticks   left in the current task
+<BR>task_id()      - a random number representing the currently-running task
+<BR>queued_tasks() - list of {id,start,0,20000,owner,obj,verb,line,this}
+<BR>queue_info([who]) - list of people with queued tasks or number of tasks for who
+<BR>raise(err)     - raise err and end the task (if not caught)
+<BR>kill_task(id)  - delete one of your tasks from the queue
+
+<P>server_log(string) - add a comment to the server log file
+<BR>server_version() - a string of three numbers "major.minor.release"
+<BR>memory_usage()   - {{blocksize, nused, nfree}, ...}, the server's memory stats
+<BR>shutdown(msg)    - print msg and kill the server (*)
+<BR>dump_database()  - what it says (*)
+<BR>db_disk_size()   - the size on disk of the last checkpoint result
+
+<P>(*) =&gt; as you might have expected, these usually require wizard permissions.
+
+<H2><A NAME="gopher">gopher</A></H2>
+
+<A HREF="core_help.html#$gopher">$gopher</A> -- programmer's details on the gopher slates
+
+<P>Also see: <A HREF="builder_help.html#gopher">gopher</A> in Builder Help
+
+<H2><A NAME="help">help</A></H2>
+
+For programmers, the help system provides the following additional forms:
+
+<P>&nbsp;&nbsp;help object:verbname   - prints any documentation strings that are present
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;at the beginning of the program for that verb.
+<BR>&nbsp;&nbsp;help $&lt;whatever&gt;_utils - prints general information about one of the 
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$..._utils objects (e.g., $string_utils, 
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$list_utils, etc...), which are all libraries 
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;of generally used verbs.
+<BR>&nbsp;&nbsp;help builtin()         - prints documentation from the programmers manual
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;about the named primitive, for example length()
+
+<P>For information about how the help system itself works and about how to associate local help databases with specific rooms or character classes, see `help $help'.
+
+<P>Also see: <A HREF="user_help.html#help">help</A> in General Help
+
+<H2><A NAME="key-representation">key-representation</A></H2>
+
+The representation of key expressions is very simple and makes it easy to construct new keys on the fly.
+
+<P>Objects are represented by their object numbers and all other kinds of key expressions are represented by lists.  These lists have as their first element a string drawn from the following set:
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"&amp;&amp;"     "||"     "!"     "?"
+<BR>For the first two of these, the list should be three elements long; the second and third elements are the representations of the key expressions on the left- and right-hand sides of the appropriate operator.  In the third case, "!", the list should be two elements long; the second element is again a representation of the operand.  Finally, in the "?" case, the list is also two elements long but the second element must be an object number.
+
+<P>As an example, the key expression
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#45  &amp;&amp;  ?#46  &amp;&amp;  (#47  ||  !#48)
+<BR>would be represented as follows:
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{"&amp;&amp;", {"&amp;&amp;", #45, {"?", #46}}, {"||", #47, {"!", #48}}}
+
+<H2><A NAME="language">language</A></H2>
+
+The MOO programming language is described in excruciating detail in the LambdaMOO Programmer's Manual, available for FTP from parcftp.xerox.com in the file pub/MOO/ProgrammersManual.txt.  The online help consists of a few quick reference guides here in the help system under the following topics:
+
+<P><A HREF="prog_help.html#statements">statements</A> -- the syntax and semantics of the various kinds of MOO statements
+<BR><A HREF="prog_help.html#expressions">expressions</A> -- the same for the various kinds of MOO expressions
+<BR><A HREF="prog_help.html#functions">functions</A> -- a list of the primitive functions available to MOO programs
+
+<H2><A NAME="local-editing">local-editing</A></H2>
+
+Programmers notes:
+
+<P>The local editing system uses a set of commands on $player that are nominally available as command line verbs, but are intended only for use by the local editing system.  These are:
+<BR>@set-note-string
+<BR>@set-note-text
+<BR>@@sendmail
+<BR>@set-section-string
+<BR>@set-section-text
+
+<P>Additional verbs used are:
+<BR>$generic_editor:invoke
+<BR>&lt;editor&gt;:local_editing_info
+<BR>&lt;editor&gt;:invoke_local_editor
+
+<P>Also see: <A HREF="user_help.html#local-editing">local-editing</A> in General Help
+
+<H2><A NAME="locking">locking</A></H2>
+
+Note to programmers:
+<BR>The interface between these two sides is the verb
+<BR>x:is_unlocked_for(y), which is called by x to determine if it is
+<BR>locked for the object   y.  The way in which 'is_unlocked_for' is
+<BR>implemented is entirely independent of the   ways in which x uses its
+<BR>results.  Note that you can play on either side of this   interface
+<BR>with your own objects, either defining new implementations of
+<BR>'is_unlocked_for' that match your particular circumstances or having
+<BR>your objects   interpret their being locked in new ways.
+
+<P>Also see: <A HREF="builder_help.html#locking">locking</A> in Builder Help
+
+<H2><A NAME="mail">mail</A></H2>
+
+Programmers topics:
+
+<P><A HREF="core_help.html#mail-system">mail-system</A> -- description of the programming interface to the mail
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;system
+<BR><A HREF="core_help.html#$mail_recipient">$mail_recipient</A> -- information on creating new mail collections and
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;details on how they work
+
+<P>Also see: <A HREF="builder_help.html#mail">mail</A> in Builder Help
+
+<H2><A NAME="messages">messages</A></H2>
+
+Note to programmers:
+<BR>&nbsp;&nbsp;This class of commands automatically applies to any property  whose
+<BR>name ends in '_msg'. Thus, in the example above, the command is
+<BR>setting the  'leave_msg' property of the named exit.  You can get
+<BR>such a command to work on new kinds  of objects simply by giving the
+<BR>appropriate properties names that end in '_msg'.
+<BR>&nbsp;&nbsp;Additionally, in many cases the _msg property is accompanied by a
+<BR>_msg verb, which defaultly returns the named property, but which is
+<BR>available to be customized in more  complex ways than allowed by
+<BR>simple string substitution.  You should check for the particular
+<BR>property you're considering whether the verb form exists (typically
+<BR>with @display).
+
+<P>Also see: <A HREF="builder_help.html#messages">messages</A> in Builder Help
+
+<H2><A NAME="porting-objects">porting-objects</A></H2>
+
+Before saying anything else about porting MOO objects, note that the first rule is: GET THE CREATOR'S PERMISSION.  The MOO world has a firm history of sharing code, and most programmers will be flattered that you asked.  Generally, you should use `examine' to determine an object's creator and then send them MOO mail requesting permission to port their object.
+
+<P>In order to port objects, you'll need to be a programmer in both the source and the destination MOO.  In addition, the object must usually be readable in the source MOO.  Finally, if the object has verbs that must run under wizard permissions, you'll either need to be a wizard in the destination MOO or have a wizard there help you.
+
+<P>Although it helps to be a sufficiently skillful programmer that you understand the code you're porting, it isn't absolutely necessary.  However, note that bad coding can open nasty security holes that can lead to damage up to and including allowing a malicious programmer to recycle your character.  Porting code you don't understand is a serious risk.
+
+<P>You will generally need to be using a client that allows logging of sessions and pasting of files into an active session.  Although some raw telnet programs have these features, this will usually require using some kind of MUD/MOO client.  Most of the better clients can perform these functions.
+
+<P>Several commands are available to assist programmers with porting
+<BR>objects between MOOs.  These are:
+
+<P><A HREF="prog_help.html#@display">@display</A> -- the `@display &lt;object&gt;.:' format give a summary of verbs,
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;properties, and their associated settings.
+<BR><A HREF="prog_help.html#@dump">@dump</A> -- the primary tool for generating complete listings of MOO
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;objects' code
+
+<P>Step by Step Procedure for Porting MOO Objects
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;1. check if the object is readable and uses non-wizard permissions in the source MOO with the `@display &lt;object&gt;.:' command.  Note that all the verbs are named (not numbered as they would be if unreadable), and that the header at the top includes "readable" among its characteristics.  Also, note the permissions for each verb to confirm none are wizardly.  If all the verb and property owners are not the same, you have a complicated object that will not be ported successfully by the simple procedure described here.
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;2. Get permission from the object's owner to port it.  If the object isn't readable, or one or more verbs aren't, you will also need to get the code for these directly from the author.
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;3. Create an object in the destination MOO with the same name as the original object.  Note its object number.
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;4. Connect to the source MOO and start session logging.  Type `@linelen 500' and `@wrap off' to suppress the MOO's line wrapping.
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;5. Type `@dump &lt;object&gt; id=&lt;number&gt; with recreate' where &lt;object&gt; is the name of the object to port, and &lt;number&gt; is the object number (with "#" included) of the object you just created in the destination MOO.
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;Some MOO's don't have a "recreate" option, in which case you should use "create" instead.
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;6. Stop logging the session, to close the file.
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;7. Open the file containing the @dump in your favorite word processor.  Remove the `@dump' line at the top and also the `@create' line if one is present.  Check the list of properties (the top section) for a `key' property and an `object_size' property and delete them if present.  
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;If other lines are present that have `E_PERM' or `Permission denied' as values, these may be unreadable properties.  They may interfere with your ability to port the object, but not necessarily.
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;8. Connect to the destination MOO.
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;9. Perform the `paste file' or other command that causes the edited @dump listing to be entered into your MOO session.
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;10. Use `@display &lt;object&gt;.:' to check that all the properties and verbs have been added properly.  Some, like `aliases' and `description' might not show on the list, which is alright.
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;11. Test the ported object thoroughly.
+
+<H2><A NAME="precedence">precedence</A></H2>
+
+The table below gives the relative precedence of all of the MOO operators; operators on higher lines in the table have higher precedence and those on the same line have identical precedence:
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;!       - (without a left operand)
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*       /       %
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+-
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;==      !=      &lt;       &lt;=      &gt;       &gt;=      in
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;&amp;      ||
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;... ? ... | ... (the conditional expression)
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=
+
+<P>Thus, the horrendous expression
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x = a &lt; b &amp;&amp; c &gt; d + e * f ? w in y | - q - r
+
+<P>would be grouped as follows:
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x = (((a &lt; b) &amp;&amp; (c &gt; (d + (e * f)))) ? (w in y) | ((- q) - r))
+
+<H2><A NAME="prepositions">prepositions</A></H2>
+
+The complete list of prepositions recognized by the command-line parser:
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;with/using
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;at/to
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;in front of
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;in/inside/into
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;on top of/on/onto/upon
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;out of/from inside/from
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;over
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;through
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;under/underneath/beneath
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;behind
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;beside
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;for/about
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;is
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;as
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;off/off of
+
+<H2><A NAME="prog-index">prog-index</A></H2>
+
+<TABLE BORDER=0 CELLSPACING=6>
+<TR><TD VALIGN="TOP"><A HREF="##">#</A></TD><TD VALIGN="TOP"><A HREF="#@eval-env-string">@eval-env-string</A></TD><TD VALIGN="TOP"><A HREF="#@setenv">@setenv</A></TD><TD VALIGN="TOP"><A HREF="#local-editing">local-editing</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#&-pointers">&-pointers</A></TD><TD VALIGN="TOP"><A HREF="#@examine">@examine</A></TD><TD VALIGN="TOP"><A HREF="#@show">@show</A></TD><TD VALIGN="TOP"><A HREF="#locking">locking</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#.program">.program</A></TD><TD VALIGN="TOP"><A HREF="#@forked">@forked</A></TD><TD VALIGN="TOP"><A HREF="#@tasks">@tasks</A></TD><TD VALIGN="TOP"><A HREF="#mail">mail</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#;">;</A></TD><TD VALIGN="TOP"><A HREF="#@gethelp">@gethelp</A></TD><TD VALIGN="TOP"><A HREF="#@taskstack">@taskstack</A></TD><TD VALIGN="TOP"><A HREF="#messages">messages</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#@add-feature">@add-feature</A></TD><TD VALIGN="TOP"><A HREF="#@grep">@grep</A></TD><TD VALIGN="TOP"><A HREF="#@verb">@verb</A></TD><TD VALIGN="TOP"><A HREF="#porting-objects">porting-objects</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#@args">@args</A></TD><TD VALIGN="TOP"><A HREF="#@kill">@kill</A></TD><TD VALIGN="TOP"><A HREF="#@verbprog">@verbprog</A></TD><TD VALIGN="TOP"><A HREF="#precedence">precedence</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#@chatmode">@chatmode</A></TD><TD VALIGN="TOP"><A HREF="#@killgrep">@killgrep</A></TD><TD VALIGN="TOP"><A HREF="#binary-strings">binary-strings</A></TD><TD VALIGN="TOP"><A HREF="#prepositions">prepositions</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#@check-chparent">@check-chparent</A></TD><TD VALIGN="TOP"><A HREF="#@lastedit">@lastedit</A></TD><TD VALIGN="TOP"><A HREF="#documentation">documentation</A></TD><TD VALIGN="TOP"><A HREF="#prog-index">prog-index</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#@check-property">@check-property</A></TD><TD VALIGN="TOP"><A HREF="#@lastmodified">@lastmodified</A></TD><TD VALIGN="TOP"><A HREF="#domain-system">domain-system</A></TD><TD VALIGN="TOP"><A HREF="#prog-summary">prog-summary</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#@chmod">@chmod</A></TD><TD VALIGN="TOP"><A HREF="#@list">@list</A></TD><TD VALIGN="TOP"><A HREF="#editors">editors</A></TD><TD VALIGN="TOP"><A HREF="#programmer-summary">programmer-summary</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#@clearproperty">@clearproperty</A></TD><TD VALIGN="TOP"><A HREF="#@prog-options">@prog-options</A></TD><TD VALIGN="TOP"><A HREF="#errors">errors</A></TD><TD VALIGN="TOP"><A HREF="#programming">programming</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#@compare">@compare</A></TD><TD VALIGN="TOP"><A HREF="#@program">@program</A></TD><TD VALIGN="TOP"><A HREF="#eval">eval</A></TD><TD VALIGN="TOP"><A HREF="#pronouns">pronouns</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#@copy">@copy</A></TD><TD VALIGN="TOP"><A HREF="#@property">@property</A></TD><TD VALIGN="TOP"><A HREF="#eval-d">eval-d</A></TD><TD VALIGN="TOP"><A HREF="#scattering">scattering</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#@display">@display</A></TD><TD VALIGN="TOP"><A HREF="#@propset">@propset</A></TD><TD VALIGN="TOP"><A HREF="#examine">examine</A></TD><TD VALIGN="TOP"><A HREF="#statements">statements</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#@display-options">@display-options</A></TD><TD VALIGN="TOP"><A HREF="#@prospectus">@prospectus</A></TD><TD VALIGN="TOP"><A HREF="#expressions">expressions</A></TD><TD VALIGN="TOP"><A HREF="#tasks">tasks</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#@displayoptions">@displayoptions</A></TD><TD VALIGN="TOP"><A HREF="#@prospectusDB">@prospectusDB</A></TD><TD VALIGN="TOP"><A HREF="#features">features</A></TD><TD VALIGN="TOP"><A HREF="#truth">truth</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#@document">@document</A></TD><TD VALIGN="TOP"><A HREF="#@remove-feature">@remove-feature</A></TD><TD VALIGN="TOP"><A HREF="#forked-interpretation">forked-interpretation</A></TD><TD VALIGN="TOP"><A HREF="#utilities">utilities</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#@drawing">@drawing</A></TD><TD VALIGN="TOP"><A HREF="#@rename">@rename</A></TD><TD VALIGN="TOP"><A HREF="#functions">functions</A></TD><TD VALIGN="TOP"><A HREF="#value-types">value-types</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#@dump">@dump</A></TD><TD VALIGN="TOP"><A HREF="#@residents">@residents</A></TD><TD VALIGN="TOP"><A HREF="#gopher">gopher</A></TD><TD VALIGN="TOP"><A HREF="#verb-references">verb-references</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#@edit">@edit</A></TD><TD VALIGN="TOP"><A HREF="#@rmeval-env">@rmeval-env</A></TD><TD VALIGN="TOP"><A HREF="#help">help</A></TD><TD VALIGN="TOP"><A HREF="#web">web</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#@egrep">@egrep</A></TD><TD VALIGN="TOP"><A HREF="#@rmproperty">@rmproperty</A></TD><TD VALIGN="TOP"><A HREF="#key-representation">key-representation</A></TD><TD VALIGN="TOP"><A HREF="#web-programming">web-programming</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#@eval-env">@eval-env</A></TD><TD VALIGN="TOP"><A HREF="#@rmverb">@rmverb</A></TD><TD VALIGN="TOP"><A HREF="#language">language</A></TD><TD></TD></TR>
+</TABLE>
+
+<H2><A NAME="prog-summary">prog-summary</A></H2>
+
+<P>See: <A HREF="#programmer-summary">programmer-summary</A>
+
+<H2><A NAME="programmer-summary">programmer-summary</A></H2>
+
+&nbsp;&nbsp;This text summarizes some of the common commands available to
+<BR>programmers. Some of of the commands are only usable if you also
+<BR>have your "progbit" set, but others only require that your character
+<BR>be a child of $prog. The listing is roughly in order of general usefulness.
+
+<P><A HREF="prog_help.html#@display">@display</A> -- by far the most useful tool for getting info on objects, verbs, and properties
+<BR><A HREF="prog_help.html#@list">@list</A> -- list the code of a programmed verb
+<BR><A HREF="prog_help.html#@verb">@verb</A> -- add a verb to an object
+<BR><A HREF="prog_help.html#@rmverb">@rmverb</A> -- removes a verb
+<BR><A HREF="prog_help.html#@property">@property</A> -- add a property to an object
+<BR><A HREF="prog_help.html#@rmproperty">@rmproperty</A> -- removes a property
+<BR><A HREF="prog_help.html#@chmod">@chmod</A> -- change the "permissions" on an object, property, or verb
+<BR><A HREF="prog_help.html##">#</A>     -- a deceptively simple tool for quickly checking objects and property values
+<BR><A HREF="prog_help.html#@args">@args</A> -- change the arguments a verb can be called with
+<BR><A HREF="manager_help.html#@tasks">@tasks</A> -- a less spammy varient of @forked
+<BR><A HREF="prog_help.html#@forked">@forked</A> -- show a list of forked or otherwise suspended tasks you own
+<BR><A HREF="prog_help.html#@kill">@kill</A> -- kill one or more forked or otherwise suspended tasks
+<BR><A HREF="prog_help.html#@copy">@copy</A> -- copy a verb or property
+<BR><A HREF="prog_help.html#@program">@program</A> -- enter lines of code for a verb
+<BR><A HREF="prog_help.html#@dump">@dump</A> -- lists all properties and verb code on an object
+<BR><A HREF="prog_help.html#eval">eval</A> -- run a program entered on the command line
+<BR><A HREF="prog_help.html#eval-d">eval-d</A> -- like "eval" but runs equivalently to a -d verb
+<BR><A HREF="prog_help.html#@clearproperty">@clearproperty</A> -- set a property to "clear"
+<BR><A HREF="manager_help.html#@grep">@grep</A> -- search the verbs on specified objects for a given text
+<BR><A HREF="manager_help.html#@egrep">@egrep</A> -- like @grep but takes regular-expressions
+<BR><A HREF="prog_help.html#@document">@document</A> -- a quick way to add header documentation to a verb
+<BR><A HREF="prog_help.html#@lastmodified">@lastmodified</A> -- display the timestamps for an object and all its verbs
+<BR><A HREF="prog_help.html#@taskstack">@taskstack</A> -- see the stack for a suspended task
+<BR><A HREF="prog_help.html#@prospectus">@prospectus</A> -- a version of @audit with some additional information
+<BR><A HREF="prog_help.html#@gethelp">@gethelp</A> -- displays the raw text of a help topic from a specified help database
+<BR><A HREF="prog_help.html#@prospectusDB">@prospectusDB</A> -- a less efficient version of @prospectus that bypasses the person's .owned_objects property
+<BR><A HREF="prog_help.html#@show">@show</A> -- shows various detailed info about an object; superceeded by the superior @display command
+<BR><A HREF="prog_help.html#@check-property">@check-property</A> -- checks an objects ancestors for the presence of a property
+<BR><A HREF="prog_help.html#@setenv">@setenv</A> -- a tool for adjusting one's eval environment
+<BR><A HREF="prog_help.html#web-programming">web-programming</A> -- tips on how to make MOO objects "web aware"
+
+<H2><A NAME="programming">programming</A></H2>
+
+The MOO contains a rich programming language for the creation of interesting rooms, exits, and other objects.  Help is available on the following topics concerning programming in MOO:
+
+<P><A HREF="prog_help.html#language">language</A> -- a brief reference for the syntax and semantics of the MOO language
+<BR><A HREF="prog_help.html#tasks">tasks</A> -- a brief description of MOO tasks and their resource limits
+
+<P><A HREF="prog_help.html#@property">@property</A> -- adding a property to an object
+<BR><A HREF="prog_help.html#@rmproperty">@rmproperty</A> -- removing a property from an object
+
+<P><A HREF="prog_help.html#@verb">@verb</A>   -- adding a verb to an object
+<BR><A HREF="prog_help.html#@rmverb">@rmverb</A> -- removing a verb from an object
+<BR><A HREF="prog_help.html#@args">@args</A>   -- changing the syntax of a verb
+<BR><A HREF="prog_help.html#@copy">@copy</A>   -- copying a verb from one object to another
+
+<P><A HREF="prog_help.html#@program">@program</A> -- entering the program for a verb
+<BR>.program  - (same as @program but bypassing the MOO's in-DB system)
+<BR><A HREF="prog_help.html#@list">@list</A> -- printing a listing of the program for a verb
+<BR><A HREF="prog_help.html#@edit">@edit</A> -- editing verb code
+
+<P><A HREF="prog_help.html#@show">@show</A>     -- looking at all the details of an object, a property, or a verb
+<BR><A HREF="builder_help.html#@parents">@parents</A>  -- listing the ancestors of an object
+<BR><A HREF="builder_help.html#@kids">@kids</A>     -- listing the children of an object
+<BR><A HREF="builder_help.html#@contents">@contents</A> -- listing the contents of an object
+<BR><A HREF="prog_help.html#@chmod">@chmod</A>    -- changing the permissions on an object, a property, or a verb
+<BR><A HREF="builder_help.html#@chparent">@chparent</A> -- changing the parent of an object
+<BR><A HREF="prog_help.html#@rename">@rename</A>   -- changing the name of a verb or object
+
+<P><A HREF="prog_help.html#eval">eval</A> -- executing MOO statements and expressions without writing a verb
+
+<H2><A NAME="pronouns">pronouns</A></H2>
+
+<B>Notes for programmers:  </B>
+
+<P>Messages are indicated on objects as properties ending in "_msg" which flags them for
+<BR>&nbsp;&nbsp;the @messages command and the message setting system.  For instance, the "explode"
+<BR>&nbsp;&nbsp;message would appear as &lt;object&gt;.explode_msg, and people could set it with:  @explode
+<BR>&nbsp;&nbsp;&lt;object&gt; is "here is the explode text"
+
+<P>&nbsp;In programs, you should use $string_utils:pronoun_sub() to perform the various
+<BR>&nbsp;&nbsp;substitutions documented here.
+
+<P>One, obscure aspect:  %n actually calls player:title() while %(name) refers to
+<BR>&nbsp;&nbsp;player.name directly.
+
+<P>Also see: <A HREF="user_help.html#pronouns">pronouns</A> in General Help
+
+<H2><A NAME="scattering">scattering</A></H2>
+
+It is often the case in MOO programming that you will want to access
+<BR>the elements of a list individually, with each element stored in a
+<BR>separate variable.  This desire arises, for example, at the beginning
+<BR>of almost every MOO verb, since the arguments to all verbs are
+<BR>delivered all bunched together in a single list.  In such
+<BR>circumstances, you could write statements like these:
+
+<P>&nbsp;&nbsp;first = args[1];
+<BR>&nbsp;&nbsp;second = args[2];
+<BR>&nbsp;&nbsp;if (length(args) &gt; 2)
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;third = args[3];
+<BR>&nbsp;&nbsp;else
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;third = 0;
+<BR>&nbsp;&nbsp;endif
+
+<P>This approach gets pretty tedious, both to read and to write, and
+<BR>it's prone to errors if you mistype one of the indices.  Also, you
+<BR>often want to check whether or not any extra list elements were
+<BR>present, adding to the tedium.
+<BR>MOO provides a special kind of assignment expression, called
+<BR>scattering assignment made just for cases such as these. A scattering
+<BR>assignment expression looks like this:
+
+<P>{target, ...} = expr
+
+<P>where each target describes a place to store elements of the list
+<BR>that results from evaluating expr. A target has one of the following
+<BR>forms:
+
+<P>variable 
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This is the simplest target, just a simple variable; the list
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;element in the corresponding position is assigned to the
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;variable.  This is called a required target, since the
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;assignment is required to put one of the list elements into the
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;variable.
+<BR>?variable 
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This is called an optional target, since it doesn't always get
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;assigned an element. If there are any list elements left over
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;after all of the required targets have been accounted for (along
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;with all of the other optionals to the left of this one), then
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this variable is treated like a required one and the list
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;element in the corresponding position is assigned to the
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;variable. If there aren't enough elements to assign one to
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this target, then no assignment is made to this variable,
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;leaving it with whatever its previous value was.
+<BR>?variable = default-expr 
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This is also an optional target, but if there aren't enough list
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;elements available to assign one to this target, the result of
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;evaluating default-expr is assigned to it instead. Thus,
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default-expr provides a default value for the variable. The
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default value expressions are evaluated and assigned working
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;from left to right after all of the other assignments have been
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;performed.
+<BR>@variable 
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;By analogy with the @ syntax in list construction, this variable
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;is assigned a list of all of the `leftover' list elements in
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this part of the list after all of the other targets have been
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;filled in. It is assigned the empty list if there aren't any
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;elements left over. This is called a rest target, since it gets
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the rest of the elements. There may be at most one rest target
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;in each scattering assignment expression.
+
+<P>If there aren't enough list elements to fill all of the required
+<BR>targets, or if there are more than enough to fill all of the required
+<BR>and optional targets but there isn't a rest target to take the
+<BR>leftover ones, then E_ARGS is raised.
+
+<P>Here are some examples of how this works. Assume first that the verb
+<BR>me:foo() contains the following code:
+
+<P>b = c = e = 17;
+<BR>{a, ?b, ?c = 8, @d, ?e = 9, f} = args;
+<BR>return {a, b, c, d, e, f};
+
+<P>Then the following calls return the given values: 
+
+<P>me:foo(1)                        error  -&gt;   E_ARGS
+<BR>me:foo(1, 2)                     =&gt;   {1, 17, 8, {}, 9, 2}
+<BR>me:foo(1, 2, 3)                  =&gt;   {1, 2, 8, {}, 9, 3}
+<BR>me:foo(1, 2, 3, 4)               =&gt;   {1, 2, 3, {}, 9, 4}
+<BR>me:foo(1, 2, 3, 4, 5)            =&gt;   {1, 2, 3, {}, 4, 5}
+<BR>me:foo(1, 2, 3, 4, 5, 6)         =&gt;   {1, 2, 3, {4}, 5, 6}
+<BR>me:foo(1, 2, 3, 4, 5, 6, 7)      =&gt;   {1, 2, 3, {4, 5}, 6, 7}
+<BR>me:foo(1, 2, 3, 4, 5, 6, 7, 8)   =&gt;   {1, 2, 3, {4, 5, 6}, 7, 8}
+
+<P>Using scattering assignment, the example at the begining of this
+<BR>section could be rewritten more simply, reliably, and readably:
+
+<P>{first, second, ?third = 0} = args;
+
+<P>It is good MOO programming style to use a scattering assignment at
+<BR>the top of nearly every verb, since it shows so clearly just what
+<BR>kinds of arguments the verb expects.
+
+<H2><A NAME="statements">statements</A></H2>
+
+The following kinds of statements exist in the MOO programming language:
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;;
+<BR>The null statement does nothing.
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;expression ;
+<BR>The expression statement evaluates the expression and then discards the value.
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IF ( expression ) statements ENDIF
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IF ( expression ) statements ELSE statements ENDIF
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IF ( expression )
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;statements
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ELSEIF ( expression )
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;statements
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ELSE
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;statements
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ENDIF
+<BR>The conditional statement evaluates each expression in turn and executes the statements associated with the first one to return a true value; the ELSE statements are executed if none of the expressions returns a true value.  There can be any number of ELSEIF clauses and the ELSE part is optional.  See 'help truth' for the definition of 'true value'.
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FOR name IN ( expression ) statements ENDFOR
+<BR>The list iteration statement first evaluates the expression, which must return a list.  It then executes the statements once for each element of that list, each time with the named variable having the value of the corresponding list element.
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FOR name IN [ expression .. expression ] statements ENDFOR
+<BR>The numeric iteration statement first evaluates the two expressions, both of which must return numbers; call those numbers N1 and N2, respectively.  The statements are then executed once for each integer I such that N1 &lt;= I &lt;= N2, in increasing order; each time, the named variable has the corresponding value of I.
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WHILE ( expression ) statements ENDWHILE
+<BR>The indefinite iteration statement repeatedly evaluates the expression and, each time it returns a true value, executes the statements.  The loop stops the first time that the expression returns a false value.  The definitions of 'true' and 'false' values is in 'help truth'.
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RETURN ;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RETURN expression ;
+<BR>The return statement evalautes the expression, if any, and returns the resulting value (or 0 if there is no expression) to the verb that called the current one.  Execution of the current verb is immediately terminated.
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FORK ( expression ) statements ENDFORK
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FORK name ( expression ) statements ENDFORK
+<BR>The fork statement first executes the expression, which must return a number; call that number N.  It then creates a new MOO task that will, after at least N seconds, execute the statements.  When the new task begins, all variables will have the values they had at the time the FORK statement was executed.  The task executing the FORK statement immediately continues execution.  If a variable name is given after the FORK keyword, then it is assigned the 'queue ID' of the newly-created task.  The value of this variable is visible both to the task executing the fork statement and to the statements in the newly-created task.  See 'help tasks' for more information about forked tasks.
+
+<H2><A NAME="tasks">tasks</A></H2>
+
+A task is an execution of a MOO program.  There are five ways for tasks to be created in LambdaMOO:
+<BR>&nbsp;&nbsp;&nbsp;+ Every time a person types a command, a task is created to execute that command; we call these 'command tasks'.
+<BR>&nbsp;&nbsp;&nbsp;+ Whenever a person connects or disconnects from the MOO, the server starts a task to do whatever processing is necessary, such as printing out 'Munchkin has connected' to all of the people in the same room; these are called 'server tasks'.
+<BR>&nbsp;&nbsp;&nbsp;+ The FORK statement in the programming language creates a task whose execution is delayed for at least some given number of seconds; these are 'forked tasks'.
+<BR>&nbsp;&nbsp;&nbsp;+ The suspend() function suspends the execution of the current task.  A snapshot is taken of whole state of the execution, and the execution will be resumed later.  These are called `suspended tasks'.
+<BR>&nbsp;&nbsp;&nbsp;+ The read() function also suspends the execution of the current task, in this case waiting for the person to type a line of input.  When the line is received, the task resumes with the read() function returning the input line as result.  These are called `reading tasks'.
+
+<P>The last three kinds of tasks above are collectively known as `queued tasks' or `waiting tasks', since they may not run immediately.
+
+<P>To prevent a maliciously- or incorrectly-written MOO program from running forever and monopolizing the server, limits are placed on the running time of every task.  One limit is that no task is allowed to run longer than 15 seconds; this limit is, in practice, never reached.  The reason is that there is a second limit on the number of operations a task may execute.
+
+<P>The server counts down 'ticks' as any task executes.  Roughly speaking, it counts one tick for every expression evaluation (other than variables and literals), one for every `if', `fork' or `return' statement, and one for every iteration of a loop.  If the count gets all the way down to zero, the task is immediately and unceremoniously aborted.  All tasks begin or resume with an store of 30,000 ticks; this is enough for almost all normal uses.
+
+<P>Because queued tasks may exist for long periods of time before they begin execution, there are commands to list the ones that you own and to kill them before they execute.  These commands are covered in the following help topics:
+
+<P><A HREF="prog_help.html#@forked">@forked</A> -- listing the forked tasks that you own
+<BR><A HREF="prog_help.html#@kill">@kill</A> -- killing a particular forked task
+
+<H2><A NAME="truth">truth</A></H2>
+
+Several kinds of statements, expressions, and functions in the MOO programming language use a notion that some MOO values are 'true' and others 'false'.
+
+<P>The only values that are considered true are non-zero numbers, non-empty strings, and non-empty lists.
+
+<P>All other values (i.e., 0, "", {}, objects, and errors) are considered false.
+
+<H2><A NAME="utilities">utilities</A></H2>
+
+The core database has a number of objects serving as libraries of useful verbs.
+<BR>More detailed information can be obtained for (some of) these, via `help $whatever_utils'
+
+<P><A HREF="user_help.html#$building_utils">$building_utils</A> -- 
+<BR><A HREF="user_help.html#$code_utils">$code_utils</A>     -- parsing and manipulating verb code
+<BR><A HREF="user_help.html#$command_utils">$command_utils</A>  -- reporting matching errors to the person
+<BR><A HREF="user_help.html#$gender_utils">$gender_utils</A>   -- managing gendered objects
+<BR><A HREF="user_help.html#$list_utils">$list_utils</A>     -- list manipulation
+<BR><A HREF="user_help.html#$set_utils">$set_utils</A>      -- set manipulation
+<BR><A HREF="user_help.html#$lock_utils">$lock_utils</A>     -- key expression manipulation
+<BR><A HREF="user_help.html#$match_utils">$match_utils</A>    -- 
+<BR><A HREF="user_help.html#$object_utils">$object_utils</A>   -- object information 
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(inheritance/location hierarchy, verb/property lists)
+<BR><A HREF="user_help.html#$perm_utils">$perm_utils</A>     -- permissions
+<BR><A HREF="user_help.html#$string_utils">$string_utils</A>   -- string manipulation
+<BR><A HREF="user_help.html#$time_utils">$time_utils</A>     -- time (numeric and verbal) manipulation
+<BR><A HREF="user_help.html#$trig_utils">$trig_utils</A>     -- trigonometric and other numerical utilities
+
+<H2><A NAME="value-types">value-types</A></H2>
+
+The following types of variables are defined in MOO language:
+
+<P>Type                   Abbreviation (abbreviation value)
+<BR>----                   ---------------------------------
+<BR>Integer number         INT (0)
+<BR>Objects                OBJ (1)
+<BR>String                 STR (2)
+<BR>Error                  ERR (3)
+<BR>List                   LIST (4)
+<BR>Floating point number  FLOAT (9)
+
+<P>The abbreviation "NUM" for an integer number is outdated and should
+<BR>not be used, although the server supports it for reasons of backward
+<BR>compatibility.
+
+<P>There is a special kind of string used in MOO for representing
+<BR>arbitrary bytes, and generally used for binary input and output.
+<BR>These appear to MOO code as being of type STR, just like ordinary
+<BR>strings.  See `help binary-strings' for more information.
+
+<P>See the LambdaMOO Programmer's Manual for more details on MOO values.
+
+<P>Obscure trivia:Types with values of 5 to 8 are used internally by the
+<BR>MOO server code.
+
+<H2><A NAME="verb-references">verb-references</A></H2>
+
+The built-in functions that manipulate or report on MOO verbs accept numeric verb references in addition to references by name.  The first verb defined on an object is verb number one, with later verbs numbered incrementally.  
+
+<P>For instance, if
+<BR>verbs(object)=={"first","second","third"}
+<BR>then
+<BR>verb_info(object,"second")==verb_info(object,2)
+
+<P>Note that previous version of the LambdaMOO server allowed numeric strings as verb references.  In addition, "0" was a synonym for the first verb defined on an object.  This lead to ambiguous references when verbs were named with numeric strings.  Numeric string verb references are no longer permitted under server version 1.8.0 or later.  The built-in functions that accepted numeric strings now will accept numbers instead.  
+
+<P>The following built-in functions accept numeric verb referenes:  verb_info(), verb_code(), delete_verb(), verb-args(), set_verb_info(), set_verb_args(), set_verb_code().
+
+<H2><A NAME="web">web</A></H2>
+
+Additional topics for programmers:
+<BR><A HREF="core_help.html#web-system">web-system</A>      -- details on web system objects
+<BR><A HREF="prog_help.html#web-programming">web-programming</A> -- how to make MOO objects "web aware"
+
+<P>Also see: <A HREF="user_help.html#web">web</A> in General Help
+
+<H2><A NAME="web-programming">web-programming</A></H2>
+
+Web programming is usually performed by modifying objects such that
+<BR>they provide special information when people interact with them using
+<BR>the $standard_webviewer.  Note that only the $standard_webviewer and
+<BR>other viewers that are only for authenticated transactions can
+<BR>interact with the object this way (ie. the Web Ghost Viewer,
+<BR>$anon_webviewer, cannot).
+
+<P>To make an object "web aware," add custom verbs to it that accept
+<BR>information from the $std_webviewer and returns a
+
+<P>The relevent verbs are:
+
+<P>&nbsp;&nbsp;:html() - returns the object's description or other "what you
+<BR>see" text.
+<BR>&nbsp;&nbsp;:do_post() - called when a POST transaction is directed at the
+<BR>object
+<BR>&nbsp;&nbsp;:more_info_for_web() - additional information appended to the
+<BR>object's "what you see" section
+<BR>&nbsp;&nbsp;:verbs_for_web() - commands and other user-interaction can go here,
+<BR>and is the last portion presented
+
+<P>By default, the #1:html verb returns the object's description,
+<BR>and the #1:more_info_for_web and #1:verbs_for_web return nothing.  To
+<BR>see an example of a :more_info_for_web verb, check out
+<BR>$container:more_info_for_web, which presents the list of objects
+<BR>inside the container.  An example of :verbs_for_web is on $note,
+<BR>where it presents the "read" command.
+
+<P>The :do_post verb is called when an HTTP transaction of type POST is
+<BR>pointed at the object.  These transactions have an accompanying web
+<BR>form line that encodes information from the HTML form that contained
+<BR>the link.  An object can have a single verb with both "html" and
+<BR>"do_post" aliases.
+
+<P>When focused on using a web browser, and object's :html or do_post
+<BR>verb is called as:
+
+<P>&nbsp;&nbsp;html/do_post(who OBJ, rest STR, search STR [,line STR])
+
+<P>Where "line" is only supplied if the transaction is a POST.  The
+<BR>"who" value is only included for backward compatibility and is not
+<BR>defined.  The verb is called with `player' and caller_perms() set to
+<BR>the object number the transaction's authentication assigned it to.
+
+<P>The "REST" and "SEARCH" strings are derived from the URL:
+
+<P>&nbsp;&nbsp;http://moo.du.org/99webpass/code/what/REST?SEARCH
+
+<P>Where "what" is the object number without the "#" and "code" is the
+<BR>code for the web application being used ("view" in the case of the
+<BR>$std_webviewer).
+
+<P>The "REST" and "SEARCH" portions of the URL can be used to send
+<BR>information to the object, including commands.  For instance, if
+<BR>"REST" is "open" it might tell the object to open.
+
+<P>To create a link including embeded information, include a line in the
+<BR>:html verb like:
+
+<P>code = $web_utils:user_webviewer:get_code();
+<BR>line = tostr("&lt;A HREF=\"http://&amp;LOCAL_LINK;/",code,"/",
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tonum(this),"/open\"&gt;Select to open&lt;/A&gt;");
+
+<P>which would (if the object is #5555, and the viewer is the
+<BR>$std_webviewer), produce the HTML text:
+
+<P>&lt;A HREF="http://&amp;LOCAL_LINK;/view/5555/open"&gt;Select to open&lt;/A&gt;
+
+<P>When the MOO outputs this, it will convert the &amp;LOCAL_LINK; string to
+<BR>a value pointing back to the MOO and including authentication
+<BR>information if needed.  When the user selected this link, another
+<BR>call to #5555:html would be made, but this time the value of "REST"
+<BR>would be "open" and the verb could act appropriately.
+
+<P>If the reference was for a form, it would look like:
+
+<P>&lt;FORM METHOD="POST" ACTION="http://&amp;LOCAL_LINK;/view/5555"&gt;
+<BR>&lt;INPUT TYPE="TEXT" NAME="example"&gt;
+<BR>&lt;INPUT TYPE="SUBMIT"&gt;
+<BR>&lt;FORM&gt;
+
+<P>When the person selects the "submit" button on the form, a call will
+<BR>be made to #5555:do_post and the "line" argument will be the encoded
+<BR>information the user entered into the text field.  This data could be
+<BR>extracted with $web_utils:parse_form.  For example, if the user
+<BR>enters "my text" then:
+
+<P>$web_utils:parse_form(line) -&gt; {{"example","my text"}}
+
+
+</BODY></HTML>

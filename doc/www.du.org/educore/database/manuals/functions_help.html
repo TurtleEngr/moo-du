@@ -1,0 +1,2043 @@
+<HTML><HEAD><TITLE>Built-In Function Help</TITLE></HEAD><BODY>
+
+<H1><HREF NAME="top">Built-In Function Help</A></H1>
+
+<H2><A NAME="abs()">abs()</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> num abs (num X)</TD></TR></TABLE>
+
+<P>Returns the absolute value of X.  If X is negative, then the result is
+<BR>`-X'; otherwise, the result is X.  The number X can be either integer or
+<BR>floating-point; the result is of the same kind.
+
+<H2><A NAME="acos()">acos()</A></H2>
+
+Syntax: float asin (float X)
+<P><TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> float acos (float X)</TD></TR></TABLE>
+
+<P>Returns the arc-sine or arc-cosine (inverse sine or cosine) of X, in the
+<BR>range `[-pi/2..pi/2]' or `[0..pi]', respectively.  Raises `E_INVARG' if X
+<BR>is outside the range `[-1.0..1.0]'.
+
+<H2><A NAME="add_property()">add_property()</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> none add_property (obj OBJECT, str PROP-NAME, VALUE, list INFO)</TD></TR></TABLE>
+
+<P>where INFO is:  {obj OWNER, str PERMS}
+
+<P>Defines a new property on the given OBJECT, inherited by all of its
+<BR>descendants; the property is named PROP-NAME, its initial value is VALUE,
+<BR>and its owner and initial permission bits are given by INFO in the same
+<BR>format as is returned by `property_info()', described above.  If OBJECT
+<BR>is not valid or INFO does not specify a valid owner and well-formed
+<BR>permission bits or OBJECT or its ancestors or descendants already defines
+<BR>a property named PROP-NAME, then `E_INVARG' is raised.  If the programmer
+<BR>does not have write permission on OBJECT or if the owner specified by
+<BR>INFO is not the programmer and the programmer is not a wizard, then
+<BR>`E_PERM' is raised.
+
+<H2><A NAME="add_verb()">add_verb()</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> none add_verb (obj OBJECT, list INFO, list ARGS)</TD></TR></TABLE>
+
+<P>Defines a new verb on the given OBJECT.  The new verb's owner, permission
+<BR>bits and name(s) are given by INFO in the same format as is returned by
+<BR>`verb_info()', described above.  The new verb's direct-object,
+<BR>preposition, and indirect-object specifications are given by ARGS in the
+<BR>same format as is returned by `verb_args', described above.  The new verb
+<BR>initially has the empty program associated with it; this program does
+<BR>nothing but return an unspecified value.
+
+<P>If OBJECT is not valid, or INFO does not specify a valid owner and
+<BR>well-formed permission bits and verb names, or ARGS is not a legitimate
+<BR>syntax specification, then `E_INVARG' is raised.  If the programmer does
+<BR>not have write permission on OBJECT or if the owner specified by INFO is
+<BR>not the programmer and the programmer is not a wizard, then `E_PERM' is
+<BR>raised.
+
+<H2><A NAME="asin()">asin()</A></H2>
+
+<P>See: <A HREF="#acos()">acos()</A>
+
+<H2><A NAME="atan()">atan()</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> float atan (float Y [, float X])</TD></TR></TABLE>
+
+<P>Returns the arc-tangent (inverse tangent) of Y in the range
+<BR>`[-pi/2..pi/2]' if X is not provided, or of `Y/X' in the range
+<BR>`[-pi..pi]' if X is provided.
+
+<H2><A NAME="binary_hash()">binary_hash()</A></H2>
+
+<P>See: <A HREF="#string_hash()">string_hash()</A>
+
+<H2><A NAME="boot_player()">boot_player()</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> none boot_player (obj PLAYER)</TD></TR></TABLE>
+
+<P>Marks for disconnection any currently-active connection to the given
+<BR>PLAYER.  The connection will not actually be closed until the
+<BR>currently-running task returns or suspends, but all MOO functions (such as
+<BR>`notify()', `connected_players()', and the like) immediately behave as if
+<BR>the connection no longer exists.  If the programmer is not either a
+<BR>wizard or the same as PLAYER, then `E_PERM' is raised.  If there is no
+<BR>currently-active connection to PLAYER, then this function does nothing.
+
+<P>If there was a currently-active connection, then the following verb call
+<BR>is made when the connection is actually closed:
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$user_disconnected(PLAYER)
+
+<P>It is not an error if this verb does not exist; the call is simply
+<BR>skipped.
+
+<H2><A NAME="buffered_output_length()">buffered_output_length()</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> int buffered_output_length ([obj CONN])</TD></TR></TABLE>
+
+<P>Returns the number of bytes currently buffered for output to the
+<BR>connection CONN.  If CONN is not provided, returns the maximum number of
+<BR>bytes that will be buffered up for output on any connection.
+
+<H2><A NAME="builtin-index">builtin-index</A></H2>
+
+<TABLE BORDER=0 CELLSPACING=6>
+<TR><TD VALIGN="TOP"><A HREF="#abs()">abs()</A></TD><TD VALIGN="TOP"><A HREF="#dump_database()">dump_database()</A></TD><TD VALIGN="TOP"><A HREF="#move()">move()</A></TD><TD VALIGN="TOP"><A HREF="#setremove()">setremove()</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#acos()">acos()</A></TD><TD VALIGN="TOP"><A HREF="#encode_binary()">encode_binary()</A></TD><TD VALIGN="TOP"><A HREF="#notify()">notify()</A></TD><TD VALIGN="TOP"><A HREF="#shutdown()">shutdown()</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#add_property()">add_property()</A></TD><TD VALIGN="TOP"><A HREF="#equal()">equal()</A></TD><TD VALIGN="TOP"><A HREF="#object_bytes()">object_bytes()</A></TD><TD VALIGN="TOP"><A HREF="#sin()">sin()</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#add_verb()">add_verb()</A></TD><TD VALIGN="TOP"><A HREF="#equals()">equals()</A></TD><TD VALIGN="TOP"><A HREF="#open_network_connection()">open_network_connection()</A></TD><TD VALIGN="TOP"><A HREF="#sinh()">sinh()</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#asin()">asin()</A></TD><TD VALIGN="TOP"><A HREF="#eval()">eval()</A></TD><TD VALIGN="TOP"><A HREF="#output_delimiters()">output_delimiters()</A></TD><TD VALIGN="TOP"><A HREF="#sqrt()">sqrt()</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#atan()">atan()</A></TD><TD VALIGN="TOP"><A HREF="#exp()">exp()</A></TD><TD VALIGN="TOP"><A HREF="#parent()">parent()</A></TD><TD VALIGN="TOP"><A HREF="#strcmp()">strcmp()</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#binary_hash()">binary_hash()</A></TD><TD VALIGN="TOP"><A HREF="#floatstr()">floatstr()</A></TD><TD VALIGN="TOP"><A HREF="#pass()">pass()</A></TD><TD VALIGN="TOP"><A HREF="#string_hash()">string_hash()</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#boot_player()">boot_player()</A></TD><TD VALIGN="TOP"><A HREF="#floor()">floor()</A></TD><TD VALIGN="TOP"><A HREF="#players()">players()</A></TD><TD VALIGN="TOP"><A HREF="#strsub()">strsub()</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#buffered_output_length()">buffered_output_length()</A></TD><TD VALIGN="TOP"><A HREF="#flush_input()">flush_input()</A></TD><TD VALIGN="TOP"><A HREF="#properties()">properties()</A></TD><TD VALIGN="TOP"><A HREF="#substitute()">substitute()</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#builtin-index">builtin-index</A></TD><TD VALIGN="TOP"><A HREF="#force_input()">force_input()</A></TD><TD VALIGN="TOP"><A HREF="#property_info()">property_info()</A></TD><TD VALIGN="TOP"><A HREF="#suspend()">suspend()</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#call_function()">call_function()</A></TD><TD VALIGN="TOP"><A HREF="#function_index">function_index</A></TD><TD VALIGN="TOP"><A HREF="#queue_info()">queue_info()</A></TD><TD VALIGN="TOP"><A HREF="#tan()">tan()</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#caller_perms()">caller_perms()</A></TD><TD VALIGN="TOP"><A HREF="#function_info()">function_info()</A></TD><TD VALIGN="TOP"><A HREF="#queued_tasks()">queued_tasks()</A></TD><TD VALIGN="TOP"><A HREF="#tanh()">tanh()</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#callers()">callers()</A></TD><TD VALIGN="TOP"><A HREF="#idle_seconds()">idle_seconds()</A></TD><TD VALIGN="TOP"><A HREF="#raise()">raise()</A></TD><TD VALIGN="TOP"><A HREF="#task_id()">task_id()</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#ceil()">ceil()</A></TD><TD VALIGN="TOP"><A HREF="#index()">index()</A></TD><TD VALIGN="TOP"><A HREF="#random()">random()</A></TD><TD VALIGN="TOP"><A HREF="#task_stack()">task_stack()</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#children()">children()</A></TD><TD VALIGN="TOP"><A HREF="#is_clear_property()">is_clear_property()</A></TD><TD VALIGN="TOP"><A HREF="#read()">read()</A></TD><TD VALIGN="TOP"><A HREF="#ticks_left()">ticks_left()</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#chparent()">chparent()</A></TD><TD VALIGN="TOP"><A HREF="#is_member()">is_member()</A></TD><TD VALIGN="TOP"><A HREF="#recycle()">recycle()</A></TD><TD VALIGN="TOP"><A HREF="#time()">time()</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#clear_property()">clear_property()</A></TD><TD VALIGN="TOP"><A HREF="#is_player()">is_player()</A></TD><TD VALIGN="TOP"><A HREF="#regex">regex</A></TD><TD VALIGN="TOP"><A HREF="#tofloat()">tofloat()</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#connected_players()">connected_players()</A></TD><TD VALIGN="TOP"><A HREF="#kill_task()">kill_task()</A></TD><TD VALIGN="TOP"><A HREF="#renumber()">renumber()</A></TD><TD VALIGN="TOP"><A HREF="#toint()">toint()</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#connected_seconds()">connected_seconds()</A></TD><TD VALIGN="TOP"><A HREF="#length()">length()</A></TD><TD VALIGN="TOP"><A HREF="#reset_max_object()">reset_max_object()</A></TD><TD VALIGN="TOP"><A HREF="#toliteral()">toliteral()</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#connection_name()">connection_name()</A></TD><TD VALIGN="TOP"><A HREF="#listappend()">listappend()</A></TD><TD VALIGN="TOP"><A HREF="#resume()">resume()</A></TD><TD VALIGN="TOP"><A HREF="#tonum()">tonum()</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#connection_option()">connection_option()</A></TD><TD VALIGN="TOP"><A HREF="#listdelete()">listdelete()</A></TD><TD VALIGN="TOP"><A HREF="#rindex()">rindex()</A></TD><TD VALIGN="TOP"><A HREF="#toobj()">toobj()</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#connection_options()">connection_options()</A></TD><TD VALIGN="TOP"><A HREF="#listen()">listen()</A></TD><TD VALIGN="TOP"><A HREF="#rmatch()">rmatch()</A></TD><TD VALIGN="TOP"><A HREF="#tostr()">tostr()</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#cos()">cos()</A></TD><TD VALIGN="TOP"><A HREF="#listeners()">listeners()</A></TD><TD VALIGN="TOP"><A HREF="#seconds_left()">seconds_left()</A></TD><TD VALIGN="TOP"><A HREF="#trunc()">trunc()</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#cosh()">cosh()</A></TD><TD VALIGN="TOP"><A HREF="#listinsert()">listinsert()</A></TD><TD VALIGN="TOP"><A HREF="#server_log()">server_log()</A></TD><TD VALIGN="TOP"><A HREF="#typeof()">typeof()</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#create()">create()</A></TD><TD VALIGN="TOP"><A HREF="#listset()">listset()</A></TD><TD VALIGN="TOP"><A HREF="#server_version()">server_version()</A></TD><TD VALIGN="TOP"><A HREF="#unlisten()">unlisten()</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#crypt()">crypt()</A></TD><TD VALIGN="TOP"><A HREF="#log()">log()</A></TD><TD VALIGN="TOP"><A HREF="#set_connection_option()">set_connection_option()</A></TD><TD VALIGN="TOP"><A HREF="#valid()">valid()</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#ctime()">ctime()</A></TD><TD VALIGN="TOP"><A HREF="#log10()">log10()</A></TD><TD VALIGN="TOP"><A HREF="#set_player_flag()">set_player_flag()</A></TD><TD VALIGN="TOP"><A HREF="#value_bytes()">value_bytes()</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#ctime_tz()">ctime_tz()</A></TD><TD VALIGN="TOP"><A HREF="#match()">match()</A></TD><TD VALIGN="TOP"><A HREF="#set_property_info()">set_property_info()</A></TD><TD VALIGN="TOP"><A HREF="#value_hash()">value_hash()</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#db_disk_size()">db_disk_size()</A></TD><TD VALIGN="TOP"><A HREF="#max()">max()</A></TD><TD VALIGN="TOP"><A HREF="#set_task_perms()">set_task_perms()</A></TD><TD VALIGN="TOP"><A HREF="#verb_args()">verb_args()</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#decode_binary()">decode_binary()</A></TD><TD VALIGN="TOP"><A HREF="#max_object()">max_object()</A></TD><TD VALIGN="TOP"><A HREF="#set_verb_args()">set_verb_args()</A></TD><TD VALIGN="TOP"><A HREF="#verb_code()">verb_code()</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#delete_property()">delete_property()</A></TD><TD VALIGN="TOP"><A HREF="#memory_usage()">memory_usage()</A></TD><TD VALIGN="TOP"><A HREF="#set_verb_code()">set_verb_code()</A></TD><TD VALIGN="TOP"><A HREF="#verb_info()">verb_info()</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#delete_verb()">delete_verb()</A></TD><TD VALIGN="TOP"><A HREF="#min()">min()</A></TD><TD VALIGN="TOP"><A HREF="#set_verb_info()">set_verb_info()</A></TD><TD VALIGN="TOP"><A HREF="#verbs()">verbs()</A></TD></TR>
+<TR><TD VALIGN="TOP"><A HREF="#disassemble()">disassemble()</A></TD><TD VALIGN="TOP"><A HREF="#mktime_tz()">mktime_tz()</A></TD><TD VALIGN="TOP"><A HREF="#setadd()">setadd()</A></TD><TD></TD></TR>
+</TABLE>
+
+<H2><A NAME="call_function()">call_function()</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> value call_function (str FUNC-NAME, ARG, ...)</TD></TR></TABLE>
+
+<P>Calls the built-in function named FUNC-NAME, passing the given arguments,
+<BR>and returns whatever that function returns.  Raises `E_INVARG' if
+<BR>FUNC-NAME is not recognized as the name of a known built-in function.
+<BR>This allows you to compute the name of the function to call and, in
+<BR>particular, allows you to write a call to a built-in function that may or
+<BR>may not exist in the particular version of the server you're using.
+
+<H2><A NAME="caller_perms()">caller_perms()</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> obj caller_perms ()</TD></TR></TABLE>
+
+<P>Returns the permissions in use by the verb that called the
+<BR>currently-executing verb.  If the currently-executing verb was not called
+<BR>by another verb (i.e., it is the first verb called in a command or server
+<BR>task), then `caller_perms()' returns `#-1'.
+
+<H2><A NAME="callers()">callers()</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> list callers ([INCLUDE-LINE-NUMBERS])</TD></TR></TABLE>
+
+<P>Returns information on each of the verbs and built-in functions currently
+<BR>waiting to resume execution in the current task.  When one verb or
+<BR>function calls another verb or function, execution of the caller is
+<BR>temporarily suspended, pending the called verb or function returning a
+<BR>value.  At any given time, there could be several such pending verbs and
+<BR>functions: the one that called the currently executing verb, the verb or
+<BR>function that called that one, and so on.  The result of `callers()' is a
+<BR>list, each element of which gives information about one pending verb or
+<BR>function in the following format:
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{THIS, VERB-NAME, PROGRAMMER, VERB-LOC, PLAYER, LINE-NUMBER}
+
+<P>For verbs, THIS is the initial value of the variable `this' in that verb,
+<BR>VERB-NAME is the name used to invoke that verb, PROGRAMMER is the person
+<BR>with whose permissions that verb is running, VERB-LOC is the object on
+<BR>which that verb is defined, PLAYER is the initial value of the variable
+<BR>`player' in that verb, and LINE-NUMBER indicates which line of the verb's
+<BR>code is executing.  The LINE-NUMBER element is included only if the
+<BR>INCLUDE-LINE-NUMBERS argument was provided and true.
+
+<P>For functions, THIS, PROGRAMMER, and VERB-LOC are all `#-1', VERB-NAME is
+<BR>the name of the function, and LINE-NUMBER is an index used internally to
+<BR>determine the current state of the built-in function.  The simplest
+<BR>correct test for a built-in function entry is
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(VERB-LOC == #-1  &amp;&amp;  PROGRAMMER == #-1  &amp;&amp;  VERB-NAME != "")
+
+<P>The first element of the list returned by `callers()' gives information on
+<BR>the verb that called the currently-executing verb, the second element
+<BR>describes the verb that called that one, and so on.  The last element of
+<BR>the list describes the first verb called in this task.
+
+<H2><A NAME="ceil()">ceil()</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> float ceil (float X)</TD></TR></TABLE>
+
+<P>Returns the smallest integer not less than X, as a floating-point number.
+
+<H2><A NAME="children()">children()</A></H2>
+
+<P>See: <A HREF="#parent()">parent()</A>
+
+<H2><A NAME="chparent()">chparent()</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> none chparent (obj OBJECT, obj NEW-PARENT)</TD></TR></TABLE>
+
+<P>Changes the parent of OBJECT to be NEW-PARENT.  If OBJECT is not valid,
+<BR>or if NEW-PARENT is neither valid nor equal to `#-1', then `E_INVARG' is
+<BR>raised.  If the programmer is neither a wizard or the owner of OBJECT, or
+<BR>if NEW-PARENT is not fertile (i.e., its `f' bit is not set) and the
+<BR>programmer is neither the owner of NEW-PARENT nor a wizard, then `E_PERM'
+<BR>is raised.  If NEW-PARENT is equal to OBJECT or one of its current
+<BR>decendents, `E_RECMOVE' is raised.  If OBJECT or one of its descendants
+<BR>defines a property with the same name as one defined either on NEW-PARENT
+<BR>or on one of its ancestors, then `E_INVARG' is raised.
+
+<P>Changing an object's parent can have the effect of removing some
+<BR>properties from and adding some other properties to that object and all
+<BR>of its descendants (i.e., its children and its children's children,
+<BR>etc.).  Let COMMON be the nearest ancestor that OBJECT and NEW-PARENT
+<BR>have in common before the parent of OBJECT is changed.  Then all
+<BR>properties defined by ancestors of OBJECT under COMMON (that is, those
+<BR>ancestors of OBJECT that are in turn descendants of COMMON) are removed
+<BR>from OBJECT and all of its descendants.  All properties defined by
+<BR>NEW-PARENT or its ancestors under COMMON are added to OBJECT and all of
+<BR>its descendants.  As with `create()', the newly-added properties are
+<BR>given the same permission bits as they have on NEW-PARENT, the owner of
+<BR>each added property is either the owner of the object it's added to (if
+<BR>the `c' permissions bit is set) or the owner of that property on
+<BR>NEW-PARENT, and the value of each added property is "clear"; see the
+<BR>description of the built-in function `clear_property()' for details.  All
+<BR>properties that are not removed or added in the reparenting process are
+<BR>completely unchanged.
+
+<P>If NEW-PARENT is equal to `#-1', then OBJECT is given no parent at all;
+<BR>it becomes a new root of the parent/child hierarchy.  In this case, all
+<BR>formerly inherited properties on OBJECT are simply removed.
+
+<H2><A NAME="clear_property()">clear_property()</A></H2>
+
+Syntax: int is_clear_property (obj OBJECT, str PROP-NAME)
+<P><TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> none clear_property (obj OBJECT, str PROP-NAME)</TD></TR></TABLE>
+
+<P>These two functions test for clear and set to clear, respectively, the
+<BR>property named PROP-NAME on the given OBJECT.  If OBJECT is not valid,
+<BR>then `E_INVARG' is raised.  If OBJECT has no non-built-in property named
+<BR>PROP-NAME, then `E_PROPNF' is raised.  If the programmer does not have
+<BR>read (write) permission on the property in question, then
+<BR>`is_clear_property()' (`clear_property()') raises `E_PERM'.  If a
+<BR>property is clear, then when the value of that property is queried the
+<BR>value of the parent's property of the same name is returned.  If the
+<BR>parent's property is clear, then the parent's parent's value is examined,
+<BR>and so on.  If OBJECT is the definer of the property PROP-NAME, as
+<BR>opposed to an inheritor of the property, then `clear_property()' raises
+<BR>`E_INVARG'.
+
+<H2><A NAME="connected_players()">connected_players()</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> list connected_players ([INCLUDE-ALL])</TD></TR></TABLE>
+
+<P>Returns a list of the object numbers of those character objects with
+<BR>currently-active connections.  If INCLUDE-ALL is provided and true, then
+<BR>the list includes the object numbers associated with *all* current
+<BR>connections, including ones that are outbound and/or not yet logged-in.
+
+<H2><A NAME="connected_seconds()">connected_seconds()</A></H2>
+
+<P>See: <A HREF="#idle_seconds()">idle_seconds()</A>
+
+<H2><A NAME="connection_name()">connection_name()</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> str connection_name (obj PLAYER)</TD></TR></TABLE>
+
+<P>Returns a network-specific string identifying the connection being used
+<BR>by the given person.  If the programmer is not a wizard and not PLAYER,
+<BR>then `E_PERM' is raised.  If PLAYER is not currently connected, then
+<BR>`E_INVARG' is raised.
+
+<P>For the TCP/IP networking configurations, for in-bound connections, the
+<BR>string has the form
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"port LPORT from HOST, port PORT"
+
+<P>where LPORT is the decimal TCP listening port on which the connection
+<BR>arrived, HOST is either the name or decimal TCP address of the host from
+<BR>which the person is connected, and PORT is the decimal TCP port of the
+<BR>connection on that host.
+
+<P>For outbound TCP/IP connections, the string has the form
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"port LPORT to HOST, port PORT"
+
+<P>where LPORT is the decimal local TCP port number from which the
+<BR>connection originated, HOST is either the name or decimal TCP address of
+<BR>the host to which the connection was opened, and PORT is the decimal TCP
+<BR>port of the connection on that host.
+
+<P>For the System V `local' networking configuration, the string is the UNIX
+<BR>login name of the connecting user or, if no such name can be found,
+<BR>something of the form
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"User #NUMBER"
+
+<P>where NUMBER is a UNIX numeric user ID.
+
+<P>For the other networking configurations, the string is the same for all
+<BR>connections and, thus, useless.
+
+<H2><A NAME="connection_option()">connection_option()</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> value connection_option (obj CONN, str NAME)</TD></TR></TABLE>
+
+<P>Returns the current setting of the option NAME for the connection CONN.
+<BR>Raises `E_INVARG' if CONN does not specify a current connection and
+<BR>`E_PERM' if the programmer is neither CONN nor a wizard.
+
+<H2><A NAME="connection_options()">connection_options()</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> list connection_options (obj CONN)</TD></TR></TABLE>
+
+<P>Returns a list of `{NAME, VALUE}' pairs describing the current settings
+<BR>of all of the allowed options for the connection CONN.  Raises `E_INVARG'
+<BR>if CONN does not specify a current connection and `E_PERM' if the
+<BR>programmer is neither CONN nor a wizard.
+
+<H2><A NAME="cos()">cos()</A></H2>
+
+<P>See: <A HREF="#tan()">tan()</A>
+
+<H2><A NAME="cosh()">cosh()</A></H2>
+
+<P>See: <A HREF="#tanh()">tanh()</A>
+
+<H2><A NAME="create()">create()</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> obj create (obj PARENT [, obj OWNER])</TD></TR></TABLE>
+
+<P>Creates and returns a new object whose parent is PARENT and whose owner
+<BR>is as described below.  Either the given PARENT object must be `#-1' or
+<BR>valid and fertile (i.e., its `f' bit must be set) or else the programmer
+<BR>must own PARENT or be a wizard; otherwise `E_PERM' is raised.  `E_PERM'
+<BR>is also raised if OWNER is provided and not the same as the programmer,
+<BR>unless the programmer is a wizard.  After the new object is created, its
+<BR>`initialize' verb, if any, is called with no arguments.
+
+<P>The new object is assigned the least non-negative object number that has
+<BR>not yet been used for a created object.  Note that no object number is
+<BR>ever reused, even if the object with that number is recycled.
+
+<P>The owner of the new object is either the programmer (if OWNER is not
+<BR>provided), the new object itself (if OWNER was given as `#-1'), or OWNER
+<BR>(otherwise).
+
+<P>The other built-in properties of the new object are initialized as
+<BR>follows:
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name         ""
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;location     #-1
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;contents     {}
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;programmer   0
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wizard       0
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;r            0
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;w            0
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;f            0
+
+<P>The function `is_player()' returns false for newly created objects.
+
+<P>In addition, the new object inherits all of the other properties on
+<BR>PARENT.  These properties have the same permission bits as on PARENT.  If
+<BR>the `c' permissions bit is set, then the owner of the property on the new
+<BR>object is the same as the owner of the new object itself; otherwise, the
+<BR>owner of the property on the new object is the same as that on PARENT.
+<BR>The initial value of every inherited property is "clear"; see the
+<BR>description of the built-in function `clear_property()' for details.
+
+<P>If the intended owner of the new object has a property named
+<BR>`ownership_quota' and the value of that property is an integer, then
+<BR>`create()' treats that value as a "quota".  If the quota is less than or
+<BR>equal to zero, then the quota is considered to be exhausted and
+<BR>`create()' raises `E_QUOTA' instead of creating an object.  Otherwise,
+<BR>the quota is decremented and stored back into the `ownership_quota'
+<BR>property as a part of the creation of the new object.
+
+<H2><A NAME="crypt()">crypt()</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> str crypt (str TEXT [, str SALT])</TD></TR></TABLE>
+
+<P>Encrypts the given TEXT using the standard UNIX encryption method.  If
+<BR>provided, SALT should be a string at least two characters long, the first
+<BR>two characters of which will be used as the extra encryption "salt" in the
+<BR>algorithm.  If SALT is not provided, a random pair of characters is used.
+<BR>In any case, the salt used is also returned as the first two characters
+<BR>of the resulting encrypted string.
+
+<P>Aside from the possibly-random selection of the salt, the encryption
+<BR>algorithm is entirely deterministic.  In particular, you can test whether
+<BR>or not a given string is the same as the one used to produce a given
+<BR>piece of encrypted text; simply extract the first two characters of the
+<BR>encrypted text and pass the candidate string and those two characters to
+<BR>`crypt()'.  If the result is identical to the given encrypted text, then
+<BR>you've got a match.
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;crypt("foobar")         =&gt;   "J3fSFQfgkp26w"
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;crypt("foobar", "J3")   =&gt;   "J3fSFQfgkp26w"
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;crypt("mumble", "J3")   =&gt;   "J3D0.dh.jjmWQ"
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;crypt("foobar", "J4")   =&gt;   "J4AcPxOJ4ncq2"
+
+<H2><A NAME="ctime()">ctime()</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> str ctime ([int TIME])</TD></TR></TABLE>
+
+<P>Interprets TIME as a time, using the same representation as given in the
+<BR>description of `time()', above, and converts it into a 28-character,
+<BR>human-readable string in the following format:
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mon Aug 13 19:13:20 1990 PDT
+
+<P>If the current day of the month is less than 10, then an extra blank
+<BR>appears between the month and the day:
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mon Apr  1 14:10:43 1991 PST
+
+<P>If TIME is not provided, then the current time is used.
+
+<P>Note that `ctime()' interprets TIME for the local time zone of the
+<BR>computer on which the MOO server is running.
+
+<H2><A NAME="ctime_tz()">ctime_tz()</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> ctime_tz(&lt;timezone&gt; [,&lt;time&gt;])
+<BR>mktime_tz(&lt;timezone&gt;, &lt;year&gt;, &lt;monthnum&gt;, &lt;day&gt;, &lt;hour&gt;, &lt;min&gt;, &lt;sec&gt;)</TD></TR></TABLE>
+
+<P>This is part of a patch to the LambdaMOO (version 1.7.8) server
+<BR>program to add two builtins to the MOO programming language, to aid
+<BR>in timezone conversion and parsing within the MOO environment.  Both
+<BR>functions are usable by any programmer, just as ctime() is (though
+<BR>the new builtin-protect mechanism in 1.7.8 allows this to be
+<BR>restricted).
+
+<P>NOTE:  Modified for server 1.8.0 by David Morris, 6/96.
+
+<P>&nbsp;&nbsp;ctime_tz() functions exactly like the ctime() function, except that
+<BR>it allows one to specify a timezone other than the MOO's local
+<BR>timezone for converting the time information.
+
+<P>&nbsp;&nbsp;mktime_tz() takes a broken down time specification (easily
+<BR>extractable from ctime output) and converts it into a
+<BR>seconds-since-1970 value or returns E_INVARG if the specified time is
+<BR>not valid for some reason.
+
+<P>All timezone specifications here are _unix_ timezone specs (i.e.
+<BR>"US/Pacific"), and timezone conversion is dependent on those zoneinfo
+<BR>files available on the host system.  This patch has been tested on
+<BR>SunOS and Linux, but given the nature of many of the unix functions
+<BR>they employ, there may be unsuspected problems on other OS types that
+<BR>haven't been tested. The AS5 patch was written by Alex Stewart.
+
+<H2><A NAME="db_disk_size()">db_disk_size()</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> int db_disk_size ()</TD></TR></TABLE>
+
+<P>Returns the total size, in bytes, of the most recent full representation
+<BR>of the database as one or more disk files.  Raises `E_QUOTA' if, for some
+<BR>reason, no such on-disk representation is currently available.
+
+<H2><A NAME="decode_binary()">decode_binary()</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> list decode_binary (str BIN-STRING [, FULLY])</TD></TR></TABLE>
+
+<P>Returns a list of strings and/or integers representing the bytes in
+<BR>the binary string BIN_STRING in order.  If FULLY is false or omitted,
+<BR>the list contains an integer only for each non-printing, non-space
+<BR>byte; all other characters are grouped into the longest possible
+<BR>contiguous substrings.
+
+<P>If FULLY is provided and true, the list contains only integers, one
+<BR>for each byte represented in BIN_STRING.  Raises `E_INVARG' if
+<BR>BIN_STRING is not a properly-formed binary string.  (See the help
+<BR>text for "binary-strings" for a full description of binary strings.)
+
+<P>&nbsp;&nbsp;decode_binary("foo")               =&gt;   {"foo"}
+<BR>&nbsp;&nbsp;decode_binary("~~foo")             =&gt;   {"~foo"}
+<BR>&nbsp;&nbsp;decode_binary("foo~0D~0A")         =&gt;   {"foo", 13, 10}
+<BR>&nbsp;&nbsp;decode_binary("foo~0Abar~0Abaz")   =&gt;   {"foo", 10, "bar", 10, "baz"}
+<BR>&nbsp;&nbsp;decode_binary("foo~0D~0A", 1)      =&gt;   {102, 111, 111, 13, 10}
+
+<P><B>Related Topics:</B>
+<BR><A HREF="prog_help.html#binary-strings">binary-strings</A>  -- describes binary strings' encoding
+<BR><A HREF="function_help.html#encode_binary()">encode_binary()</A> -- converts a list of values to binary string format
+
+<H2><A NAME="delete_property()">delete_property()</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> none delete_property (obj OBJECT, str PROP-NAME)</TD></TR></TABLE>
+
+<P>Removes the property named PROP-NAME from the given OBJECT and all of its
+<BR>descendants.  If OBJECT is not valid, then `E_INVARG' is raised.  If the
+<BR>programmer does not have write permission on OBJECT, then `E_PERM' is
+<BR>raised.  If OBJECT does not directly define a property named PROP-NAME
+<BR>(as opposed to inheriting one from its parent), then `E_PROPNF' is raised.
+
+<H2><A NAME="delete_verb()">delete_verb()</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> none delete_verb (obj OBJECT, str VERB-DESC)</TD></TR></TABLE>
+
+<P>Removes the verb as specified by VERB-DESC from the given OBJECT.  If
+<BR>OBJECT is not valid, then `E_INVARG' is raised.  If the programmer does
+<BR>not have write permission on OBJECT, then `E_PERM' is raised.  If OBJECT
+<BR>does not define a verb as specified by VERB-DESC, then `E_VERBNF' is
+<BR>raised.
+
+<H2><A NAME="disassemble()">disassemble()</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> list disassemble (obj OBJECT, str VERB-DESC)</TD></TR></TABLE>
+
+<P>Returns a (longish) list of strings giving a listing of the server's
+<BR>internal "compiled" form of the verb as specified by VERB-DESC on OBJECT.
+<BR>This format is not documented and may indeed change from release to
+<BR>release, but some programmers may nonetheless find the output of
+<BR>`disassemble()' interesting to peruse as a way to gain a deeper
+<BR>appreciation of how the server works.
+
+<P>If OBJECT is not valid, then `E_INVARG' is raised.  If OBJECT does not
+<BR>define a verb as specified by VERB-DESC, then `E_VERBNF' is raised.  If
+<BR>the programmer does not have read permission on the verb in question,
+<BR>then `disassemble()' raises `E_PERM'.
+
+<H2><A NAME="dump_database()">dump_database()</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> none dump_database ()</TD></TR></TABLE>
+
+<P>Requests that the server checkpoint the database at its next opportunity.
+<BR>It is not normally necessary to call this function; the server
+<BR>automatically checkpoints the database at regular intervals; see the
+<BR>chapter on server assumptions about the database for details.  If the
+<BR>programmer is not a wizard, then `E_PERM' is raised.
+
+<H2><A NAME="encode_binary()">encode_binary()</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> str encode_binary (ARG, ...)</TD></TR></TABLE>
+
+<P>Each argument must be an integer between 0 and 255, a string, or a list
+<BR>containing only legal arguments for this function.  This function
+<BR>translates each integer and string in turn into its binary string
+<BR>equivalent, returning the concatenation of all these substrings into a
+<BR>single binary string.  (See the help text for "binary-strings" for a
+<BR>full description of binary strings.)
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;encode_binary("~foo")                     =&gt;   "~7Efoo"
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;encode_binary({"foo", 10}, {"bar", 13})   =&gt;   "foo~0Abar~0D"
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;encode_binary("foo", 10, "bar", 13)       =&gt;   "foo~0Abar~0D"
+
+<P><B>Related Topics:</B>
+<BR><A HREF="prog_help.html#binary-strings">binary-strings</A>  -- describes binary strings' encoding
+<BR><A HREF="function_help.html#decode_binary()">decode_binary()</A> -- returns a list of values represented by a binary
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;string
+
+<H2><A NAME="equal()">equal()</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> int equal (VALUE1, VALUE2)</TD></TR></TABLE>
+
+<P>Returns true if VALUE1 is completely indistinguishable from VALUE2.  This
+<BR>is much the same operation as "`VALUE1 == VALUE2'" except that, unlike
+<BR>`==', the `equal()' function does not treat upper- and lower-case
+<BR>characters in strings as equal.
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"Foo" == "foo"         =&gt;   1
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;equal("Foo", "foo")    =&gt;   0
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;equal("Foo", "Foo")    =&gt;   1
+
+<H2><A NAME="equals()">equals()</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> INT equals ( value1 ANY, value2 ANY)</TD></TR></TABLE>
+
+<P>Returns true if value1 is identical to value2.  This is much like "value1 == value2" except that unlike "==" the equals() function does not treat upper and lower case strings as identical.
+
+<H2><A NAME="eval()">eval()</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> list eval (str STRING)</TD></TR></TABLE>
+
+<P>The MOO-code compiler processes STRING as if it were to be the program
+<BR>associated with some verb and, if no errors are found, that fictional
+<BR>verb is invoked.  If the programmer is not, in fact, a programmer, then
+<BR>`E_PERM' is raised.  The normal result of calling `eval()' is a two
+<BR>element list.  The first element is true if there were no compilation
+<BR>errors and false otherwise.  The second element is either the result
+<BR>returned from the fictional verb (if there were no compilation errors) or
+<BR>a list of the compiler's error messages (otherwise).
+
+<P>When the fictional verb is invoked, the various built-in variables have
+<BR>values as shown below:
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;player    the same as in the calling verb
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this      #-1
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;caller    the same as the initial value of `this' in the calling verb
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;args      {}
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;argstr    ""
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;verb      ""
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dobjstr   ""
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dobj      #-1
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;prepstr   ""
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;iobjstr   ""
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;iobj      #-1
+
+<P>The fictional verb runs with the permissions of the programmer and as if
+<BR>its `d' permissions bit were on.
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;eval("return 3 + 4;")   =&gt;   {1, 7}
+
+<H2><A NAME="exp()">exp()</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> float exp (float X)</TD></TR></TABLE>
+
+<P>Returns e raised to the power of X.
+
+<H2><A NAME="floatstr()">floatstr()</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> str floatstr(float X, int PRECISION [, SCIENTIFIC])</TD></TR></TABLE>
+
+<P>Converts X into a string with more control than provided by either
+<BR>`tostr()' or `toliteral()'.  PRECISION is the number of digits to appear
+<BR>to the right of the decimal point, capped at 4 more than the maximum
+<BR>available precision, a total of 19 on most machines; this makes it
+<BR>possible to avoid rounding errors if the resulting string is subsequently
+<BR>read back as a floating-point value.  If SCIENTIFIC is false or not
+<BR>provided, the result is a string in the form `"MMMMMMM.DDDDDD"', preceded
+<BR>by a minus sign if and only if X is negative.  If SCIENTIFIC is provided
+<BR>and true, the result is a string in the form `"M.DDDDDDe+EEE"', again
+<BR>preceded by a minus sign if and only if X is negative.
+
+<H2><A NAME="floor()">floor()</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> float floor (float X)</TD></TR></TABLE>
+
+<P>Returns the largest integer not greater than X, as a floating-point
+<BR>number.
+
+<H2><A NAME="flush_input()">flush_input()</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> none flush_input (obj CONN [SHOW-MESSAGES])</TD></TR></TABLE>
+
+<P>Performs the same actions as if the connection CONN's defined flush
+<BR>command had been received on that connection, i.e., removes all pending
+<BR>lines of input from CONN's queue and, if SHOW-MESSAGES is provided and
+<BR>true, prints a message to CONN listing the flushed lines, if any.  See
+<BR>the chapter on server assumptions about the database for more information
+<BR>about a connection's defined flush command.
+
+<H2><A NAME="force_input()">force_input()</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> none force_input (obj CONN, str LINE [, AT-FRONT])</TD></TR></TABLE>
+
+<P>Inserts the string LINE as an input task in the queue for the connection
+<BR>CONN, just as if it had arrived as input over the network.  If AT_FRONT
+<BR>is provided and true, then the new line of input is put at the front of
+<BR>CONN's queue, so that it will be the very next line of input processed
+<BR>even if there is already some other input in that queue.  Raises
+<BR>`E_INVARG' if CONN does not specify a current connection and `E_PERM' if
+<BR>the programmer is neither CONN nor a wizard.
+
+<H2><A NAME="function_index">function_index</A></H2>
+
+<P>See: <A HREF="#builtin-index">builtin-index</A>
+
+<H2><A NAME="function_info()">function_info()</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> list function_info ([str NAME])</TD></TR></TABLE>
+
+<P>Returns descriptions of the built-in functions available on the server.
+<BR>If NAME is provided, only the description of the function with that name
+<BR>is returned.  If NAME is omitted, a list of descriptions is returned, one
+<BR>for each function available on the server.  Raised `E_INVARG' if NAME is
+<BR>provided but no function with that name is available on the server.
+
+<P>Each function description is a list of the following form:
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{NAME, MIN-ARGS, MAX-ARGS, TYPES
+
+<P>where NAME is the name of the built-in function, MIN-ARGS is the minimum
+<BR>number of arguments that must be provided to the function, MAX-ARGS is
+<BR>the maximum number of arguments that can be provided to the function or
+<BR>`-1' if there is no maximum, and TYPES is a list of MAX-ARGS integers (or
+<BR>MIN-ARGS if MAX-ARGS is `-1'), each of which represents the type of
+<BR>argument required in the corresponding position.  Each type number is as
+<BR>would be returned from the `typeof()' built-in function except that `-1'
+<BR>indicates that any type of value is acceptable and `-2' indicates that
+<BR>either integers or floating-point numbers may be given.  For example,
+<BR>here are several entries from the list:
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{"listdelete", 2, 2, {4, 0}}
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{"suspend", 0, 1, {0}}
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{"server_log", 1, 2, {2, -1}}
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{"max", 1, -1, {-2}}
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{"tostr", 0, -1, {}}
+
+<P>`Listdelete()' takes exactly 2 arguments, of which the first must be a
+<BR>list (`LIST == 4') and the second must be an integer (`INT == 0').
+<BR>`Suspend()' has one optional argument that, if provided, must be an
+<BR>integer.  `Server_log()' has one required argument that must be a string
+<BR>(`STR == 2') and one optional argument that, if provided, may be of any
+<BR>type.  `Max()' requires at least one argument but can take any number
+<BR>above that, and the first argument must be either an integer or a
+<BR>floating-point number; the type(s) required for any other arguments can't
+<BR>be determined from this description.  Finally, `tostr()' takes any number
+<BR>of arguments at all, but it can't be determined from this description
+<BR>which argument types would be acceptable in which positions.
+
+<H2><A NAME="idle_seconds()">idle_seconds()</A></H2>
+
+Syntax: int connected_seconds (obj PLAYER)
+<P><TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> int idle_seconds (obj PLAYER)</TD></TR></TABLE>
+
+<P>These functions return the number of seconds that the currently-active
+<BR>connection to PLAYER has existed and been idle, respectively.  If PLAYER
+<BR>is not the object number of a character object with a currently-active
+<BR>connection, then `E_INVARG' is raised.
+
+<H2><A NAME="index()">index()</A></H2>
+
+Syntax: int index (str STR1, str STR2 [, CASE-MATTERS])
+<P><TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> int rindex (str STR1, str STR2 [, CASE-MATTERS])</TD></TR></TABLE>
+
+<P>The function `index()' (`rindex()') returns the index of the first
+<BR>character of the first (last) occurrence of STR2 in STR1, or zero if STR2
+<BR>does not occur in STR1 at all.  By default the search for an occurrence
+<BR>of STR2 is done while ignoring the upper/lower case distinction.  If
+<BR>CASE-MATTERS is provided and true, then case is treated as significant in
+<BR>all comparisons.
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;index("foobar", "o")        =&gt;   2
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rindex("foobar", "o")       =&gt;   3
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;index("foobar", "x")        =&gt;   0
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;index("foobar", "oba")      =&gt;   3
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;index("Foobar", "foo", 1)   =&gt;   0
+
+<H2><A NAME="is_clear_property()">is_clear_property()</A></H2>
+
+<P>See: <A HREF="#clear_property()">clear_property()</A>
+
+<H2><A NAME="is_member()">is_member()</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> int is_member (VALUE, list LIST)</TD></TR></TABLE>
+
+<P>Returns true if there is an element of LIST that is completely
+<BR>indistinguishable from VALUE.  This is much the same operation as "`VALUE
+<BR>in LIST'" except that, unlike `in', the `is_member()' function does not
+<BR>treat upper- and lower-case characters in strings as equal.
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"Foo" in {1, "foo", #24}            =&gt;   2
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;is_member("Foo", {1, "foo", #24})   =&gt;   0
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;is_member("Foo", {1, "Foo", #24})   =&gt;   2
+
+<H2><A NAME="is_player()">is_player()</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> int is_player (obj OBJECT)</TD></TR></TABLE>
+
+<P>Returns a true value if the given OBJECT is a user character object and a false
+<BR>value otherwise.  If OBJECT is not valid, `E_INVARG' is raised.
+
+<H2><A NAME="kill_task()">kill_task()</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> none kill_task (int TASK-ID)</TD></TR></TABLE>
+
+<P>Removes the task with the given TASK-ID from the queue of waiting tasks.
+<BR>If the programmer is not the owner of that task and not a wizard, then
+<BR>`E_PERM' is raised.  If there is no task on the queue with the given
+<BR>TASK-ID, then `E_INVARG' is raised.
+
+<H2><A NAME="length()">length()</A></H2>
+
+Syntax: int length (str STRING)
+<P><TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> int length (list LIST)</TD></TR></TABLE>
+
+<P>Returns the number of characters in STRING or elements in LIST.  
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;length("foo")       =&gt;   3
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;length("()")        =&gt;   0
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;length({1, 2, 3})   =&gt;   3
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;length({})          =&gt;   0
+
+<H2><A NAME="listappend()">listappend()</A></H2>
+
+Syntax: list listinsert (list LIST, VALUE [, int INDEX])
+<P><TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> list listappend (list LIST, VALUE [, int INDEX])</TD></TR></TABLE>
+
+<P>These functions return a copy of LIST with VALUE added as a new element.
+<BR>`listinsert()' and `listappend()' add VALUE before and after
+<BR>(respectively) the existing element with the given INDEX, if provided.
+
+<P>The following three expressions always have the same value:
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;listinsert(LIST, ELEMENT, INDEX)
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;listappend(LIST, ELEMENT, INDEX - 1)
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{@LIST[1..INDEX - 1], ELEMENT, @LIST[INDEX..length(LIST)]}
+
+<P>If INDEX is not provided, then `listappend()' adds the VALUE at the end
+<BR>of the list and `listinsert()' adds it at the beginning; this usage is
+<BR>discouraged, however, since the same intent can be more clearly expressed
+<BR>using the list-construction expression, as shown in the examples below.
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x = {1, 2, 3};
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;listappend(x, 4, 2)   =&gt;   {1, 2, 4, 3}
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;listinsert(x, 4, 2)   =&gt;   {1, 4, 2, 3}
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;listappend(x, 4)      =&gt;   {1, 2, 3, 4}
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;listinsert(x, 4)      =&gt;   {4, 1, 2, 3}
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{@x, 4}               =&gt;   {1, 2, 3, 4}
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{4, @x}               =&gt;   {4, 1, 2, 3}
+
+<H2><A NAME="listdelete()">listdelete()</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> list listdelete (list LIST, int INDEX)</TD></TR></TABLE>
+
+<P>Returns a copy of LIST with the INDEXth element removed.  If INDEX is not
+<BR>in the range `[1..length(LIST)]', then `E_RANGE' is raised.
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x = {"foo", "bar", "baz"};
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;listdelete(x, 2)   =&gt;   {"foo", "baz"}
+
+<H2><A NAME="listen()">listen()</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> value listen (obj OBJECT, POINT [, PRINT-MESSAGES])</TD></TR></TABLE>
+
+<P>Create a new point at which the server will listen for network
+<BR>connections, just as it does normally.  OBJECT is the object whose verbs
+<BR>`do_login_command', `do_command', `do_out_of_band_command',
+<BR>`user_connected', `user_created', `user_reconnected',
+<BR>`user_disconnected', and `user_client_disconnected' will be called at
+<BR>appropriate points, just as these verbs are called on `#0' for normal
+<BR>connections.  (See the chapter on server assumptions about the database
+<BR>for the complete story on when these functions are called.)  POINT is a
+<BR>network-configuration-specific parameter describing the listening point.
+<BR>If PRINT-MESSAGES is provided and true, then the various
+<BR>database-configurable messages (also detailed in the chapter on server
+<BR>assumptions) will be printed on connections received at the new listening
+<BR>point.  `Listen()' returns CANON, a `canonicalized' version of POINT,
+<BR>with any configuration-specific defaulting or aliasing accounted for.
+
+<P>This raises `E_PERM' if the programmer is not a wizard, `E_INVARG' if
+<BR>OBJECT is invalid or there is already a listening point described by
+<BR>POINT, and `E_QUOTA' if some network-configuration-specific error
+<BR>occurred.
+
+<P>For the TCP/IP configurations, POINT is a TCP port number on which to
+<BR>listen and CANON is equal to POINT unless POINT is zero, in which case
+<BR>CANON is a port number assigned by the operating system.
+
+<P>For the local multi-user configurations, POINT is the UNIX file name to
+<BR>be used as the connection point and CANON is always equal to POINT.
+
+<P>In the single-user configuration, the can be only one listening point at a
+<BR>time; POINT can be any value at all and CANON is always zero.
+
+<H2><A NAME="listeners()">listeners()</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> list listeners ()</TD></TR></TABLE>
+
+<P>Returns a list describing all existing listening points, including the
+<BR>default one set up automatically by the server when it was started
+<BR>(unless that one has since been destroyed by a call to `unlisten()').
+<BR>Each element of the list has the following form:
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{OBJECT, CANON, PRINT-MESSAGES}
+
+<P>where OBJECT is the first argument given in the call to `listen()' to
+<BR>create this listening point, PRINT-MESSAGES is true if the third argument
+<BR>in that call was provided and true, and CANON was the value returned by
+<BR>that call.  (For the initial listening point, OBJECT is `#0', CANON is
+<BR>determined by the command-line arguments or a
+<BR>network-configuration-specific default, and PRINT-MESSAGES is true.)
+
+<P>Please note that there is nothing special about the initial listening point
+<BR>created by the server when it starts; you can use `unlisten()' on it just as
+<BR>if it had been created by `listen()'.  This can be useful; for example, under
+<BR>one of the TCP/IP configurations, you might start up your server on some
+<BR>obscure port, say 12345, connect to it by yourself for a while, and then open
+<BR>it up to normal users by evaluating the statments
+<BR>unlisten(12345); listen(#0, 7777, 1)
+
+<H2><A NAME="listinsert()">listinsert()</A></H2>
+
+<P>See: <A HREF="#listappend()">listappend()</A>
+
+<H2><A NAME="listset()">listset()</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> list listset (list LIST, VALUE, int INDEX)</TD></TR></TABLE>
+
+<P>Returns a copy of LIST with the INDEXth element replaced by VALUE.  If
+<BR>INDEX is not in the range `[1..length(LIST)]', then `E_RANGE' is raised.
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x = {"foo", "bar", "baz"};
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;listset(x, "mumble", 2)   =&gt;   {"foo", "mumble", "baz"}
+
+<P>This function exists primarily for historical reasons; it was used heavily
+<BR>before the server supported indexed assignments like `x[i] = v'.  New code
+<BR>should always use indexed assignment instead of `listset()' wherever
+<BR>possible.
+
+<H2><A NAME="log()">log()</A></H2>
+
+<P>See: <A HREF="#log10()">log10()</A>
+
+<H2><A NAME="log10()">log10()</A></H2>
+
+Syntax: float log (float X)
+<P><TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> float log10 (float X)</TD></TR></TABLE>
+
+<P>Returns the natural or base 10 logarithm of X.  Raises `E_INVARG' if X is
+<BR>not positive.
+
+<H2><A NAME="match()">match()</A></H2>
+
+Syntax: list match (str SUBJECT, str PATTERN [, CASE-MATTERS])
+<P><TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> list rmatch (str SUBJECT, str PATTERN [, CASE-MATTERS])</TD></TR></TABLE>
+
+<P>The function `match()' (`rmatch()') searches for the first (last)
+<BR>occurrence of the regular expression PATTERN in the string SUBJECT.  If
+<BR>PATTERN is syntactically malformed, then `E_INVARG' is raised.  The
+<BR>process of matching can in some cases consume a great deal of memory in
+<BR>the server; should this memory consumption become excessive, then the
+<BR>matching process is aborted and `E_QUOTA' is raised.
+
+<P>If no match is found, the empty list is returned; otherwise, these
+<BR>functions return a list containing information about the match (see
+<BR>below).  By default, the search ignores upper-/lower-case distinctions.
+<BR>If CASE-MATTERS is provided and true, then case is treated as significant
+<BR>in all comparisons.
+
+<P>The list that `match()' (`rmatch()') returns contains the details about
+<BR>the match made.  The list is in the form:
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{START, END, REPLACEMENTS, SUBJECT}
+
+<P>where START is the index in SUBJECT of the beginning of the match, END is
+<BR>the index of the end of the match, REPLACEMENTS is a list described
+<BR>below, and SUBJECT is the same string that was given as the first
+<BR>argument to the `match()' or `rmatch()'.
+
+<P>The REPLACEMENTS list is always nine items long, each item itself being a
+<BR>list of two integers, the start and end indices in STRING matched by some
+<BR>parenthesized sub-pattern of PATTERN.  The first item in REPLACEMENTS
+<BR>carries the indices for the first parenthesized sub-pattern, the second
+<BR>item carries those for the second sub-pattern, and so on.  If there are
+<BR>fewer than nine parenthesized sub-patterns in PATTERN, or if some
+<BR>sub-pattern was not used in the match, then the corresponding item in
+<BR>REPLACEMENTS is the list {0, -1}.  
+
+<P>See the help on regular-expressions (regex) for discussion of patterns
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;match("foo", "^f*o$")        =&gt;  {}
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;match("foo", "^fo*$")        =&gt;  {1, 3, {{0, -1}, ...}, "foo"}
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;match("foobar", "o*b")       =&gt;  {2, 4, {{0, -1}, ...}, "foobar"}
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rmatch("foobar", "o*b")      =&gt;  {4, 4, {{0, -1}, ...}, "foobar"}
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;match("foobar", "f%(o*%)b")
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&gt;  {1, 4, {{2, 3}, {0, -1}, ...}, "foobar"}
+
+<P><B>Related Topics:</B>
+<BR><A HREF="function_help.html#substitute()">substitute()</A> -- accepts match() results and performs substitutions
+<BR><A HREF="core_help.html#object-matching">object-matching</A> -- finding objects by name or alias
+
+<H2><A NAME="max()">max()</A></H2>
+
+Syntax: num min (num X, ...)
+<P><TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> num max (num X, ...)</TD></TR></TABLE>
+
+<P>These two functions return the smallest or largest of their arguments,
+<BR>respectively.  All of the arguments must be numbers of the same kind
+<BR>(i.e., either integer or floating-point); otherwise `E_TYPE' is raised.
+
+<H2><A NAME="max_object()">max_object()</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> obj max_object ()</TD></TR></TABLE>
+
+<P>Returns the largest object number yet assigned to a created object.  Note
+<BR>that the object with this number may no longer exist; it may have been
+<BR>recycled.  The next object created will be assigned the object number one
+<BR>larger than the value of `max_object()'.
+
+<H2><A NAME="memory_usage()">memory_usage()</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> list memory_usage ()</TD></TR></TABLE>
+
+<P>On some versions of the server, this returns statistics concerning the
+<BR>server consumption of system memory.  The result is a list of lists, each
+<BR>in the following format:
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{BLOCK-SIZE, NUSED, NFREE}
+
+<P>where BLOCK-SIZE is the size in bytes of a particular class of memory
+<BR>fragments, NUSED is the number of such fragments currently in use in the
+<BR>server, and NFREE is the number of such fragments that have been reserved
+<BR>for use but are currently free.
+
+<P>On servers for which such statistics are not available, `memory_usage()'
+<BR>returns `{}'.  The compilation option `USE_GNU_MALLOC' controls whether
+<BR>or not statistics are available; if the option is not provided,
+<BR>statistics are not available.
+
+<H2><A NAME="min()">min()</A></H2>
+
+<P>See: <A HREF="#max()">max()</A>
+
+<H2><A NAME="mktime_tz()">mktime_tz()</A></H2>
+
+<P>See: <A HREF="#ctime_tz()">ctime_tz()</A>
+
+<H2><A NAME="move()">move()</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> none move (obj WHAT, obj WHERE)</TD></TR></TABLE>
+
+<P>Changes WHAT's location to be WHERE.  This is a complex process because a
+<BR>number of permissions checks and notifications must be performed.  The
+<BR>actual movement takes place as described in the following paragraphs.
+
+<P>WHAT should be a valid object and WHERE should be either a valid object
+<BR>or `#-1' (denoting a location of `nowhere'); otherwise `E_INVARG' is
+<BR>raised.  The programmer must be either the owner of WHAT or a wizard;
+<BR>otherwise, `E_PERM' is raised.
+
+<P>If WHERE is a valid object, then the verb-call
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WHERE:accept(WHAT)
+
+<P>is performed before any movement takes place.  If the verb returns a
+<BR>false value and the programmer is not a wizard, then WHERE is considered
+<BR>to have refused entrance to WHAT; `move()' raises `E_NACC'.  If WHERE
+<BR>does not define an `accept' verb, then it is treated as if it defined one
+<BR>that always returned false.
+
+<P>If moving WHAT into WHERE would create a loop in the containment
+<BR>hierarchy (i.e., WHAT would contain itself, even indirectly), then
+<BR>`E_RECMOVE' is raised instead.
+
+<P>The `location' property of WHAT is changed to be WHERE, and the
+<BR>`contents' properties of the old and new locations are modified
+<BR>appropriately.  Let OLD-WHERE be the location of WHAT before it was
+<BR>moved.  If OLD-WHERE is a valid object, then the verb-call
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OLD-WHERE:exitfunc(WHAT)
+
+<P>is performed and its result is ignored; it is not an error if OLD-WHERE
+<BR>does not define a verb named `exitfunc'.  Finally, if WHERE and WHAT are
+<BR>still valid objects, and WHERE is still the location of WHAT, then the
+<BR>verb-call
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WHERE:enterfunc(WHAT)
+
+<P>is performed and its result is ignored; again, it is not an error if
+<BR>WHERE does not define a verb named `enterfunc'.
+
+<H2><A NAME="notify()">notify()</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> none notify (obj CONN, str STRING [, NO-FLUSH])</TD></TR></TABLE>
+
+<P>Enqueues STRING for output (on a line by itself) on the connection CONN.
+<BR>If the programmer is not CONN or a wizard, then `E_PERM' is raised.  If
+<BR>CONN is not a currently-active connection, then this function does
+<BR>nothing.  Output is normally written to connections only between tasks,
+<BR>not during execution.
+
+<P>The server will not queue an arbitrary amount of output for a connection;
+<BR>the `MAX_QUEUED_OUTPUT' compilation option (in `options.h') controls the
+<BR>limit.  When an attempt is made to enqueue output that would take the
+<BR>server over its limit, it first tries to write as much output as possible
+<BR>to the connection without having to wait for the other end.  If that
+<BR>doesn't result in the new output being able to fit in the queue, the
+<BR>server starts throwing away the oldest lines in the queue until the new
+<BR>ouput will fit.  The server remembers how many lines of output it has
+<BR>`flushed' in this way and, when next it can succeed in writing anything
+<BR>to the connection, it first writes a line like `&gt;&gt; Network buffer
+<BR>overflow: X lines of output to you have been lost &lt;&lt;' where X is the
+<BR>number of flushed lines.
+
+<P>If NO-FLUSH is provided and true, then `notify()' never flushes any
+<BR>output from the queue; instead it immediately returns false.  `Notify()'
+<BR>otherwise always returns true.
+
+<H2><A NAME="object_bytes()">object_bytes()</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> int object_bytes (obj OBJECT)</TD></TR></TABLE>
+
+<P>Returns the number of bytes of the server's memory required to store the
+<BR>given OBJECT, including the space used by the values of all of its
+<BR>non-clear properties and by the verbs and properties defined directly on
+<BR>the object.  Raised `E_INVARG' if OBJECT is not a valid object and
+<BR>`E_PERM' if the programmer is not a wizard.
+
+<H2><A NAME="open_network_connection()">open_network_connection()</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> obj open_network_connection (VALUE, ...)</TD></TR></TABLE>
+
+<P>Establishes a network connection to the place specified by the arguments
+<BR>and more-or-less pretends that a new, normal user connection has been
+<BR>established from there.  The new connection, as usual, will not be logged
+<BR>in initially and will have a negative object number associated with it
+<BR>for use with `read()', `notify()', and `boot_player()'.  This object
+<BR>number is the value returned by this function.
+
+<P>If the programmer is not a wizard or if the `OUTBOUND_NETWORK' compilation
+<BR>option was not used in building the server, then `E_PERM' is raised.  If
+<BR>the network connection cannot be made for some reason, then other errors
+<BR>will be returned, depending upon the particular network implementation in
+<BR>use.
+
+<P>For the TCP/IP network implementations (the only ones as of this writing
+<BR>that support outbound connections), there must be two arguments, a string
+<BR>naming a host (possibly using the numeric Internet syntax) and an integer
+<BR>specifying a TCP port.  If a connection cannot be made because the host
+<BR>does not exist, the port does not exist, the host is not reachable or
+<BR>refused the connection, `E_INVARG' is raised.  If the connection cannot
+<BR>be made for other reasons, including resource limitations, then `E_QUOTA'
+<BR>is raised.
+
+<P>The outbound connection process involves certain steps that can take
+<BR>quite a long time, during which the server is not doing anything else,
+<BR>including responding to user commands and executing MOO tasks.  See the
+<BR>chapter on server assumptions about the database for details about how
+<BR>the server limits the amount of time it will wait for these steps to
+<BR>successfully complete.
+
+<P>It is worth mentioning one tricky point concerning the use of this
+<BR>function.  Since the server treats the new connection pretty much like
+<BR>any normal user connection, it will naturally try to parse any input
+<BR>from that connection as commands in the usual way.  To prevent this
+<BR>treatment, you should use `set_connection_option()' to set the
+<BR>`"hold-input"' option true on the connection.
+
+<H2><A NAME="output_delimiters()">output_delimiters()</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> list output_delimiters (obj PLAYER)</TD></TR></TABLE>
+
+<P>Returns a list of two strings, the current "output prefix" and "output
+<BR>suffix" for PLAYER.  If PLAYER does not have an active network
+<BR>connection, then `E_INVARG' is raised.  If either string is currently
+<BR>undefined, the value `""' is used instead.  See the discussion of the
+<BR>`PREFIX' and `SUFFIX' commands in the next chapter for more information
+<BR>about the output prefix and suffix.
+
+<H2><A NAME="parent()">parent()</A></H2>
+
+Syntax: obj parent (obj OBJECT)
+<P><TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> list children (obj OBJECT)</TD></TR></TABLE>
+
+<P>These functions return the parent and a list of the children of OBJECT,
+<BR>respectively.  If OBJECT is not valid, then `E_INVARG' is raised.
+
+<H2><A NAME="pass()">pass()</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> value pass (ARG, ...)</TD></TR></TABLE>
+
+<P>Often, it is useful for a child object to define a verb that *augments*
+<BR>the behavior of a verb on its parent object.  For example, in the
+<BR>LambdaCore database, the root object (which is an ancestor of every other
+<BR>object) defines a verb called `description' that simply returns the value
+<BR>of `this.description'; this verb is used by the implementation of the
+<BR>`look' command.  In many cases, a programmer would like the description of
+<BR>some object to include some non-constant part; for example, a sentence
+<BR>about whether or not the object was `awake' or `sleeping'.  This sentence
+<BR>should be added onto the end of the normal description.  The programmer
+<BR>would like to have a means of calling the normal `description' verb and
+<BR>then appending the sentence onto the end of that description.  The
+<BR>function `pass()' is for exactly such situations.
+
+<P>`pass' calls the verb with the same name as the current verb but as
+<BR>defined on the parent of the object that defines the current verb.  The
+<BR>arguments given to `pass' are the ones given to the called verb and the
+<BR>returned value of the called verb is returned from the call to `pass'.
+<BR>The initial value of `this' in the called verb is the same as in the
+<BR>calling verb.
+
+<P>Thus, in the example above, the child-object's `description' verb might
+<BR>have the following implementation:
+
+<P>return pass() + "  It is " + (this.awake ? "awake." | "sleeping.");
+
+<P>That is, it calls its parent's `description' verb and then appends to the
+<BR>result a sentence whose content is computed based on the value of a
+<BR>property on the object.
+
+<P>In almost all cases, you will want to call `pass()' with the same
+<BR>arguments as were given to the current verb.  This is easy to write in
+<BR>MOO; just call `pass(@args)'.
+
+<H2><A NAME="players()">players()</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> list players ()</TD></TR></TABLE>
+
+<P>Returns a list of the object numbers of all user character objects in the
+<BR>database.
+
+<H2><A NAME="properties()">properties()</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> list properties (obj OBJECT)</TD></TR></TABLE>
+
+<P>Returns a list of the names of the properties defined directly on the
+<BR>given OBJECT, not inherited from its parent.  If OBJECT is not valid,
+<BR>then `E_INVARG' is raised.  If the programmer does not have read
+<BR>permission on OBJECT, then `E_PERM' is raised.
+
+<H2><A NAME="property_info()">property_info()</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> none add_property (obj OBJECT, str PROP-NAME, VALUE, list INFO)</TD></TR></TABLE>
+
+<P>where INFO is:  {obj OWNER, str PERMS}
+
+<P>Defines a new property on the given OBJECT, inherited by all of its
+<BR>descendants; the property is named PROP-NAME, its initial value is VALUE,
+<BR>and its owner and initial permission bits are given by INFO in the same
+<BR>format as is returned by `property_info()', described above.  If OBJECT
+<BR>is not valid or INFO does not specify a valid owner and well-formed
+<BR>permission bits or OBJECT or its ancestors or descendants already defines
+<BR>a property named PROP-NAME, then `E_INVARG' is raised.  If the programmer
+<BR>does not have write permission on OBJECT or if the owner specified by
+<BR>INFO is not the programmer and the programmer is not a wizard, then
+<BR>`E_PERM' is raised.
+
+<H2><A NAME="queue_info()">queue_info()</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> list queue_info ([obj PLAYER])</TD></TR></TABLE>
+
+<P>If PLAYER is omitted, returns a list of object numbers naming all people
+<BR>that currently have active task queues inside the server.  If PLAYER is
+<BR>provided, returns the number of background tasks currently queued for that
+<BR>user.  It is guaranteed that `queue_info(X)' will return zero for any X
+<BR>not in the result of `queue_info()'.
+
+<H2><A NAME="queued_tasks()">queued_tasks()</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> list queued_tasks ()</TD></TR></TABLE>
+
+<P>Returns information on each of the background tasks (i.e., forked,
+<BR>suspended or reading) owned by the programmer (or, if the programmer is a
+<BR>wizard, all queued tasks).  The returned value is a list of lists, each
+<BR>of which encodes certain information about a particular queued task in
+<BR>the following format:
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{TASK-ID, START-TIME, X, Y,
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PROGRAMMER, VERB-LOC, VERB-NAME, LINE, THIS}
+
+<P>where TASK-ID is an integer identifier for this queued task, START-TIME
+<BR>is the time after which this task will begin execution (in `time()'
+<BR>format), X and Y are obsolete values that are no longer interesting,
+<BR>PROGRAMMER is the permissions with which this task will begin execution
+<BR>(and also the person who "owns" this task), VERB-LOC is the object on
+<BR>which the verb that forked this task was defined at the time, VERB-NAME
+<BR>is that name of that verb, LINE is the number of the first line of the
+<BR>code in that verb that this task will execute, and THIS is the value of
+<BR>the variable `this' in that verb.  For reading tasks, START-TIME is `-1'.
+
+<P>The X and Y fields are now obsolete and are retained only for
+<BR>backward-compatibility reasons.  They may be reused for new purposes in
+<BR>some future version of the server.
+
+<P>Related functions
+<BR><A HREF="function_help.html#kill_task()">kill_task()</A> -- delete one of your tasks from the queue
+
+<H2><A NAME="raise()">raise()</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> none raise (CODE [, str MESSAGE [, VALUE]])</TD></TR></TABLE>
+
+<P>Raises CODE as an error in the same way as other MOO expressions,
+<BR>statements, and functions do.  MESSAGE, which defaults to the value of
+<BR>`tostr(CODE)', and VALUE, which defaults to zero, are made available to
+<BR>any `try'-`except' statements that catch the error.  If the error is not
+<BR>caught, then MESSAGE will appear on the first line of the traceback
+<BR>printed to the user.
+
+<H2><A NAME="random()">random()</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> int random ([int MOD])</TD></TR></TABLE>
+
+<P>MOD must be a positive integer; otherwise, `E_INVARG' is raised.  An
+<BR>integer is chosen randomly from the range `[1..MOD]' and returned.  If
+<BR>MOD is not provided, it defaults to the largest MOO integer, 2147483647.
+
+<H2><A NAME="read()">read()</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> str read ([obj CONN [, NON-BLOCKING]])</TD></TR></TABLE>
+
+<P>Reads and returns a line of input from the connection CONN (or, if not
+<BR>provided, from the person that typed the command that initiated the
+<BR>current task).  If NON-BLOCKING is false or not provided, this function
+<BR>suspends the current task, resuming it when there is input available to
+<BR>be read.  If NON-BLOCKING is provided and true, this function never
+<BR>suspends the calling task; if there is no input currently available for
+<BR>input, `read()' simply returns 0 immediately.
+
+<P>If PLAYER is provided, then the programmer must either be a wizard or the
+<BR>owner of `player'; if `player' is not provided, then `read()' may only be
+<BR>called by a wizard and only in the task that was last spawned by a
+<BR>command from the connection in question.  Otherwise, `E_PERM' is raised.
+<BR>If the given `player' is not currently connected and has no pending lines
+<BR>of input, or if the connection is closed while a task is waiting for
+<BR>input but before any lines of input are received, then `read()' raises
+<BR>`E_INVARG'.
+
+<P>The restriction on the use of `read()' without any arguments preserves the
+<BR>following simple invariant: if input is being read from a person, it is
+<BR>for the task started by the last command that person typed.  This
+<BR>invariant adds responsibility to the programmer, however.  If your
+<BR>program calls another verb before doing a `read()', then either that verb
+<BR>must not suspend or else you must arrange that no commands will be read
+<BR>from the connection in the meantime.  The most straightforward way to do
+<BR>this is to call
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set_connection_option(player, "hold-input", 1)
+
+<P>before any task suspension could happen, then make all of your calls to
+<BR>`read()' and other code that might suspend, and finally call
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set_connection_option(player, "hold-input", 0)
+
+<P>to allow commands once again to be read and interpreted normally.
+
+<H2><A NAME="recycle()">recycle()</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> none recycle (obj OBJECT)</TD></TR></TABLE>
+
+<P>The given OBJECT is destroyed, irrevocably.  The programmer must either
+<BR>own OBJECT or be a wizard; otherwise, `E_PERM' is raised.  If OBJECT is
+<BR>not valid, then `E_INVARG' is raised.  The children of OBJECT are
+<BR>reparented to the parent of OBJECT.  Before OBJECT is recycled, each
+<BR>object in its contents is moved to `#-1' (implying a call to OBJECT's
+<BR>`exitfunc' verb, if any) and then OBJECT's `recycle' verb, if any, is
+<BR>called with no arguments.
+
+<P>After OBJECT is recycled, if the owner of the former object has a
+<BR>property named `ownership_quota' and the value of that property is a
+<BR>integer, then `recycle()' treats that value as a "quota" and increments
+<BR>it by one, storing the result back into the `ownership_quota' property.
+
+<H2><A NAME="regex">regex</A></H2>
+
+<P>See: <A HREF="user_help.html#regular-expressions">regular-expressions</A> in General Help
+
+<H2><A NAME="renumber()">renumber()</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> obj renumber (obj OBJECT)</TD></TR></TABLE>
+
+<P>The object number of the object currently numbered OBJECT is changed to
+<BR>be the least nonnegative object number not currently in use and the new
+<BR>object number is returned.  If OBJECT is not valid, then `E_INVARG' is
+<BR>raised.  If the programmer is not a wizard, then `E_PERM' is raised.  If
+<BR>there are no unused nonnegative object numbers less than OBJECT, then
+<BR>OBJECT is returned and no changes take place.
+
+<P>The references to OBJECT in the parent/children and location/contents
+<BR>hierarchies are updated to use the new object number, and any verbs,
+<BR>properties and/or objects owned by OBJECT are also changed to be owned by
+<BR>the new object number.  The latter operation can be quite time consuming
+<BR>if the database is large.  No other changes to the database are
+<BR>performed; in particular, no object references in property values or verb
+<BR>code are updated.
+
+<P>This operation is intended for use in making new versions of the
+<BR>LambdaCore database from the then-current LambdaMOO database, and other
+<BR>similar situations.  Its use requires great care.
+
+<H2><A NAME="reset_max_object()">reset_max_object()</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> none reset_max_object ()</TD></TR></TABLE>
+
+<P>The server's idea of the highest object number ever used is changed to be
+<BR>the highest object number of a currently-existing object, thus allowing
+<BR>reuse of any higher numbers that refer to now-recycled objects.  If the
+<BR>programmer is not a wizard, then `E_PERM' is raised.
+
+<P>This operation is intended for use in making new versions of the
+<BR>LambdaCore database from the then-current LambdaMOO database, and other
+<BR>similar situations.  Its use requires great care.
+
+<H2><A NAME="resume()">resume()</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> none resume (int TASK-ID [, VALUE])</TD></TR></TABLE>
+
+<P>Immediately ends the suspension of the suspended task with the given
+<BR>TASK-ID; that task's call to `suspend()' will return VALUE, which
+<BR>defaults to zero.  `Resume()' raises `E_INVARG' if TASK-ID does not
+<BR>specify an existing suspended task and `E_PERM' if the programmer is
+<BR>neither a wizard nor the owner of the specified task.
+
+<H2><A NAME="rindex()">rindex()</A></H2>
+
+<P>See: <A HREF="#index()">index()</A>
+
+<H2><A NAME="rmatch()">rmatch()</A></H2>
+
+<P>See: <A HREF="#match()">match()</A>
+
+<H2><A NAME="seconds_left()">seconds_left()</A></H2>
+
+Syntax: int ticks_left ()
+<P><TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> int seconds_left ()</TD></TR></TABLE>
+
+<P>These two functions return the number of ticks or seconds (respectively)
+<BR>left to the current task before it will be forcibly terminated.  These
+<BR>are useful, for example, in deciding when to call `suspend()' to continue
+<BR>a long-lived computation.
+
+<H2><A NAME="server_log()">server_log()</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> none server_log (str MESSAGE [, IS-ERROR])</TD></TR></TABLE>
+
+<P>The text in MESSAGE is sent to the server log with a distinctive prefix
+<BR>(so that it can be distinguished from server-generated messages).  If the
+<BR>programmer is not a wizard, then `E_PERM' is raised.  If IS-ERROR is
+<BR>provided and true, then MESSAGE is marked in the server log as an error.
+
+<H2><A NAME="server_version()">server_version()</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> str server_version ()</TD></TR></TABLE>
+
+<P>Returns a string giving the version number of the running MOO server.
+
+<H2><A NAME="set_connection_option()">set_connection_option()</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> none set_connection_option (obj CONN, str OPTION, VALUE)</TD></TR></TABLE>
+
+<P>Controls a number of optional behaviors associated the connection CONN.
+<BR>Raises `E_INVARG' if CONN does not specify a current connection and
+<BR>`E_PERM' if the programmer is neither CONN nor a wizard.  The following
+<BR>values for OPTION are currently supported:
+
+<P>`"hold-input"'
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;If VALUE is true, then input received on CONN will never be treated
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;as a command; instead, it will remain in the queue until retrieved
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;by a call to `read()'.
+
+<P>`"client-echo"'
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Send the Telnet Protocol `WONT ECHO' or `WILL ECHO' command,
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;depending on whether VALUE is true or false, respectively.  For
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clients that support the Telnet Protocol, this should toggle whether
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;or not the client echoes locally the characters typed by the user.
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Note that the server itself never echoes input characters under any
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;circumstances.  (This option is only available under the TCP/IP
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;networking configurations.)
+
+<P>`"binary"'
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If VALUE is true, then both input from and output to CONN can
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;contain arbitrary bytes.  Input from a connection in binary mode is
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;not broken into lines at all; it is delivered to either the read()
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;function or the built-in command parser as "binary strings", in
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;whatever size chunks come back from the operating system.  (See the
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;early section on MOO value types for a description of the binary
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;string representation.)  For output to a connection in binary mode,
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;the second argument to `notify()' must be a binary string; if it is
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;malformed, E_INVARG is raised.
+
+<P>`"flush-command"'
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If VALUE is a non-empty string, then it becomes the new "flush"
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;command for this connection, by which the person can flush all
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;queued input that has not yet been processed by the server.  If
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;VALUE is not a non-empty string, then CONN is set to have no flush
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;command at all.  The default value of this option can be set via the
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;property `$server_options.default_flush_command'; see the chapter on
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;server assumptions about the database for details.
+
+<H2><A NAME="set_player_flag()">set_player_flag()</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> none set_player_flag (obj OBJECT, VALUE)</TD></TR></TABLE>
+
+<P>Confers or removes the "character object" status of the given OBJECT,
+<BR>depending upon the truth value of VALUE.  If OBJECT is not valid,
+<BR>`E_INVARG' is raised.  If the programmer is not a wizard, then `E_PERM'
+<BR>is raised.
+
+<P>If VALUE is true, then OBJECT gains (or keeps) "character object" status: it
+<BR>will be an element of the list returned by `players()', the expression
+<BR>`is_player(OBJECT)' will return true, and the server will treat a call to
+<BR>`$do_login_command()' that returns OBJECT as logging in the current
+<BR>connection.
+
+<P>If VALUE is false, the OBJECT loses (or continues to lack) "character
+<BR>object" status: it will not be an element of the list returned by
+<BR>`players()', the expression `is_player(OBJECT)' will return false, and
+<BR>users cannot connect to OBJECT by name when they log into the server.  In
+<BR>addition, if a user is connected to OBJECT at the time that it loses
+<BR>"character object" status, then that connection is immediately broken, just
+<BR>as if `boot_player(OBJECT)' had been called (see the help for `boot_player()').
+
+<H2><A NAME="set_property_info()">set_property_info()</A></H2>
+
+Syntax: list property_info (obj OBJECT, str PROP-NAME)
+<P><TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> none set_property_info (obj OBJECT, str PROP-NAME, list INFO)</TD></TR></TABLE>
+
+<P>These two functions get and set (respectively) the owner and permission
+<BR>bits for the property named PROP-NAME on the given OBJECT.  If OBJECT is
+<BR>not valid, then `E_INVARG' is raised.  If OBJECT has no non-built-in
+<BR>property named PROP-NAME, then `E_PROPNF' is raised.  If the programmer
+<BR>does not have read (write) permission on the property in question, then
+<BR>`property_info()' (`set_property_info()') raises `E_PERM'.  Property info
+<BR>has the following form:
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{OWNER, PERMS [, NEW-NAME]}
+
+<P>where OWNER is an object, PERMS is a string containing only characters
+<BR>from the set `r', `w', and `c', and NEW-NAME is a string; NEW-NAME is
+<BR>never part of the value returned by `property_info()', but it may
+<BR>optionally be given as part of the value provided to
+<BR>`set_property_info()'.  This list is the kind of value returned by
+<BR>`property_info()' and expected as the third argument to
+<BR>`set_property_info()'; the latter function raises `E_INVARG' if OWNER is
+<BR>not valid, if PERMS contains any illegal characters, or, when NEW-NAME is
+<BR>given, if PROP-NAME is not defined directly on OBJECT or NEW-NAME names
+<BR>an existing property defined on OBJECT or any of its ancestors or
+<BR>descendants.
+
+<H2><A NAME="set_task_perms()">set_task_perms()</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> none set_task_perms (obj WHO)</TD></TR></TABLE>
+
+<P>Changes the permissions with which the currently-executing verb is
+<BR>running to be those of WHO.  If the programmer is neither WHO nor a
+<BR>wizard, then `E_PERM' is raised.
+
+<P>*Note*: This does not change the owner of the currently-running verb,
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;only the permissions of this particular invocation.  It is used in
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;verbs owned by wizards to make themselves run with lesser (usually
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;non-wizard) permissions.
+
+<H2><A NAME="set_verb_args()">set_verb_args()</A></H2>
+
+Syntax: list verb_args (obj OBJECT, str VERB-DESC)
+<P><TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> none set_verb_args (obj OBJECT, str VERB-DESC, list ARGS)</TD></TR></TABLE>
+
+<P>These two functions get and set (respectively) the direct-object,
+<BR>preposition, and indirect-object specifications for the verb as specified
+<BR>by VERB-DESC on the given OBJECT.  If OBJECT is not valid, then `E_INVARG'
+<BR>is raised.  If OBJECT does not define a verb as specified by VERB-DESC,
+<BR>then `E_VERBNF' is raised.  If the programmer does not have read (write)
+<BR>permission on the verb in question, then `verb_args()'
+<BR>(`set_verb_args()') raises `E_PERM'.  Verb args specifications have the
+<BR>following form:
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{DOBJ, PREP, IOBJ}
+
+<P>where DOBJ and IOBJ are strings drawn from the set `"this"', `"none"',
+<BR>and `"any"', and PREP is a string that is either `"none"', `"any"', or
+<BR>one of the prepositional phrases listed much earlier in the description
+<BR>of verbs in the first chapter.  This is the kind of value returned by
+<BR>`verb_args()' and expected as the third argument to `set_verb_args()'.
+<BR>Note that for `set_verb_args()', PREP must be only one of the
+<BR>prepositional phrases, not (as is shown in that table) a set of such
+<BR>phrases separated by `/' characters.  `set_verb_args' raises `E_INVARG'
+<BR>if any of the DOBJ, PREP, or IOBJ strings is illegal.
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;verb_args($container, "take")
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&gt;   {"any", "out of/from inside/from", "this"}
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set_verb_args($container, "take", {"any", "from", "this"})
+
+<H2><A NAME="set_verb_code()">set_verb_code()</A></H2>
+
+Syntax: list verb_code (obj OBJECT, str VERB-DESC [, FULLY-PAREN [, INDENT]])
+<P><TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> list set_verb_code (obj OBJECT, str VERB-DESC, list CODE)</TD></TR></TABLE>
+
+<P>These functions get and set (respectively) the MOO-code program
+<BR>associated with the verb as specified by VERB-DESC on OBJECT.  The
+<BR>program is represented as a list of strings, one for each line of the
+<BR>program; this is the kind of value returned by `verb_code()' and expected
+<BR>as the third argument to `set_verb_code()'.  For `verb_code()', the
+<BR>expressions in the returned code are usually written with the
+<BR>minimum-necessary parenthesization; if FULL-PAREN is true, then all
+<BR>expressions are fully parenthesized.  Also for `verb_code()', the lines
+<BR>in the returned code are usually not indented at all; if INDENT is true,
+<BR>each line is indented to better show the nesting of statements.
+
+<P>If OBJECT is not valid, then `E_INVARG' is raised.  If OBJECT does not
+<BR>define a verb as specified by VERB-DESC, then `E_VERBNF' is raised.  If
+<BR>the programmer does not have read (write) permission on the verb in
+<BR>question, then `verb_code()' (`set_verb_code()') raises `E_PERM'.  If the
+<BR>programmer is not, in fact. a programmer, then `E_PERM' is raised.
+
+<P>For `set_verb_code()', the result is a list of strings, the error messages
+<BR>generated by the MOO-code compiler during processing of CODE.  If the
+<BR>list is non-empty, then `set_verb_code()' did not install CODE; the
+<BR>program associated with the verb in question is unchanged.
+
+<H2><A NAME="set_verb_info()">set_verb_info()</A></H2>
+
+Syntax: list verb_info (obj OBJECT, str VERB-DESC)
+<P><TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> none set_verb_info (obj OBJECT, str VERB-DESC, list INFO)</TD></TR></TABLE>
+
+<P>These two functions get and set (respectively) the owner, permission
+<BR>bits, and name(s) for the verb as specified by VERB-DESC on the given
+<BR>OBJECT.  If OBJECT is not valid, then `E_INVARG' is raised.  If OBJECT
+<BR>does not define a verb as specified by VERB-DESC, then `E_VERBNF' is
+<BR>raised.  If the programmer does not have read (write) permission on the
+<BR>verb in question, then `verb_info()' (`set_verb_info()') raises `E_PERM'.
+<BR>Verb info has the following form:
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{OWNER, PERMS, NAMES}
+
+<P>where OWNER is an object, PERMS is a string containing only characters
+<BR>from the set `r', `w', `x', and `d', and NAMES is a string.  This is the
+<BR>kind of value returned by `verb_info()' and expected as the third
+<BR>argument to `set_verb_info()'.  `set_verb_info()' raises `E_INVARG' if
+<BR>OWNER is not valid, if PERMS contains any illegal characters, or if NAMES
+<BR>is the empty string or consists entirely of spaces; it raises `E_PERM' if
+<BR>OWNER is not the programmer and the programmer is not a wizard.
+
+<H2><A NAME="setadd()">setadd()</A></H2>
+
+<P>See: <A HREF="#setremove()">setremove()</A>
+
+<H2><A NAME="setremove()">setremove()</A></H2>
+
+Syntax: list setadd (list LIST, VALUE)
+<P><TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> list setremove (list LIST, VALUE)</TD></TR></TABLE>
+
+<P>Returns a copy of LIST with the given VALUE added or removed, as
+<BR>appropriate.  `setadd()' only adds VALUE if it is not already an element
+<BR>of LIST; LIST is thus treated as a mathematical set.  VALUE is added at
+<BR>the end of the resulting list, if at all.  Similarly, `setremove()'
+<BR>returns a list identical to LIST if VALUE is not an element.  If VALUE
+<BR>appears more than once in LIST, only the first occurrence is removed in
+<BR>the returned copy.
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;setadd({1, 2, 3}, 3)         =&gt;   {1, 2, 3}
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;setadd({1, 2, 3}, 4)         =&gt;   {1, 2, 3, 4}
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;setremove({1, 2, 3}, 3)      =&gt;   {1, 2}
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;setremove({1, 2, 3}, 4)      =&gt;   {1, 2, 3}
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;setremove({1, 2, 3, 2}, 2)   =&gt;   {1, 3, 2}
+
+<H2><A NAME="shutdown()">shutdown()</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> none shutdown ([str MESSAGE])</TD></TR></TABLE>
+
+<P>Requests that the server shut itself down at its next opportunity.  Before
+<BR>doing so, a notice (incorporating MESSAGE, if provided) is printed to all
+<BR>connected people.  If the programmer is not a wizard, then `E_PERM' is
+<BR>raised.
+
+<H2><A NAME="sin()">sin()</A></H2>
+
+<P>See: <A HREF="#tan()">tan()</A>
+
+<H2><A NAME="sinh()">sinh()</A></H2>
+
+<P>See: <A HREF="#tanh()">tanh()</A>
+
+<H2><A NAME="sqrt()">sqrt()</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> float sqrt (float X)</TD></TR></TABLE>
+
+<P>Returns the square root of X.  Raises `E_INVARG' if X is negative.
+
+<H2><A NAME="strcmp()">strcmp()</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> int strcmp (str STR1, str STR2)</TD></TR></TABLE>
+
+<P>Performs a case-sensitive comparison of the two argument strings.  If
+<BR>STR1 is lexicographically less than STR2, the `strcmp()' returns a
+<BR>negative integer.  If the two strings are identical, `strcmp()' returns
+<BR>zero.  Otherwise, `strcmp()' returns a positive integer.  The ASCII
+<BR>character ordering is used for the comparison.
+
+<H2><A NAME="string_hash()">string_hash()</A></H2>
+
+Syntax: str string_hash (str TEXT)
+<P><TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> str binary_hash (str BIN-STRING)</TD></TR></TABLE>
+
+<P>Returns a 32-character hexadecimal string encoding the result of applying
+<BR>the MD5 cryptographically secure hash function to the contents of the
+<BR>string TEXT or the binary string BIN-STRING.  MD5, like other such
+<BR>functions, has the property that, if
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;string_hash(X) == string_hash(Y)
+<BR>then, almost certainly,
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;equal(X, Y)
+
+<P>This can be useful, for example, in certain networking applications: after
+<BR>sending a large piece of text across a connection, also send the result of
+<BR>applying `string_hash()' to the text; if the destination site also
+<BR>applies `string_hash()' to the text and gets the same result, you can be
+<BR>quite confident that the large text has arrived unchanged.
+
+<H2><A NAME="strsub()">strsub()</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> str strsub (str SUBJECT, str WHAT, str WITH [, CASE-MATTERS])</TD></TR></TABLE>
+
+<P>Replaces all occurrences in SUBJECT of WHAT with WITH, performing string
+<BR>substitution.  The occurrences are found from left to right and all
+<BR>substitutions happen simultaneously.  By default, occurrences of WHAT are
+<BR>searched for while ignoring the upper/lower case distinction.  If
+<BR>CASE-MATTERS is provided and true, then case is treated as significant in
+<BR>all comparisons.
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;strsub("%n is a fink.", "%n", "Fred")   =&gt;   "Fred is a fink."
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;strsub("foobar", "OB", "b")             =&gt;   "fobar"
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;strsub("foobar", "OB", "b", 1)          =&gt;   "foobar"
+
+<H2><A NAME="substitute()">substitute()</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> str substitute (str TEMPLATE, list SUBS)</TD></TR></TABLE>
+
+<P>Performs a standard set of substitutions on the string TEMPLATE, using
+<BR>the information contained in SUBS, returning the resulting, transformed
+<BR>TEMPLATE.  SUBS should be a list like those returned by `match()' or
+<BR>`rmatch()' when the match succeeds; otherwise, `E_INVARG' is raised.
+
+<P>In TEMPLATE, the strings `%1' through `%9' will be replaced by the text
+<BR>matched by the first through ninth parenthesized sub-patterns when
+<BR>`match()' or `rmatch()' was called.  The string `%0' in TEMPLATE will be
+<BR>replaced by the text matched by the pattern as a whole when `match()' or
+<BR>`rmatch()' was called.  The string `%%' will be replaced by a single `%'
+<BR>sign.  If `%' appears in TEMPLATE followed by any other character,
+<BR>`E_INVARG' will be raised.
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;subs = match("*** Welcome to LambdaMOO!!!", "%(%w*%) to %(%w*%)");
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;substitute("I thank you for your %1 here in %2.", subs)
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&gt;   "I thank you for your Welcome here in LambdaMOO."
+
+<H2><A NAME="suspend()">suspend()</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> value suspend ([int SECONDS])</TD></TR></TABLE>
+
+<P>Suspends the current task, and resumes it after at least SECONDS seconds.
+<BR>(If SECONDS is not provided, the task is suspended indefinitely; such a
+<BR>task can only be resumed by use of the `resume()' function.)  When the
+<BR>task is resumed, it will have a full quota of ticks and seconds.  This
+<BR>function is useful for programs that run for a long time or require a lot
+<BR>of ticks.  If SECONDS is negative, then `E_INVARG' is raised.  `Suspend()'
+<BR>returns zero unless it was resumed via `resume()', in which case it
+<BR>returns the second argument given to that function.
+
+<P>In some sense, this function forks the `rest' of the executing task.
+<BR>However, there is a major difference between the use of `suspend(SECONDS)'
+<BR>and the use of the `fork (SECONDS)'.  The `fork' statement creates a new
+<BR>task (a "forked task") while the currently-running task still goes on to
+<BR>completion, but a `suspend()' suspends the currently-running task (thus
+<BR>making it into a "suspended task").  This difference may be best
+<BR>explained by the following examples, in which one verb calls another:
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.program   #0:caller_A
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#0.prop = 1;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#0:callee_A();
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#0.prop = 2;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.program   #0:callee_A
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fork(5)
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#0.prop = 3;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;endfork
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.program   #0:caller_B
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#0.prop = 1;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#0:callee_B();
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#0.prop = 2;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.program   #0:callee_B
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;suspend(5);
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#0.prop = 3;
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.
+
+<P>Consider `#0:caller_A', which calls `#0:callee_A'.  Such a task would
+<BR>assign 1 to `#0.prop', call `#0:callee_A', fork a new task, return to
+<BR>`#0:caller_A', and assign 2 to `#0.prop', ending this task.  Five seconds
+<BR>later, if the forked task had not been killed, then it would begin to
+<BR>run; it would assign 3 to `#0.prop' and then stop.  So, the final value of
+<BR>`#0.prop' (i.e., the value after more than 5 seconds) would be 3.
+
+<P>Now consider `#0:caller_B', which calls `#0:callee_B' instead of
+<BR>`#0:callee_A'.  This task would assign 1 to `#0.prop', call
+<BR>`#0:callee_B', and suspend.  Five seconds later, if the suspended task had
+<BR>not been killed, then it would resume; it would assign 3 to `#0.prop',
+<BR>return to `#0:caller_B', and assign 2 to `#0.prop', ending the task.  So,
+<BR>the final value of `#0.prop' (i.e., the value after more than 5 seconds)
+<BR>would be 2.
+
+<P>A suspended task, like a forked task, can be described by the
+<BR>`queued_tasks()' function and killed by the `kill_task()' function.
+<BR>Suspending a task does not change its task id.  A task can be suspended
+<BR>again and again by successive calls to `suspend()'.
+
+<P>By default, there is no limit to the number of tasks any person may
+<BR>suspend, but such a limit can be imposed from within the database.  See
+<BR>the chapter in the Programmer's Manual on server assumptions about the 
+<BR>database for details.
+
+<H2><A NAME="tan()">tan()</A></H2>
+
+Syntax: float sin (float X)
+Syntax: float cos (float X)
+<P><TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> float tan (float X)</TD></TR></TABLE>
+
+<P>Returns the sine, cosine, or tangent of X, respectively.
+
+<H2><A NAME="tanh()">tanh()</A></H2>
+
+Syntax: float sinh (float X)
+Syntax: float cosh (float X)
+<P><TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> float tanh (float X)</TD></TR></TABLE>
+
+<P>Returns the hyperbolic sine, cosine, or tangent of X, respectively.
+
+<H2><A NAME="task_id()">task_id()</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> int task_id ()</TD></TR></TABLE>
+
+<P>Returns the non-zero, non-negative integer identifier for the
+<BR>currently-executing task.  Such integers are randomly selected for each
+<BR>task and can therefore safely be used in circumstances where
+<BR>unpredictability is required.
+
+<H2><A NAME="task_stack()">task_stack()</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> list task_stack (int TASK-ID [, INCLUDE-LINE-NUMBERS])</TD></TR></TABLE>
+
+<P>Returns information like that returned by the `callers()' function, but
+<BR>for the suspended task with the given TASK-ID; the INCLUDE-LINE-NUMBERS
+<BR>argument has the same meaning as in `callers()'.  Raises `E_INVARG' if
+<BR>TASK-ID does not specify an existing suspended task and `E_PERM' if the
+<BR>programmer is neither a wizard nor the owner of the specified task.
+
+<H2><A NAME="ticks_left()">ticks_left()</A></H2>
+
+<P>See: <A HREF="#seconds_left()">seconds_left()</A>
+
+<H2><A NAME="time()">time()</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> int time ()</TD></TR></TABLE>
+
+<P>Returns the current time, represented as the number of seconds that have
+<BR>elapsed since midnight on 1 January 1970, Greenwich Mean Time.
+
+<H2><A NAME="tofloat()">tofloat()</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> float tofloat (VALUE)</TD></TR></TABLE>
+
+<P>Converts the given MOO value into a floating-point number and returns that
+<BR>number.  Integers and object numbers are converted into the corresponding
+<BR>integral floating-point numbers.  Strings are parsed as the decimal
+<BR>encoding of a real number which is then represented as closely as
+<BR>possible as a floating-point number.  Errors are first converted to
+<BR>integers as in `toint()' and then converted as integers are.  `Tofloat()'
+<BR>raises `E_TYPE' if VALUE is a list.  If VALUE is a string but the string
+<BR>does not contain a syntactically-correct number, then `tofloat()' raises
+<BR>`E_INVARG.'
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tofloat(34)          =&gt;   34.0
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tofloat(#34)         =&gt;   34.0
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tofloat("34")        =&gt;   34.0
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tofloat("34.7")      =&gt;   34.7
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tofloat(E_TYPE)      =&gt;   1.0
+
+<H2><A NAME="toint()">toint()</A></H2>
+
+Syntax: int toint (VALUE)
+<P><TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> int tonum (VALUE)</TD></TR></TABLE>
+
+<P>Converts the given MOO value into an integer and returns that integer.
+<BR>Floating-point numbers are rounded toward zero, truncating their
+<BR>fractional parts.  Object numbers are converted into the equivalent
+<BR>integers.  Strings are parsed as the decimal encoding of a real number
+<BR>which is then converted to an integer.  Errors are converted into
+<BR>integers obeying the same ordering (with respect to `&lt;=' as the errors
+<BR>themselves.  `Toint()' raises `E_TYPE' if VALUE is a list.  If VALUE is a
+<BR>string but the string does not contain a syntactically-correct number,
+<BR>then `toint()' returns 0.
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;toint(34.7)        =&gt;   34
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;toint(-34.7)       =&gt;   -34
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;toint(#34)         =&gt;   34
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;toint("34")        =&gt;   34
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;toint("34.7")      =&gt;   34
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;toint(" - 34  ")   =&gt;   -34
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;toint(E_TYPE)      =&gt;   1
+
+<H2><A NAME="toliteral()">toliteral()</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> str toliteral (VALUE)</TD></TR></TABLE>
+
+<P>Returns a string containing a MOO literal expression that, when evaluated,
+<BR>would be equal to VALUE.
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;toliteral(17)    =&gt;   "17"
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;toliteral(1.0/3.0)    =&gt;   "0.333333333333333"
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;toliteral(#17)        =&gt;   "#17"
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;toliteral("foo")      =&gt;   "\"foo\""
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;toliteral({1, 2})     =&gt;   "{1, 2}"
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;toliteral(E_PERM)     =&gt;   "E_PERM"
+
+<H2><A NAME="tonum()">tonum()</A></H2>
+
+<P>See: <A HREF="#toint()">toint()</A>
+
+<H2><A NAME="toobj()">toobj()</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> obj toobj (VALUE)</TD></TR></TABLE>
+
+<P>Converts the given MOO value into an object number and returns that object
+<BR>number.  The conversions are very similar to those for `toint()' except
+<BR>that for strings, the number *may* be preceded by `#'.
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;toobj("34")       =&gt;   #34
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;toobj("#34")      =&gt;   #34
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;toobj("foo")      =&gt;   #0
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;toobj({1, 2})     error-&gt;   E_TYPE
+
+<H2><A NAME="tostr()">tostr()</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> str tostr (VALUE, ...)</TD></TR></TABLE>
+
+<P>Converts all of the given MOO values into strings and returns the
+<BR>concatenation of the results.
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tostr(17)                  =&gt;   "17"
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tostr(1.0/3.0)             =&gt;   "0.333333333333333"
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tostr(#17)                 =&gt;   "#17"
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tostr("foo")               =&gt;   "foo"
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tostr({1, 2})              =&gt;   "{list}"
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tostr(E_PERM)              =&gt;   "Permission denied"
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tostr("3 + 4 = ", 3 + 4)   =&gt;   "3 + 4 = 7"
+
+<P>Note that `tostr()' does not do a good job of converting lists into
+<BR>strings; all lists, including the empty list, are converted into the
+<BR>string `"{list}"'.  The function `toliteral()', below, is better for this
+<BR>purpose.
+
+<H2><A NAME="trunc()">trunc()</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> float trunc (float X)</TD></TR></TABLE>
+
+<P>Returns the integer obtained by truncating X at the decimal point, as a
+<BR>floating-point number.  For negative X, this is equivalent to `ceil()';
+<BR>otherwise it is equivalent to `floor()'.
+
+<H2><A NAME="typeof()">typeof()</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> int typeof (VALUE)</TD></TR></TABLE>
+
+<P>Takes any MOO value and returns an integer representing the type of VALUE.
+<BR>The result is the same as the initial value of one of these built-in
+<BR>variables: `INT', `FLOAT', `STR', `LIST', `OBJ', or `ERR'.  Thus, one
+<BR>usually writes code like this:
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (typeof(x) == LIST) ...
+
+<P>and not like this:
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (typeof(x) == 3) ...
+
+<P>because the former is much more readable than the latter.
+
+
+<H2><A NAME="unlisten()">unlisten()</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> none unlisten (CANON)</TD></TR></TABLE>
+
+<P>Stop listening for connections on the point described by CANON, which
+<BR>should be the second element of some element of the list returned by
+<BR>`listeners()'.  Raises `E_PERM' if the programmer is not a wizard and
+<BR>`E_INVARG' if there does not exist a listener with that description.
+
+<H2><A NAME="valid()">valid()</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> int valid (obj OBJECT)</TD></TR></TABLE>
+
+<P>Returns a non-zero integer (i.e., a true value) if OBJECT is a valid
+<BR>object (one that has been created and not yet recycled) and zero (i.e., a
+<BR>false value) otherwise.
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;valid(#0)    =&gt;   1
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;valid(#-1)   =&gt;   0
+
+<H2><A NAME="value_bytes()">value_bytes()</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> int value_bytes (VALUE)</TD></TR></TABLE>
+
+<P>Returns the number of bytes of the server's memory required to store the
+<BR>given VALUE.
+
+<H2><A NAME="value_hash()">value_hash()</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> str value_hash (VALUE)</TD></TR></TABLE>
+
+<P>Returns the same string as `string_hash(toliteral(VALUE))'; see the
+<BR>description of `string_hash()' for details.
+
+<H2><A NAME="verb_args()">verb_args()</A></H2>
+
+<P>See: <A HREF="#set_verb_args()">set_verb_args()</A>
+
+<H2><A NAME="verb_code()">verb_code()</A></H2>
+
+<P>See: <A HREF="#set_verb_code()">set_verb_code()</A>
+
+<H2><A NAME="verb_info()">verb_info()</A></H2>
+
+<P>See: <A HREF="#set_verb_info()">set_verb_info()</A>
+
+<H2><A NAME="verbs()">verbs()</A></H2>
+
+<TABLE BORDER=0><TR><TD VALIGN="TOP"><B>Syntax:</B></TD><TD VALIGN="TOP"> list verbs (obj OBJECT)</TD></TR></TABLE>
+
+<P>Returns a list of the names of the verbs defined directly on the given
+<BR>OBJECT, not inherited from its parent.  If OBJECT is not valid, then
+<BR>`E_INVARG' is raised.  If the programmer does not have read permission on
+<BR>OBJECT, then `E_PERM' is raised.
+
+<P>Most of the remaining operations on verbs accept a string containing the
+<BR>verb's name to identify the verb in question.  Because verbs can have multiple
+<BR>names and because an object can have multiple verbs with the same name, this
+<BR>practice can lead to difficulties.  To most unambiguously refer to a
+<BR>particular verb, one can instead use a positive integer, the index of the verb
+<BR>in the list returned by `verbs()', described above.
+
+<P>For example, suppose that `verbs(#34)' returns this list:
+
+<P>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{"foo", "bar", "baz", "foo"}
+
+<P>Object `#34' has two verbs named `foo' defined on it (this may not be an
+<BR>error, if the two verbs have different command syntaxes).  To refer
+<BR>unambiguously to the first one in the list, one uses the integer 1; to refer to
+<BR>the other one, one uses 4.
+
+<P>In the function descriptions below, an argument named VERB-DESC is either a
+<BR>string containing the name of a verb or else a positive integer giving the
+<BR>index of that verb in its defining object's `verbs()' list.
+
+<P>For historical reasons, there is also a second, inferior mechanism for
+<BR>referring to verbs with numbers, but its use is strongly discouraged.  If
+<BR>the property `$server_options.support_numeric_verbname_strings' exists
+<BR>with a true value, then functions on verbs will also accept a numeric
+<BR>string (e.g., `"4"') as a verb descriptor.  The decimal integer in the
+<BR>string works more-or-less like the positive integers described above, but
+<BR>with two significant differences:
+
+<P>&nbsp;&nbsp;1. The numeric string is a *zero-based* index into `verbs()'; that is,
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;in the string case, you would use the number one less than what you
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;would use in the positive integer case.
+
+<P>&nbsp;&nbsp;2. When there exists a verb whose actual name looks like a decimal
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;integer, this numeric-string notation is ambiguous; the server will
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;in all cases assume that the reference is to the first verb in the
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;list for which the given string could be a name, either in the
+<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;normal sense or as a numeric index.
+
+<P>Clearly, this older mechanism is more difficult and risky to use; new code
+<BR>should only be written to use the current mechanism, and old code using
+<BR>numeric strings should be modified not to do so.
+
+</BODY></HTML>
