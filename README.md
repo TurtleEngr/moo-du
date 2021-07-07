@@ -7,4 +7,5 @@ documentation. I requested FTP access to download the eDUcore on April
 This was archived before: May 16, 2001
 
 Core: archive/eDUcore.19991031.gz
+
 Documentation: doc/www.du.org
